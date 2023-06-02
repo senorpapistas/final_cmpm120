@@ -338,7 +338,7 @@ class victoryScreen extends Phaser.Scene {
         });
     }
     create(){
-        this.add.text(50, 800, "Congratualations")
+        this.add.text(90, 800, "Congratulations")
             .setFontSize(100)
     }
 }

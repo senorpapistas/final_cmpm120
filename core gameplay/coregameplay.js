@@ -18,20 +18,20 @@ class Demo extends Phaser.Scene{
         this.input.on('pointerdown', (pointer) => {
             if (pointer.x > 540) {
                 this.player.setVelocityX(400);
-                this.player.setVelocityY(-400);
+                this.player.setVelocityY(-500);
             }
             if (pointer.x < 540) {
                 this.player.setVelocityX(-400);
-                this.player.setVelocityY(-400);
+                this.player.setVelocityY(-500);
             }
         });
         // following block of code used to settle the ship to 0 x_gravity faster
         let velx = this.player.body.velocity.x
         if (velx > 0) {
-            velx -= 1;
+            velx -= 2.5;
             this.player.setVelocityX(velx);
         } else if (velx < 0) {
-            velx += 1;
+            velx += 2.5;
             this.player.setVelocityX(velx);
         }
 
