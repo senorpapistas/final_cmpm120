@@ -36,8 +36,14 @@ class Demo extends Phaser.Scene{
         }
 
         //restarts demo if player goes off screen
-        if (this.player.x > 1200 || this.player.x < -120 || this.player.y > 2000) {
+        if (this.player.y > 2000 || this.player.y < 0) {
             this.scene.start('demo');
+        }
+
+        if (this.player.x > 1200) {
+            this.player.setX(-120);
+        } else if (this.player.x < -120) {
+            this.player.setX(1200);
         }
     }
 }
