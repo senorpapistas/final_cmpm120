@@ -4,17 +4,41 @@ class Demo extends Phaser.Scene{
     }
     preload() {
         this.load.image('player', 'player.png');
+        this.load.image('bullet', 'bullet.png');
     }
     create() {
-        this.player = this.physics.add.sprite(540, 960, 'player').setScale(1).setMaxVelocity(200, 300).setVelocityX(0);
-        this.physics.add.existing(new Phaser.GameObjects.Rectangle(this, 540, 960, 10, 1920)).body.allowGravity = false;
+        // temporary player character
+        this.player = this.physics.add.sprite(540, 960, 'player');
         
+        // temporary object used to show sides of screen
+        this.physics.add.existing(new Phaser.GameObjects.Rectangle(this, 540, 960, 10, 1920)).body.allowGravity = false;
     }
     update(time, delta) {
-        this.input.on('pointerdown', () => {
-            this.player.setVelocityX(100);
-            this.player.setVelocityY(-100);
+        // if mouse is clicked or screen is pressed on either side of middle line, ship jumps in the direction of that side
+        this.input.on('pointerdown', (pointer) => {
+            if (pointer.x > 540) {
+                this.player.setVelocityX(400);
+                this.player.setVelocityY(-400);
+            }
+            if (pointer.x < 540) {
+                this.player.setVelocityX(-400);
+                this.player.setVelocityY(-400);
+            }
         });
+        // following block of code used to settle the ship to 0 x_gravity faster
+        let velx = this.player.body.velocity.x
+        if (velx > 0) {
+            velx -= 1;
+            this.player.setVelocityX(velx);
+        } else if (velx < 0) {
+            velx += 1;
+            this.player.setVelocityX(velx);
+        }
+
+        //restarts demo if player goes off screen
+        if (this.player.x > 1200 || this.player.x < -120 || this.player.y > 2000) {
+            this.scene.start('demo');
+        }
     }
 }
 
@@ -31,7 +55,7 @@ const game = new Phaser.Game({
             debug: true,
             gravity: {
                 x: 0,
-                y: 200
+                y: 700
             }
         }
     },
