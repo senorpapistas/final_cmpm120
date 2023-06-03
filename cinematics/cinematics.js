@@ -12,10 +12,28 @@ class cutscene extends Phaser.Scene {
         //title
         let title = this.add.text(game.config.width*.5,game.config.height*.1, "Click to start", {font: "80px Verdana"}).setOrigin(0.5);
 
+        //parallax effect: 2 backgrounds scroll down after each other
+        this.stars = this.add.image(game.config.width*.5, game.config.height*.5, 'space')
+        this.stars.angle = 90
+        this.stars.scale = 2
+
+        this.stars2 = this.add.image(game.config.width*.5, game.config.height*1.5, 'space')
+        this.stars2.angle = 90
+        this.stars2.scale = 2
+
+
+        //initial still background
+        this.shadow = this.add.rectangle(game.config.width*.5, game.config.height*.5,1080,1920, 0x000000)
         this.background = this.add.image(game.config.width*.5, game.config.height*.5, 'space')
-        let player = this.add.image(game.config.width*.5, game.config.height*.8, 'player');
         this.background.angle = 90
         this.background.scale = 2
+
+        let player = this.add.image(game.config.width*.5, game.config.height*.8, 'player');
+        
+    
+
+        //variable to turn on scrolling backgrounds
+        this.scroll = 0;
 
         //fx
         const backfx = this.background.preFX.addVignette(0.5, 0.8, 0.2, 0.5);
@@ -35,8 +53,15 @@ class cutscene extends Phaser.Scene {
             this.tweens.add({
                 targets: [backfx],
                 radius: 3,
-                duration: 6000,
-                hold: 1000,
+                duration: 1000,
+                //hold: 1000,
+                onComplete:() => {
+                    //destroy initial still background
+                    this.shadow.destroy()
+                    this.background.destroy()
+                    
+                    this.scroll = 1
+                }
             });
 
             this.tweens.add({
@@ -63,6 +88,22 @@ class cutscene extends Phaser.Scene {
         this.scene.start('titleScreen');
     }
     update() {
+        if(this.scroll == 1) {
+            if (this.stars.y == game.config.height*1.5)
+            {
+                this.stars.y = game.config.height*-.5
+            }
+            this.stars.y += 5;
+            //this.stars.y %= 1920;
+            if (this.stars2.y == game.config.height*1.5)
+            {
+                this.stars2.y = game.config.height*-.5
+            }
+            this.stars2.y += 5;
+
+            console.log(this.stars2.y)
+            //this.stars2.y %= 1920;
+        }
     }
 }
 
@@ -100,7 +141,7 @@ class titleScreen extends Phaser.Scene{
         });
 
         button.on('pointerover',()=>{
-            anim.stop();
+            anim.pause();
             button.scale +=.2;
             buttontext.scale += .5;
             console.log('button')
@@ -109,12 +150,8 @@ class titleScreen extends Phaser.Scene{
         .on('pointerout',()=> {
             button.scale -=.2;
             buttontext.scale -= .5;
-            anim = this.tweens.add({
-                targets: [button],
-                scale: 1.2,
-                yoyo: true,
-                repeat: -1
-            });
+            
+            anim.resume();
         })
 
         this.add.text(game.config.width*.5, game.config.height*.9, "titleScreen", {font: "40px Arial"}).setOrigin(0.5);
@@ -202,7 +239,6 @@ class victoryScreen extends Phaser.Scene{
         this.text2 = this.add.text(game.config.width*.5,game.config.height*.4, `Score: ${this.score2}`, {font: "80px Verdana"}).setOrigin(0.5);
         this.text3 = this.add.text(game.config.width*.5,game.config.height*.5, `Score: ${this.score3}`, {font: "80px Verdana"}).setOrigin(0.5);
         this.text4 = this.add.text(game.config.width*.5,game.config.height*.6, "Total: 0", {font: "80px Verdana"}).setOrigin(0.5);
-
 
         let updatescore = this.tweens.addCounter({
             from: 0,
