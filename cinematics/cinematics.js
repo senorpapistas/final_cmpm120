@@ -92,7 +92,7 @@ class titleScreen extends Phaser.Scene{
         });
 
         //button fx
-        let anim = this.tweens.add({    //button breathingt
+        let anim = this.tweens.add({    //button breathing
             targets: [button],
             scale: 1.2,
             yoyo: true,
@@ -190,6 +190,30 @@ class victoryScreen extends Phaser.Scene{
             yoyo: true,
             repeat: -1
         });
+
+        //score to be updated
+        this.score1 = 3500;
+        this.score2 = 4500;
+        this.score3 = 1;
+        this.finalscore = this.score1+this.score2+this.score3;
+
+        //text        
+        this.text1 = this.add.text(game.config.width*.5,game.config.height*.3, `Score: ${this.score1}`, {font: "80px Verdana"}).setOrigin(0.5);
+        this.text2 = this.add.text(game.config.width*.5,game.config.height*.4, `Score: ${this.score2}`, {font: "80px Verdana"}).setOrigin(0.5);
+        this.text3 = this.add.text(game.config.width*.5,game.config.height*.5, `Score: ${this.score3}`, {font: "80px Verdana"}).setOrigin(0.5);
+        this.text4 = this.add.text(game.config.width*.5,game.config.height*.6, "Total: 0", {font: "80px Verdana"}).setOrigin(0.5);
+
+
+        let updatescore = this.tweens.addCounter({
+            from: 0,
+            to: this.finalscore,
+            duration: 1500,
+            onUpdate: tween =>
+            {
+                let value = Math.round(tween.getValue());
+                this.text4.setText(`Total: ${value}`);
+            }
+        })
 
 
         this.add.text(game.config.width*.5, game.config.height*.9, "victoryScreen", {font: "40px Arial"}).setOrigin(0.5);
