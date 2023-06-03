@@ -92,7 +92,7 @@ class titleScreen extends Phaser.Scene{
         });
 
         //button fx
-        let anim = this.tweens.add({    //button breathing
+        let anim = this.tweens.add({    //button breathingt
             targets: [button],
             scale: 1.2,
             yoyo: true,
@@ -101,12 +101,14 @@ class titleScreen extends Phaser.Scene{
 
         button.on('pointerover',()=>{
             anim.stop();
-            button.scale +=.3;
+            button.scale +=.2;
+            buttontext.scale += .5;
             console.log('button')
             
         })
         .on('pointerout',()=> {
-            button.scale -=.3;
+            button.scale -=.2;
+            buttontext.scale -= .5;
             anim = this.tweens.add({
                 targets: [button],
                 scale: 1.2,
@@ -135,6 +137,33 @@ class transitionScreen extends Phaser.Scene{
         //title
         let title = this.add.text(game.config.width*.5,game.config.height*.1, "You passed!", {font: "80px Verdana"}).setOrigin(0.5);
 
+
+        //animate title
+        this.tweens.add({
+            targets: [title],
+            scale: 1.1,
+            yoyo: true,
+            repeat: -1
+        });
+
+        //text
+        let text = this.add.text(game.config.width*.5,game.config.height*.5, "Score: 0", {font: "80px Verdana"}).setOrigin(0.5);
+
+        //score to be updated
+        let score = 3500;
+
+        //updates score
+        let updatescore = this.tweens.addCounter({
+            from: 0,
+            to: score,
+            duration: 1500,
+            onUpdate: tween =>
+            {
+                let value = Math.round(tween.getValue());
+                text.setText(`Score: ${value}`);
+            }
+        })
+
         this.add.text(game.config.width*.5, game.config.height*.9, "transitionScreen", {font: "40px Arial"}).setOrigin(0.5);
 
         this.input.once('pointerdown', () => {
@@ -153,6 +182,15 @@ class victoryScreen extends Phaser.Scene{
     create() {
         //title
         let title = this.add.text(game.config.width*.5,game.config.height*.1, "You Win!", {font: "80px Verdana"}).setOrigin(0.5);
+
+        //animate title
+        this.tweens.add({
+            targets: [title],
+            scale: 1.1,
+            yoyo: true,
+            repeat: -1
+        });
+
 
         this.add.text(game.config.width*.5, game.config.height*.9, "victoryScreen", {font: "40px Arial"}).setOrigin(0.5);
 
