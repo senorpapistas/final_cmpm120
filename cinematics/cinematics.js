@@ -7,22 +7,29 @@ class cutscene extends Phaser.Scene {
         this.load.image('space', 'space.jpg');
     }
     create() {
+        this.click = 0;
 
         //title
         let title = this.add.text(game.config.width*.5,game.config.height*.1, "Click to start", {font: "80px Verdana"}).setOrigin(0.5);
 
-        let background = this.add.image(game.config.width*.5, game.config.height*.5, 'space')
+        this.background = this.add.image(game.config.width*.5, game.config.height*.5, 'space')
         let player = this.add.image(game.config.width*.5, game.config.height*.8, 'player');
-        background.angle = 90
-        background.scale = 2
+        this.background.angle = 90
+        this.background.scale = 2
 
         //fx
-        const backfx = background.preFX.addVignette(0.5, 0.8, 0.2, 0.5);
-        //const fx = player.preFX.addVignette(0.5, 0.5, 0, 0.2);
-
+        const backfx = this.background.preFX.addVignette(0.5, 0.8, 0.2, 0.5);
 
         //activate fx on click
         this.input.once('pointerdown', () => {
+            this.click = 1;
+
+            //click again to skip animation
+            this.input.once('pointerdown', () => {
+                this.scene.start('titleScreen');
+            });
+
+
             title.destroy()
 
             this.tweens.add({
@@ -55,28 +62,58 @@ class cutscene extends Phaser.Scene {
         console.log('bruh')
         this.scene.start('titleScreen');
     }
+    update() {
+    }
 }
 
 class titleScreen extends Phaser.Scene{
     constructor(){
         super('titleScreen');
     }
+    preload() {
+        this.load.image('player', 'player.png');
+        this.load.image('space', 'space.jpg');
+    }
     create() {
 
         //title
-        let title = this.add.text(game.config.width*.5,game.config.height*.1, "Title", {font: "80px Verdana"}).setOrigin(0.5);
+        let title = this.add.text(game.config.width*.5,game.config.height*-.1, "Title", {font: "80px Verdana"}).setOrigin(0.5);
 
         //play button
         let button = this.add.rectangle(game.config.width *.5, game.config.height*.5, 500, 200, 0x3c78d8).setInteractive();
         let buttontext = this.add.text(game.config.width*.5,game.config.height*.5, "Play", {font: "80px Verdana"}).setOrigin(0.5);
 
+
+        //title drop down
+        this.tweens.add({
+            targets: [title],
+            y: game.config.height*.1,
+            duration: 1000,
+        });
+
+        //button fx
+        let anim = this.tweens.add({    //button breathing
+            targets: [button],
+            scale: 1.2,
+            yoyo: true,
+            repeat: -1
+        });
+
         button.on('pointerover',()=>{
+            anim.stop();
             button.scale +=.3;
+            console.log('button')
+            
         })
         .on('pointerout',()=> {
             button.scale -=.3;
+            anim = this.tweens.add({
+                targets: [button],
+                scale: 1.2,
+                yoyo: true,
+                repeat: -1
+            });
         })
-
 
         this.add.text(game.config.width*.5, game.config.height*.9, "titleScreen", {font: "40px Arial"}).setOrigin(0.5);
 
@@ -120,7 +157,7 @@ class victoryScreen extends Phaser.Scene{
         this.add.text(game.config.width*.5, game.config.height*.9, "victoryScreen", {font: "40px Arial"}).setOrigin(0.5);
 
         this.input.once('pointerdown', () => {
-            this.scene.start('loseScreen');
+            this.scene.start('cutscene');
         });
     }
     update() {
@@ -128,24 +165,7 @@ class victoryScreen extends Phaser.Scene{
     }
 }
 
-class loseScreen extends Phaser.Scene{
-    constructor(){
-        super('loseScreen');
-    }
-    create() {
-        //title
-        let title = this.add.text(game.config.width*.5,game.config.height*.1, "You lose!", {font: "80px Verdana"}).setOrigin(0.5);
 
-        this.add.text(game.config.width*.5, game.config.height*.9, "loseScreen", {font: "40px Arial"}).setOrigin(0.5);
-
-        this.input.once('pointerdown', () => {
-            this.scene.start('titleScreen');
-        });
-    }
-    update() {
-
-    }
-}
 
 let config = {
     scale: {
@@ -164,7 +184,7 @@ let config = {
             }
         }
     },
-    scene: [cutscene, titleScreen, transitionScreen, victoryScreen, loseScreen],
+    scene: [cutscene, titleScreen, transitionScreen, victoryScreen],
 }
 
 let game = new Phaser.Game(config);
