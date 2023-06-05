@@ -51,22 +51,36 @@ class Demo extends Phaser.Scene{
         // placeholder background shader, shifts the hue of the background constantly
         const shader = this.add.shader('Hue Shift', 540, 960, 1080, 1920,  [ 'space' ]);
 
+        // sounds
+        this.booster = this.sound.add('boost');
+        this.bgm = this.sound.add('bgm');
+        this.bgm.loop = true;
+        this.bgm.play();
+        this.bgm.pauseOnBlur = true;
+
         // button for muting bgm
         this.w = this.game.config.width;
         this.h = this.game.config.height;
         this.s = this.game.config.width * 0.01;
-        let audiobutton = this.add.text(this.w*0.93, this.h*0.01, "🔊")
+        let audioButton = this.add.text(this.w*0.93, this.h*0.01, "🔊")
             .setStyle({fontSize: `${5 * this.s}px`})
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
                 if (this.bgm.mute) {
-                    audiobutton.setText("🔊")
+                    audioButton.setText("🔊")
                     this.bgm.mute = false;
                 } else {
-                    audiobutton.setText("🔈")
+                    audioButton.setText("🔈")
                     this.bgm.mute = true;
                 }
             });
+        let resetButton = this.add.text(this.w*0.87, this.h*0.05, "RESET")
+            .setStyle({fontSize: `${4 * this.s}px`, color: '#ff0000'})
+            .setInteractive({useHandCursor: true})
+            .on('pointerdown', () => {
+                this.game.sound.stopAll();
+                this.scene.start('demo');
+            })
         
         // temporary player character
         this.player = this.physics.add.sprite(540, 960, 'player');
@@ -81,14 +95,6 @@ class Demo extends Phaser.Scene{
             this.playerBullets.fire(this.player.x, this.player.y - 50, 0, -500)
         }});
         this.physics.world.on('worldbounds', (body) => {body.gameObject.onWorldBounds();})
-
-        // sounds
-        this.booster = this.sound.add('boost');
-        this.bgm = this.sound.add('bgm');
-        this.bgm.loop = true;
-        this.bgm.play();
-        this.bgm.pauseOnBlur = true;
-
     }
     update(time, delta) {
         // if mouse is clicked or screen is pressed on either side of middle line, ship jumps in the direction of that side
@@ -114,9 +120,11 @@ class Demo extends Phaser.Scene{
             this.player.setVelocityX(velx);
         }
 
-        //restarts demo if player goes off screen
+        //resets position if player goes off screen
         if (this.player.y > 2000 || this.player.y < 0) {
-            this.scene.start('demo');
+            this.player.x = 540;
+            this.player.y = 960;
+            this.player.setVelocityY(0);
         }
 
         if (this.player.x > 1200) {
