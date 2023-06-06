@@ -66,12 +66,13 @@ class Demo extends Phaser.Scene{
             .setStyle({fontSize: `${5 * this.s}px`})
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
-                if (this.bgm.mute) {
+                // change this.game.sound.mute to this.bgm.mute to mute only the background music
+                if (this.game.sound.mute) {
                     audioButton.setText("🔊")
-                    this.bgm.mute = false;
+                    this.game.sound.mute = false;
                 } else {
                     audioButton.setText("🔈")
-                    this.bgm.mute = true;
+                    this.game.sound.mute = true;
                 }
             });
         let resetButton = this.add.text(this.w*0.87, this.h*0.05, "RESET")
