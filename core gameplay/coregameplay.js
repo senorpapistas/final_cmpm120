@@ -69,9 +69,11 @@ class Demo extends Phaser.Scene{
                 if (this.bgm.mute) {
                     audioButton.setText("🔊")
                     this.bgm.mute = false;
+                    this.booster.mute = false;
                 } else {
                     audioButton.setText("🔈")
                     this.bgm.mute = true;
+                    this.booster.mute = true;
                 }
             });
         let resetButton = this.add.text(this.w*0.87, this.h*0.05, "RESET")
