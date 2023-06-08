@@ -69,26 +69,23 @@ class cutscene extends Phaser.Scene {
                 targets: [player],
                 y: -500,
                 duration: 5000, 
+                delay: 2000,
+                ease: 'Cubic'
             });
 
             this.timedEvent = this.time.delayedCall(6000, this.event, [], this);
         });
 
 
-
         this.add.text(game.config.width*.5, game.config.height*.9, "cutscene", {font: "40px Arial"}).setOrigin(0.5);
 
-        /*
-        this.input.once('pointerdown', () => {
-            this.scene.start('titleScreen');
-        });
-        */
     }
     event() {
         console.log('bruh')
         this.scene.start('titleScreen');
     }
     update() {
+        //background scroll
         if(this.scroll == 1) {
             if (this.stars.y == game.config.height*1.5)
             {
@@ -179,7 +176,71 @@ class transitionScreen extends Phaser.Scene{
         this.load.image('space', 'space.jpg');
     }
     create() {
-        
+        //parallax effect: 2 backgrounds scroll sideways after each other
+        this.stars = this.add.image(game.config.width*.5, game.config.height*.5, 'space')
+        this.stars.angle = 90
+        this.stars.scale = 2
+
+        this.stars2 = this.add.image(game.config.width*1.5, game.config.height*.5, 'space')
+        this.stars2.angle = 90
+        this.stars2.scale = 2
+
+        //planet logic
+        let planet = this.add.rectangle(game.config.width*1.2, game.config.height*.5, 250, 250, 0xff0000)
+        let planet2 = this.add.rectangle(game.config.width*1.2, game.config.height*.5, 250, 250, 0xfcba03)
+        let planettween = this.tweens.add({
+            targets: planet,
+            x: -1000,
+            loop: -1,
+            duration: 3000,
+            delay: Math.floor(Math.random()*500),
+            onLoop: () => {
+                console.log('loop done')
+                planet.y = Math.floor(Math.random()*game.config.height*.4 + game.config.height*.7)
+                console.log(planet.y)
+            }
+        });
+
+        let planettween2 = this.tweens.add({
+            targets: planet2,
+            x: -1000,
+            loop: -1,
+            duration: 3000,
+            delay: Math.floor(Math.random()*500+1000),
+            onLoop: () => {
+                console.log('loop done')
+                planet2.y = Math.floor(Math.random()*game.config.height*.4 + game.config.height*.7)
+                console.log(planet2.y)
+            }
+        });
+
+        //top background
+        this.add.rectangle(game.config.width*.5, game.config.height*.3, 1080, 1500, 0x000000)
+
+        //player
+        let player = this.add.image(game.config.width*.5, game.config.height*.8, 'player')
+        player.angle = 90;
+
+        //player spaceship bobbing
+        let chain = this.tweens.chain({
+            targets: player,
+            tweens: [
+                {
+                    x: player.x + 50,
+                    duration: 3000,
+                    delay: 500,
+                    ease: 'sine'
+                },
+                {
+                    x: player.x - 50,
+                    duration: 3000,
+                    delay: 500,
+                    ease: 'sine'
+                }, 
+            ],
+            loop: -1,
+            })
+
         //title
         let title = this.add.text(game.config.width*.5,game.config.height*.1, "You passed!", {font: "80px Verdana"}).setOrigin(0.5);
 
@@ -210,55 +271,6 @@ class transitionScreen extends Phaser.Scene{
             }
         })
 
-        //player
-        let player = this.add.image(game.config.width*.5, game.config.height*.8, 'player')
-        player.angle = 90;
-
-        //player spaceship bobbing
-        let chain = this.tweens.chain({
-            targets: player,
-            tweens: [
-                {
-                    x: player.x + 50,
-                    duration: 3000,
-                    delay: 500
-                },
-                {
-                    x: player.x - 50,
-                    duration: 3000,
-                    delay: 500
-                }, 
-            ],
-            loop: -1,
-            })
-
-        
-
-        //building logic
-        let building = this.add.rectangle(game.config.width, game.config.height*.5, 500, 500, 0xff0000)
-        let buildingtween = this.tweens.add({
-            targets: building,
-            x: -1000,
-            loop: -1,
-            duration: 2000,
-            onLoop: () => {
-                console.log('loop done')
-                building.y = Math.floor(Math.random()*game.config.height*.5)
-                console.log(building.y)
-            }
-        });
-
-            //let maxdistance = 50;
-        //let distance = Math.floor(Math.random()*maxdistance);
-
-        /*
-        this.tweens.add({
-            targets: player,
-            x: 500,
-            yoyo: true,
-            repeat: -1
-        });
-        */
 
         this.add.text(game.config.width*.5, game.config.height*.9, "transitionScreen", {font: "40px Arial"}).setOrigin(0.5);
 
@@ -267,7 +279,19 @@ class transitionScreen extends Phaser.Scene{
         });
     }
     update() {
-
+        //background scroll
+        if (this.stars.x == game.config.width*-.5)
+        {
+            this.stars.x = game.config.width*1.5
+        }
+        this.stars.x -= .5;
+        //this.stars.y %= 1920;
+        if (this.stars2.x == game.config.width*-.5)
+        {
+            this.stars2.x = game.config.width*1.5
+        }
+        this.stars2.x -= .5;
+        //this.stars2.y %= 1920;
     }
 }
     
