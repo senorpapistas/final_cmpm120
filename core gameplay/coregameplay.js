@@ -123,7 +123,7 @@ class Demo extends Phaser.Scene{
                 this.player.setVelocityY(-500);
             }
         }
-        
+
         // following block of code used to settle the ship to 0 x_gravity faster
         let velx = this.player.body.velocity.x;
         if (velx > 0) {
@@ -150,6 +150,9 @@ class Demo extends Phaser.Scene{
 }
 
 const game = new Phaser.Game({
+    input: {
+        gamepad: true,
+    },
     scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH,
