@@ -6,6 +6,8 @@ class Bullet extends Phaser.Physics.Arcade.Image {
     }
     onCreate() {
         this.disableBody(true, true);
+        this.setScale(.3); // temporary line
+        this.setRotation(1.5); // temporary line
         this.body.collideWorldBounds = true;
         this.body.onWorldBounds = true;
         this.body.allowGravity = false;
