@@ -112,6 +112,18 @@ class Demo extends Phaser.Scene{
             }
         });
 
+        // movement for gamepad
+        if (this.gamepad) {
+            if (this.gamepad.left) {
+                this.booster.play();
+                this.player.setVelocityX(400);
+                this.player.setVelocityY(-500);
+            } else if (this.gamepad.right) {
+                this.player.setVelocityX(-400);
+                this.player.setVelocityY(-500);
+            }
+        }
+
         // following block of code used to settle the ship to 0 x_gravity faster
         let velx = this.player.body.velocity.x;
         if (velx > 0) {
