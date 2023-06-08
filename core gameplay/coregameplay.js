@@ -110,7 +110,7 @@ class Demo extends Phaser.Scene{
                 this.player.setVelocityY(-500);
             }
             let boosttext = this.add.text(440, 1800, '(whoosh)', {fontSize: '40px'})
-                this.tweens.add({target: boosttext, alpha: {from: 1, to: 0}, easing: 'Quintic.in', duration: 100});
+            this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})})
         });
     }
     update(time, delta) {
