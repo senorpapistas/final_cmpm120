@@ -113,12 +113,16 @@ class Demo extends Phaser.Scene{
     }
     update(time, delta) {
         // movement for gamepad
-        if (this.gamepad) {
-            if (this.gamepad.left) {
+        const pads = this.input.gamepad.gamepads;
+        for (let i = 0; i < pads.length; i++)
+        {
+            const gamepad = pads[i];
+            if (!gamepad) {continue;}
+            if (gamepad.right) {
                 this.booster.play();
                 this.player.setVelocityX(400);
                 this.player.setVelocityY(-500);
-            } else if (this.gamepad.right) {
+            } else if (gamepad.left) {
                 this.player.setVelocityX(-400);
                 this.player.setVelocityY(-500);
             }
