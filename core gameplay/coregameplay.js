@@ -97,8 +97,7 @@ class Demo extends Phaser.Scene{
             this.playerBullets.fire(this.player.x, this.player.y - 50, 0, -500)
         }});
         this.physics.world.on('worldbounds', (body) => {body.gameObject.onWorldBounds();})
-    }
-    update(time, delta) {
+    
         // if mouse is clicked or screen is pressed on either side of middle line, ship jumps in the direction of that side
         this.input.on('pointerdown', (pointer) => {
             this.booster.play();
@@ -111,7 +110,8 @@ class Demo extends Phaser.Scene{
                 this.player.setVelocityY(-500);
             }
         });
-
+    }
+    update(time, delta) {
         // following block of code used to settle the ship to 0 x_gravity faster
         let velx = this.player.body.velocity.x;
         if (velx > 0) {
