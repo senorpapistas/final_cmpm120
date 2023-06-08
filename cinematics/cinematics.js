@@ -28,6 +28,7 @@ class cutscene extends Phaser.Scene {
         this.background.angle = 90
         this.background.scale = 2
 
+        //player
         let player = this.add.image(game.config.width*.5, game.config.height*.8, 'player');
         
     
@@ -124,6 +125,8 @@ class titleScreen extends Phaser.Scene{
         let button = this.add.rectangle(game.config.width *.5, game.config.height*.5, 500, 200, 0x3c78d8).setInteractive();
         let buttontext = this.add.text(game.config.width*.5,game.config.height*.5, "Play", {font: "80px Verdana"}).setOrigin(0.5);
 
+        //player
+        let player = this.add.image(game.config.width*.5, game.config.height*.8, 'player');
 
         //title drop down
         this.tweens.add({
@@ -154,6 +157,8 @@ class titleScreen extends Phaser.Scene{
             anim.resume();
         })
 
+
+
         this.add.text(game.config.width*.5, game.config.height*.9, "titleScreen", {font: "40px Arial"}).setOrigin(0.5);
 
         this.input.once('pointerdown', () => {
@@ -168,6 +173,10 @@ class titleScreen extends Phaser.Scene{
 class transitionScreen extends Phaser.Scene{
     constructor(){
         super('transitionScreen');
+    }
+    preload() {
+        this.load.image('player', 'player.png');
+        this.load.image('space', 'space.jpg');
     }
     create() {
         
@@ -200,6 +209,56 @@ class transitionScreen extends Phaser.Scene{
                 text.setText(`Score: ${value}`);
             }
         })
+
+        //player
+        let player = this.add.image(game.config.width*.5, game.config.height*.8, 'player')
+        player.angle = 90;
+
+        //player spaceship bobbing
+        let chain = this.tweens.chain({
+            targets: player,
+            tweens: [
+                {
+                    x: player.x + 50,
+                    duration: 3000,
+                    delay: 500
+                },
+                {
+                    x: player.x - 50,
+                    duration: 3000,
+                    delay: 500
+                }, 
+            ],
+            loop: -1,
+            })
+
+        
+
+        //building logic
+        let building = this.add.rectangle(game.config.width, game.config.height*.5, 500, 500, 0xff0000)
+        let buildingtween = this.tweens.add({
+            targets: building,
+            x: -1000,
+            loop: -1,
+            duration: 2000,
+            onLoop: () => {
+                console.log('loop done')
+                building.y = Math.floor(Math.random()*game.config.height*.5)
+                console.log(building.y)
+            }
+        });
+
+            //let maxdistance = 50;
+        //let distance = Math.floor(Math.random()*maxdistance);
+
+        /*
+        this.tweens.add({
+            targets: player,
+            x: 500,
+            yoyo: true,
+            repeat: -1
+        });
+        */
 
         this.add.text(game.config.width*.5, game.config.height*.9, "transitionScreen", {font: "40px Arial"}).setOrigin(0.5);
 
@@ -309,7 +368,7 @@ let config = {
             }
         }
     },
-    scene: [cutscene, titleScreen, transitionScreen, victoryScreen],
+    scene: [transitionScreen, cutscene, titleScreen, victoryScreen],
 }
 
 let game = new Phaser.Game(config);
