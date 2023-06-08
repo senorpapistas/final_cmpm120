@@ -317,19 +317,24 @@ class victoryScreen extends Phaser.Scene{
         this.score3 = 1;
         this.finalscore = this.score1+this.score2+this.score3;
 
-        //text        
+        //score text        
         this.text1 = this.add.text(game.config.width*.5,game.config.height*.3, `Score: ${this.score1}`, {font: "80px Verdana"}).setOrigin(0.5)
             .setAlpha(0);
         this.text2 = this.add.text(game.config.width*.5,game.config.height*.4, `Score: ${this.score2}`, {font: "80px Verdana"}).setOrigin(0.5)
             .setAlpha(0);
         this.text3 = this.add.text(game.config.width*.5,game.config.height*.5, `Score: ${this.score3}`, {font: "80px Verdana"}).setOrigin(0.5)
             .setAlpha(0);
-        this.text4 = this.add.text(game.config.width*.5,game.config.height*.6, "Total: 0", {font: "80px Verdana"}).setOrigin(0.5);
+        this.text4 = this.add.text(game.config.width*.5,game.config.height*.6, "Total:  ", {font: "80px Verdana"}).setOrigin(0.5);
 
 
+        //score text description
+        let description = this.add.text(game.config.width*.5,game.config.height*.8, "You're mid!", {font: "80px Verdana"}).setOrigin(0.5)
+            .setAlpha(0);
+
+        
         //score animation
         //
-        //displays level scores, then displays final score
+        //displays level scores, then displays final score with a final score description
         let chain = this.tweens.chain({
             tweens: [
                 {
@@ -344,7 +349,7 @@ class victoryScreen extends Phaser.Scene{
                     targets: this.text3,
                     alpha: 1,
                     
-                    //final score
+                    //final score counts up
                     onComplete:() => {
                         let updatescore = this.tweens.addCounter({
                             from: 0,
@@ -354,6 +359,11 @@ class victoryScreen extends Phaser.Scene{
                             {
                                 let value = Math.round(tween.getValue());
                                 this.text4.setText(`Total: ${value}`);
+                            },
+
+                            //score description pops up
+                            onComplete:()=>{
+                                description.setAlpha(1);
                             }
                         })
                     }
