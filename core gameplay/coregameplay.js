@@ -40,6 +40,7 @@ class Demo extends Phaser.Scene{
         super('demo')
     }
     preload() {
+        this.load.path = '../assets/'
         this.load.image('player', 'player.png');
         this.load.image('bullet', 'bullet.png');
         this.load.image('space', 'deep-space.jpg');

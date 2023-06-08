@@ -172,6 +172,7 @@ class transitionScreen extends Phaser.Scene{
         super('transitionScreen');
     }
     preload() {
+        this.load.path = '../assets/'
         this.load.image('player', 'player.png');
         this.load.image('space', 'space.jpg');
     }
