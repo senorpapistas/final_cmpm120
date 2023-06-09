@@ -81,7 +81,6 @@ class cutscene extends Phaser.Scene {
 
     }
     event() {
-        console.log('bruh')
         this.scene.start('titleScreen');
     }
     update() {
@@ -98,8 +97,6 @@ class cutscene extends Phaser.Scene {
                 this.stars2.y = game.config.height*-.5
             }
             this.stars2.y += 5;
-
-            console.log(this.stars2.y)
             //this.stars2.y %= 1920;
         }
     }
@@ -144,7 +141,6 @@ class titleScreen extends Phaser.Scene{
             anim.pause();
             button.scale +=.2;
             buttontext.scale += .5;
-            console.log('button')
             
         })
         .on('pointerout',()=> {
@@ -196,9 +192,7 @@ class transitionScreen extends Phaser.Scene{
             duration: 3000,
             delay: Math.floor(Math.random()*500),
             onLoop: () => {
-                console.log('loop done')
                 planet.y = Math.floor(Math.random()*game.config.height*.4 + game.config.height*.7)
-                console.log(planet.y)
             }
         });
 
@@ -209,9 +203,7 @@ class transitionScreen extends Phaser.Scene{
             duration: 3000,
             delay: Math.floor(Math.random()*500+1000),
             onLoop: () => {
-                console.log('loop done')
                 planet2.y = Math.floor(Math.random()*game.config.height*.4 + game.config.height*.7)
-                console.log(planet2.y)
             }
         });
 
@@ -350,7 +342,7 @@ class victoryScreen extends Phaser.Scene{
                     targets: this.text3,
                     alpha: 1,
                     
-                    //final score counts up
+                    //final score counts upt
                     onComplete:() => {
                         let updatescore = this.tweens.addCounter({
                             from: 0,
@@ -364,7 +356,11 @@ class victoryScreen extends Phaser.Scene{
 
                             //score description pops up
                             onComplete:()=>{
-                                description.setAlpha(1);
+                                this.tweens.add({
+                                    targets: description,
+                                    alpha: 1,
+                                    delay: 500
+                                })
                             }
                         })
                     }
