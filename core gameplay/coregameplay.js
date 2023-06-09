@@ -76,6 +76,8 @@ class Demo extends Phaser.Scene{
                     this.game.sound.mute = true;
                 }
             });
+
+        // button for resetting level
         let resetButton = this.add.text(this.w*0.87, this.h*0.05, "RESET")
             .setStyle({fontSize: `${4 * this.s}px`, color: '#ff0000'})
             .setInteractive({useHandCursor: true})

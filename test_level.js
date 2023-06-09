@@ -78,22 +78,22 @@ class Demo extends Phaser.Scene {
         });
 
         // creating an enemy group and spawning 1 in
-        let testEnemy = new Enemies(this.physics.world, this, {name: 'testEnemy'});
+        let testEnemy = this.add.existing(new Enemies(this.physics.world, this, {name: 'testEnemy'}));
         testEnemy.createMultiple({key: 'enemy', quantity: 3});
-        let testenemyevent = this.time.addEvent({delay: 1000, loop: true, callback: () => {
+        this.time.addEvent({delay: 1000, loop: true, callback: () => {
             testEnemy.spawn(Phaser.Math.RND.between(200, 900), -200, 0, 500, .5);
         }});
         //console.log(testEnemy);
-
+        
         this.physics.add.overlap(testEnemy, this.playerBullets, (enemy, bullet) => {
             console.log('wow');
             bullet.disableBody(true, true);
-            enemy.destroy();
+            enemy.enemyKilled();
         });
 
-        /*this.physics.add.overlap(testEnemy, this.player, (enemy, player) => {
-            this.gameOver(testenemyevent)
-        });*/
+        this.physics.add.overlap(testEnemy, this.player, (enemy, player) => {
+            this.scene.start('death');
+        });
 
         // checking if object hits world bounds
         this.physics.world.on('worldbounds', (body) => {body.gameObject.onWorldBounds();})
@@ -121,11 +121,5 @@ class Demo extends Phaser.Scene {
         } else if (this.player.x < -120) {
             this.player.setX(1200);
         }
-    }
-    gameOver(event) {
-        console.log('urgh');
-        this.game.sound.stopAll();
-        event.remove();
-        //this.time.delayedCall(300, () => {this.scene.start('death')});
     }
 }
