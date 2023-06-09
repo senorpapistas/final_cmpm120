@@ -66,7 +66,6 @@ class Demo extends Phaser.Scene {
         // jumping mechanic
         this.input.on('pointerdown', (pointer) => {
             this.booster.play();
-            let boosttext = this.add.text(440, 1800, '(whoosh)', {fontSize: '40px'});
             this.playerBullets.fire(this.player.x, this.player.y - 50, 0, -500);
             if (pointer.x > 540) {
                 this.player.setVelocityX(400);
@@ -76,6 +75,8 @@ class Demo extends Phaser.Scene {
                 this.player.setVelocityX(-400);
                 this.player.setVelocityY(-500);
             }
+            let boosttext = this.add.text(440, 1800, '(whoosh)', {fontSize: '40px'});
+            this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})})
         });
 
         // creating an enemy group and spawning 1 in
