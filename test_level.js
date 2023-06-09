@@ -92,6 +92,7 @@ class Demo extends Phaser.Scene {
         });
 
         this.physics.add.overlap(testEnemy, this.player, (enemy, player) => {
+            this.game.sound.stopAll();
             this.scene.start('death');
         });
 
