@@ -180,7 +180,15 @@ class titleScreen extends Phaser.Scene{
             anim.resume();
         })
         .on('pointerdown',()=>{
-            this.tweens.chain({
+            this.tweens.add({targets:t1, x:-1000, duration: 1000})
+            this.tweens.add({targets:t2, x:5000, duration: 500})
+            this.tweens.add({targets:t3, x: -5000, duration: 600})
+            this.tweens.add({targets:t4, x:5000, duration: 1000,
+                onComplete:() => {
+                    
+                    this.scene.start('transitionScreen');
+                }})
+            /*this.tweens.chain({
                 tweens: [
                     {
                         targets: t1,
@@ -206,8 +214,15 @@ class titleScreen extends Phaser.Scene{
                             this.scene.start('transitionScreen');
                         }
                     },
+                
                 ]})
+                */
         })
+
+        //player
+        let player = this.add.image(game.config.width*.5, game.config.height*.8, 'player');
+
+        this.add.text(game.config.width*.5, game.config.height*.9, "titleScreen", {font: "40px Arial"}).setOrigin(0.5);
 
         //settings button
         let effect2 = this.add.rectangle(game.config.width *.5, game.config.height*.65, 1080, 50, 0xffffff)
@@ -229,23 +244,28 @@ class titleScreen extends Phaser.Scene{
             button2back.scale = 1
             button2text.scale = 1
             this.tweens.add({targets:effect2, alpha: 0, duration: 500})
-            anim.resume();
+            anim.resume()
         })
-        
-        //settings menu
+    
+        //opens settings menu
         .on('pointerdown',()=>{
-        
+            settingsmenu.setAlpha(1)
         })
-        
+    
 
-        
+        //settings menu
+        let rect = this.add.rectangle(200,1100,1000,500,0x2843b8)
+            .setOrigin(0)
+        let triangle = this.add.triangle(200,1100,0,0,1000,200,1000,0,0xffffff)
+            .setOrigin(0)
+        let exit = this.add.rectangle(1000,1175, 50, 50, 0x3c0000).setInteractive()
+
+        let settingsmenu = this.add.container(0,0, [rect,triangle,exit])
+            .setAlpha(0)
+
+        exit.on('pointerdown',()=>{settingsmenu.setAlpha(0)})    
 
 
-
-        //player
-        let player = this.add.image(game.config.width*.5, game.config.height*.8, 'player');
-
-        this.add.text(game.config.width*.5, game.config.height*.9, "titleScreen", {font: "40px Arial"}).setOrigin(0.5);
 
     }
     update() {
