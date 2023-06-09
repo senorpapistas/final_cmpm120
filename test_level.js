@@ -49,6 +49,17 @@ class Demo extends Phaser.Scene {
                 this.scene.start('demo');
             });
         
+        // button for making game fullscreen
+        let fullscreenButton = this.add.text(this.w*0.87, this.h*0.09, "FULL?")
+            .setStyle({fontSize: `${4 * this.s}px`, color: '#00ff00'})
+            .setInteractive({useHandCursor: true})
+            .on('pointerdown', () => {
+                if (this.scale.isFullscreen) {
+                    this.scale.stopFullscreen();
+                } else {
+                    this.scale.startFullscreen();
+                }
+            });
         // player character sprite
         this.player = this.physics.add.sprite(540, 960, 'player');
 
