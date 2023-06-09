@@ -39,11 +39,9 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.setScale(scale);
         this.enableBody(true, x, y, true, true);
         this.setVelocity(vx, vy);
-        console.log(this.body.velocity);
     };
     onCreate() {
         this.disableBody(true, true);
-        this.setAlpha(1);
         this.body.collideWorldBounds = true;
         this.body.onWorldBounds = true;
         this.body.allowGravity = false;
@@ -52,7 +50,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         console.log(this.alpha);
         this.disableBody(true, true);
     };
-    destroy() {
+    enemyKilled() {
         // add line(s) of code to add points
         this.y = -200;
         this.scene.time.delayedCall(100, () => {
