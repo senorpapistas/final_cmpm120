@@ -66,6 +66,7 @@ class Demo extends Phaser.Scene {
         // jumping mechanic
         this.input.on('pointerdown', (pointer) => {
             this.booster.play();
+            let boosttext = this.add.text(440, 1800, '(whoosh)', {fontSize: '40px'});
             this.playerBullets.fire(this.player.x, this.player.y - 50, 0, -500);
             if (pointer.x > 540) {
                 this.player.setVelocityX(400);
