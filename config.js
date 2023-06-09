@@ -19,6 +19,6 @@ let game = new Phaser.Game({
         }
     },
     type: Phaser.WEBGL,
-    scene: [Demo],
+    scene: [Demo, Death],
     title: 'Hotline Albuquerque'
 });

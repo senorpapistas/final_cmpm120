@@ -12,6 +12,9 @@ class Demo extends Phaser.Scene {
         this.load.audio('bgm', 'creamy tomato.mp3');
     }
     create() {
+        // changed world bounds to allow enemies to spawn outside without being destroyed
+        this.physics.world.setBounds(-200, -500, 1480, 2720);
+
         // sounds
         this.booster = this.sound.add('boost');
         this.bgm = this.sound.add('bgm');
@@ -55,14 +58,15 @@ class Demo extends Phaser.Scene {
         // makes the player ship automatically shoot bullets every .5 seconds
         this.playerBullets = this.add.existing(new Bullets(this.physics.world, this, {name: 'playerBullets'}));
         this.playerBullets.createMultiple({key: 'bullet', quantity: 10});
-        this.playerFiring = this.time.addEvent({delay: 500, loop: true, callback: () => {
+        /*this.playerFiring = this.time.addEvent({delay: 500, loop: true, callback: () => {
             this.playerBullets.fire(this.player.x, this.player.y - 50, 0, -500)
-        }});
-        this.physics.world.on('worldbounds', (body) => {body.gameObject.onWorldBounds();})
+        }});*/
+        console.log(this.playerBullets)
     
         // jumping mechanic
         this.input.on('pointerdown', (pointer) => {
             this.booster.play();
+            this.playerBullets.fire(this.player.x, this.player.y - 50, 0, -500);
             if (pointer.x > 540) {
                 this.player.setVelocityX(400);
                 this.player.setVelocityY(-500);
@@ -72,6 +76,27 @@ class Demo extends Phaser.Scene {
                 this.player.setVelocityY(-500);
             }
         });
+
+        // creating an enemy group and spawning 1 in
+        let testEnemy = new Enemies(this.physics.world, this, {name: 'testEnemy'});
+        testEnemy.createMultiple({key: 'enemy', quantity: 3});
+        let testenemyevent = this.time.addEvent({delay: 1000, loop: true, callback: () => {
+            testEnemy.spawn(Phaser.Math.RND.between(200, 900), -200, 0, 500, .5);
+        }});
+        //console.log(testEnemy);
+
+        this.physics.add.overlap(testEnemy, this.playerBullets, (enemy, bullet) => {
+            console.log('wow');
+            bullet.disableBody(true, true);
+            enemy.destroy();
+        });
+
+        /*this.physics.add.overlap(testEnemy, this.player, (enemy, player) => {
+            this.gameOver(testenemyevent)
+        });*/
+
+        // checking if object hits world bounds
+        this.physics.world.on('worldbounds', (body) => {body.gameObject.onWorldBounds();})
     }
     update(time, delta) {
         // following block of code used to settle the ship to 0 x_gravity faster
@@ -96,5 +121,11 @@ class Demo extends Phaser.Scene {
         } else if (this.player.x < -120) {
             this.player.setX(1200);
         }
+    }
+    gameOver(event) {
+        console.log('urgh');
+        this.game.sound.stopAll();
+        event.remove();
+        //this.time.delayedCall(300, () => {this.scene.start('death')});
     }
 }
