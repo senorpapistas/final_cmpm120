@@ -3,6 +3,7 @@ class cutscene extends Phaser.Scene {
         super('cutscene');
     }
     preload() {
+        this.load.path = '../assets/'
         this.load.image('player', 'player.png');
         this.load.image('space', 'space.jpg');
     }
@@ -81,7 +82,6 @@ class cutscene extends Phaser.Scene {
 
     }
     event() {
-        console.log('bruh')
         this.scene.start('titleScreen');
     }
     update() {
@@ -98,8 +98,6 @@ class cutscene extends Phaser.Scene {
                 this.stars2.y = game.config.height*-.5
             }
             this.stars2.y += 5;
-
-            console.log(this.stars2.y)
             //this.stars2.y %= 1920;
         }
     }
@@ -110,60 +108,160 @@ class titleScreen extends Phaser.Scene{
         super('titleScreen');
     }
     preload() {
+        this.load.path = '../assets/'
         this.load.image('player', 'player.png');
         this.load.image('space', 'space.jpg');
     }
     create() {
 
+        //parallax effect: 2 backgrounds scroll down after each other
+        this.stars = this.add.image(game.config.width*.5, game.config.height*.5, 'space')
+        this.stars.angle = 90
+        this.stars.scale = 2
+
+        this.stars2 = this.add.image(game.config.width*.5, game.config.height*1.5, 'space')
+        this.stars2.angle = 90
+        this.stars2.scale = 2
+
+    
+        //background (made of chunks, will disappear on Play)
+        let t1 = this.add.triangle(0, 0, 0, 0, 0, 700, 1080, 0, 0x000000)
+            .setOrigin(0,0)
+        let t2 = this.add.triangle(game.config.width, game.config.height, 0, 0, 0, -200, -2000, 0, 0x000000)
+            .setOrigin(0,0)
+        let t3 = this.add.triangle(0, game.config.height*.5, 0, 0, 0, 500, 2500, 0, 0x000000)
+            .setOrigin(0,0)
+        let t4 = this.add.triangle(game.config.width, game.config.height*.5, 0, 0, 0, -300, -2500, 0, 0x000000)
+            .setOrigin(0,0)
+ 
+
         //title
         let title = this.add.text(game.config.width*.5,game.config.height*-.1, "Title", {font: "80px Verdana"}).setOrigin(0.5);
 
-        //play button
-        let button = this.add.rectangle(game.config.width *.5, game.config.height*.5, 500, 200, 0x3c78d8).setInteractive();
-        let buttontext = this.add.text(game.config.width*.5,game.config.height*.5, "Play", {font: "80px Verdana"}).setOrigin(0.5);
-
-        //player
-        let player = this.add.image(game.config.width*.5, game.config.height*.8, 'player');
 
         //title drop down
         this.tweens.add({
             targets: [title],
             y: game.config.height*.1,
-            duration: 1000,
+            duration: 500,
+            onComplete:()=>{
+                anim.play();
+            }
         });
 
-        //button fx
+        //play button
+        let effect = this.add.rectangle(game.config.width *.5, game.config.height*.5, 1080, 50, 0xffffff)
+            .setAlpha(0)
+        let buttonback = this.add.rectangle(game.config.width *.5 + 20, game.config.height*.5 + 20, 500, 200, 0xffffff);
+        let button = this.add.rectangle(game.config.width *.5, game.config.height*.5, 500, 200, 0x3c78d8).setInteractive();
+        let buttontext = this.add.text(game.config.width*.5,game.config.height*.5, "Play", {font: "80px Verdana"}).setOrigin(0.5);
+
+        //button breathing
         let anim = this.tweens.add({    //button breathing
             targets: [button],
-            scale: 1.2,
+            scale: 1.1,
             yoyo: true,
             repeat: -1
         });
 
+        //button effects
         button.on('pointerover',()=>{
             anim.pause();
-            button.scale +=.2;
-            buttontext.scale += .5;
-            console.log('button')
-            
+            button.scale = 1.1
+            buttonback.scale = 1.1
+            buttontext.scale = 1.1
+            this.tweens.add({targets:effect, alpha: 1, duration: 500})
         })
         .on('pointerout',()=> {
-            button.scale -=.2;
-            buttontext.scale -= .5;
-            
+            button.scale = 1
+            buttonback.scale = 1
+            buttontext.scale = 1
+            this.tweens.add({targets:effect, alpha: 0, duration: 500})
             anim.resume();
         })
+        .on('pointerdown',()=>{
+            this.tweens.chain({
+                tweens: [
+                    {
+                        targets: t1,
+                        x: -1000,
+                        duration: 1000
+                    },
+                    {
+                        targets: t2,
+                        x: 5000,
+                        duration: 500
+                    },
+                    {
+                        targets: t3,
+                        x: -5000,
+                        duration: 600
+                    },
+                    {
+                        targets: t4,
+                        x: 5000,
+                        duration: 1000,
+
+                        onComplete:() => {
+                            this.scene.start('transitionScreen');
+                        }
+                    },
+                ]})
+        })
+
+        //settings button
+        let effect2 = this.add.rectangle(game.config.width *.5, game.config.height*.65, 1080, 50, 0xffffff)
+            .setAlpha(0);
+        let button2back = this.add.rectangle(game.config.width *.5 + 20, game.config.height*.65 + 20, 500, 200, 0xffffff);
+        let button2 = this.add.rectangle(game.config.width *.5, game.config.height*.65, 500, 200, 0x3c78d8).setInteractive();
+        let button2text = this.add.text(game.config.width*.5,game.config.height*.65, "Settings", {font: "80px Verdana"}).setOrigin(0.5);
+
+        //button effects
+        button2.on('pointerover',()=>{
+            //anim.pause();
+            button2.scale = 1.1
+            button2back.scale = 1.1
+            button2text.scale = 1.1
+            this.tweens.add({targets:effect2, alpha: 1, duration: 500})
+        })
+        .on('pointerout',()=> {
+            button2.scale = 1
+            button2back.scale = 1
+            button2text.scale = 1
+            this.tweens.add({targets:effect2, alpha: 0, duration: 500})
+            anim.resume();
+        })
+        
+        //settings menu
+        .on('pointerdown',()=>{
+        
+        })
+        
+
+        
 
 
+
+        //player
+        let player = this.add.image(game.config.width*.5, game.config.height*.8, 'player');
 
         this.add.text(game.config.width*.5, game.config.height*.9, "titleScreen", {font: "40px Arial"}).setOrigin(0.5);
 
-        this.input.once('pointerdown', () => {
-            this.scene.start('transitionScreen');
-        });
     }
     update() {
-
+        //background scroll
+            if (this.stars.y == game.config.height*1.5)
+            {
+                this.stars.y = game.config.height*-.5
+            }
+            this.stars.y += 5;
+            //this.stars.y %= 1920;
+            if (this.stars2.y == game.config.height*1.5)
+            {
+                this.stars2.y = game.config.height*-.5
+            }
+            this.stars2.y += 5;
+            //this.stars2.y %= 1920;
     }
 }
 
@@ -196,9 +294,7 @@ class transitionScreen extends Phaser.Scene{
             duration: 3000,
             delay: Math.floor(Math.random()*500),
             onLoop: () => {
-                console.log('loop done')
                 planet.y = Math.floor(Math.random()*game.config.height*.4 + game.config.height*.7)
-                console.log(planet.y)
             }
         });
 
@@ -209,9 +305,7 @@ class transitionScreen extends Phaser.Scene{
             duration: 3000,
             delay: Math.floor(Math.random()*500+1000),
             onLoop: () => {
-                console.log('loop done')
                 planet2.y = Math.floor(Math.random()*game.config.height*.4 + game.config.height*.7)
-                console.log(planet2.y)
             }
         });
 
@@ -350,7 +444,7 @@ class victoryScreen extends Phaser.Scene{
                     targets: this.text3,
                     alpha: 1,
                     
-                    //final score counts up
+                    //final score counts upt
                     onComplete:() => {
                         let updatescore = this.tweens.addCounter({
                             from: 0,
@@ -364,7 +458,11 @@ class victoryScreen extends Phaser.Scene{
 
                             //score description pops up
                             onComplete:()=>{
-                                description.setAlpha(1);
+                                this.tweens.add({
+                                    targets: description,
+                                    alpha: 1,
+                                    delay: 1000
+                                })
                             }
                         })
                     }
@@ -403,7 +501,7 @@ let config = {
             }
         }
     },
-    scene: [transitionScreen, cutscene, titleScreen, victoryScreen],
+    scene: [titleScreen,transitionScreen, cutscene, victoryScreen],
 }
 
 let game = new Phaser.Game(config);
