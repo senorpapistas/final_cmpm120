@@ -164,60 +164,38 @@ class titleScreen extends Phaser.Scene{
             repeat: -1
         });
 
-        //button effects
-        button.on('pointerover',()=>{
-            anim.pause();
-            button.scale = 1.1
-            buttonback.scale = 1.1
-            buttontext.scale = 1.1
-            this.tweens.add({targets:effect, alpha: 1, duration: 500})
-        })
-        .on('pointerout',()=> {
-            button.scale = 1
-            buttonback.scale = 1
-            buttontext.scale = 1
-            this.tweens.add({targets:effect, alpha: 0, duration: 500})
-            anim.resume();
-        })
-        .on('pointerdown',()=>{
-            this.tweens.add({targets:t1, x:-1000, duration: 1000})
-            this.tweens.add({targets:t2, x:5000, duration: 500})
-            this.tweens.add({targets:t3, x: -5000, duration: 600})
-            this.tweens.add({targets:t4, x:5000, duration: 1000,
-                onComplete:() => {
-                    
-                    this.scene.start('transitionScreen');
-                }})
-            /*this.tweens.chain({
-                tweens: [
-                    {
-                        targets: t1,
-                        x: -1000,
-                        duration: 1000
-                    },
-                    {
-                        targets: t2,
-                        x: 5000,
-                        duration: 500
-                    },
-                    {
-                        targets: t3,
-                        x: -5000,
-                        duration: 600
-                    },
-                    {
-                        targets: t4,
-                        x: 5000,
-                        duration: 1000,
 
+        //play button effects
+        //settings checks if settings menu is on
+        let settings = 0;
+        
+            button.on('pointerover',()=>{
+                if (settings == 0) {
+                    anim.pause();
+                    button.scale = 1.1
+                    buttonback.scale = 1.1
+                    buttontext.scale = 1.1
+                    this.tweens.add({targets:effect, alpha: 1, duration: 500})
+                }
+            })
+            .on('pointerout',()=> {
+                button.scale = 1
+                buttonback.scale = 1
+                buttontext.scale = 1
+                this.tweens.add({targets:effect, alpha: 0, duration: 500})
+                anim.resume();
+            })
+            .on('pointerdown',()=>{
+                if (settings == 0) {
+                    this.tweens.add({targets:t1, x:-3000, duration: 700})
+                    this.tweens.add({targets:t2, x:5000, duration: 500})
+                    this.tweens.add({targets:t3, x: -5000, duration: 600})
+                    this.tweens.add({targets:t4, x:5000, duration: 700,
                         onComplete:() => {
                             this.scene.start('transitionScreen');
-                        }
-                    },
-                
-                ]})
-                */
-        })
+                        }})
+                }
+            })
 
         //player
         let player = this.add.image(game.config.width*.5, game.config.height*.8, 'player');
@@ -231,52 +209,104 @@ class titleScreen extends Phaser.Scene{
         let button2 = this.add.rectangle(game.config.width *.5, game.config.height*.65, 500, 200, 0x3c78d8).setInteractive();
         let button2text = this.add.text(game.config.width*.5,game.config.height*.65, "Settings", {font: "80px Verdana"}).setOrigin(0.5);
 
-        //button effects
-        button2.on('pointerover',()=>{
-            //anim.pause();
-            button2.scale = 1.1
-            button2back.scale = 1.1
-            button2text.scale = 1.1
-            this.tweens.add({targets:effect2, alpha: 1, duration: 500})
-        })
-        .on('pointerout',()=> {
-            button2.scale = 1
-            button2back.scale = 1
-            button2text.scale = 1
-            this.tweens.add({targets:effect2, alpha: 0, duration: 500})
-            anim.resume()
-        })
-    
-        //opens settings menu
-        .on('pointerdown',()=>{
-            settingsmenu.setAlpha(1)
-        })
+        //settings button effects
+            button2.on('pointerover',()=>{
+                if (settings == 0) {
+                button2.scale = 1.1
+                button2back.scale = 1.1
+                button2text.scale = 1.1
+                this.tweens.add({targets:effect2, alpha: 1, duration: 500}) 
+                }
+            })
+            .on('pointerout',()=> {
+                button2.scale = 1
+                button2back.scale = 1
+                button2text.scale = 1
+                this.tweens.add({targets:effect2, alpha: 0, duration: 500})
+                anim.resume()
+            })
+            //opens settings menu
+            .on('pointerdown',()=>{
+                this.tweens.add({targets:effect2, alpha: 0, duration: 500})
+                settings = 1
+                settingsmenu.setAlpha(1)
+            })
     
 
         //settings menu
-        let rect = this.add.rectangle(200,1100,1000,500,0x2843b8)
-            .setOrigin(0)
-        let triangle = this.add.triangle(200,1100,0,0,1000,200,1000,0,0xffffff)
-            .setOrigin(0)
-        let exit = this.add.rectangle(1000,1175, 50, 50, 0x3c0000).setInteractive()
+        let rect = this.add.rectangle(game.config.width*.5,game.config.height*.5,1000,800,0x2843b8)
+            .setOrigin(.5)
+        let triangle = this.add.triangle(game.config.width*.5,game.config.height*.5 -300,0,0,1000,200,1000,0,0x3c78d8)
+        let exit = this.add.rectangle(game.config.width*.8,game.config.height*.2 + 250, 50, 50, 0x3c0000).setInteractive()
+        let fullscreenbutton = this.add.rectangle(game.config.width*.5,game.config.height*.5, 1000, 200, 0, 0x000000).setInteractive()
+        let fullscreenbuttoneffect = this.add.rectangle(game.config.width*.5,game.config.height*.5, 1000, 200, 0x000000).setAlpha(0)
+        let subtitlesbuttoneffect = this.add.rectangle(game.config.width*.5,game.config.height*.6, 1000, 200, 0x000000).setAlpha(0)
+        let subtitlesbutton = this.add.rectangle(game.config.width*.5,game.config.height*.6, 1000, 200, 0, 0x000000).setInteractive()
+        let fullscreentext = this.add.text(game.config.width*.15,game.config.height*.475, "  fullscreen", {font: "80px Verdana"})
+        let subtitlestext = this.add.text(game.config.width*.15,game.config.height*.575, "  subtitles", {font: "80px Verdana"})
+        let fullscreenimage = this.add.text(game.config.width*.08,game.config.height*.475, "📺", {font: "80px Verdana"}).setAlpha(0)
+        let subtitlesimage = this.add.text(game.config.width*.08,game.config.height*.575, "🔤", {font: "80px Verdana"}).setAlpha(0)
+        let settingstitle = this.add.text(game.config.width*.15,game.config.height*.5 - 350, "Settings", {font: "80px Verdana"})
+        let settingstitle2 = this.add.text(game.config.width*.15+10,game.config.height*.5 - 350+10, "Settings", {font: "80px Verdana", color: 0xffffff})
 
-        let settingsmenu = this.add.container(0,0, [rect,triangle,exit])
+        
+        let settingsmenu = this.add.container(0,10, [rect,triangle,exit,fullscreenbutton, subtitlesbutton,fullscreenbuttoneffect,subtitlesbuttoneffect, 
+                                                    fullscreenimage, subtitlesimage, fullscreentext,subtitlestext, settingstitle2, settingstitle])
             .setAlpha(0)
+        
+        //
+        //NEED GLOBAL VARIABLES FOR FULLSCREEN AND SUBTITLES
+        //
+        let subtitles = 0;
+        let fullscreen = 0;
 
-        exit.on('pointerdown',()=>{settingsmenu.setAlpha(0)})    
+        //settings buttons
+        fullscreenbutton.on('pointerover',()=>{
+            fullscreenbuttoneffect.setAlpha(1)
+        })
+        fullscreenbutton.on('pointerout',()=>{
+            fullscreenbuttoneffect.setAlpha(0)
+        })
+        fullscreenbutton.on('pointerdown',()=>{
+            if (fullscreen == 0) {fullscreen = 1}
+                else{fullscreen= 0}
+            fullscreenimage.setAlpha(fullscreen)
+            //
+            //fullscreen code goes here
+            //
+        })
+
+        subtitlesbutton.on('pointerover',()=>{
+            subtitlesbuttoneffect.setAlpha(1)
+        })
+        subtitlesbutton.on('pointerout',()=>{
+            subtitlesbuttoneffect.setAlpha(0)
+        })
+        subtitlesbutton.on('pointerdown',()=>{
+            if (subtitles == 0) {subtitles = 1}
+                else{subtitles= 0}
+            subtitlesimage.setAlpha(subtitles)
+            //
+            //subtitles code goes here
+            //
+        })
+        exit.on('pointerdown',()=>{
+            settingsmenu.setAlpha(0)
+            settings = 0
+        })    
 
 
 
     }
     update() {
         //background scroll
-            if (this.stars.y == game.config.height*1.5)
+            if (this.stars.y >= game.config.height*1.5)
             {
                 this.stars.y = game.config.height*-.5
             }
             this.stars.y += 5;
             //this.stars.y %= 1920;
-            if (this.stars2.y == game.config.height*1.5)
+            if (this.stars2.y >= game.config.height*1.5)
             {
                 this.stars2.y = game.config.height*-.5
             }
@@ -395,13 +425,13 @@ class transitionScreen extends Phaser.Scene{
     }
     update() {
         //background scroll
-        if (this.stars.x == game.config.width*-.5)
+        if (this.stars.x <= game.config.width*-.5)
         {
             this.stars.x = game.config.width*1.5
         }
         this.stars.x -= .5;
         //this.stars.y %= 1920;
-        if (this.stars2.x == game.config.width*-.5)
+        if (this.stars2.x <= game.config.width*-.5)
         {
             this.stars2.x = game.config.width*1.5
         }

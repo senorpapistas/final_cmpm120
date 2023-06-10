@@ -126,9 +126,10 @@ class Demo extends Phaser.Scene {
         }
 
         //resets position if player goes off screen
-        if (this.player.y > 2000 || this.player.y < 0) {
-            this.game.sound.stopAll();
-            this.scene.start('death');
+        if (this.player.y > 2000) {
+            this.player.x = 540;
+            this.player.y = 960;
+            this.player.setVelocityY(0);
         }
 
         if (this.player.x > 1200) {
