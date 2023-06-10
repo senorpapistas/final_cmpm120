@@ -236,7 +236,7 @@ class titleScreen extends Phaser.Scene{
         //settings menu
         let rect = this.add.rectangle(game.config.width*.5,game.config.height*.5,1000,800,0x2843b8)
             .setOrigin(.5)
-        let triangle = this.add.triangle(game.config.width*.5,game.config.height*.5 -300,0,0,1000,200,1000,0,0xffffff)
+        let triangle = this.add.triangle(game.config.width*.5,game.config.height*.5 -300,0,0,1000,200,1000,0,0x3c78d8)
         let exit = this.add.rectangle(game.config.width*.8,game.config.height*.2 + 250, 50, 50, 0x3c0000).setInteractive()
         let fullscreenbutton = this.add.rectangle(game.config.width*.5,game.config.height*.5, 1000, 200, 0, 0x000000).setInteractive()
         let fullscreenbuttoneffect = this.add.rectangle(game.config.width*.5,game.config.height*.5, 1000, 200, 0x000000).setAlpha(0)
@@ -246,11 +246,13 @@ class titleScreen extends Phaser.Scene{
         let subtitlestext = this.add.text(game.config.width*.15,game.config.height*.575, "  subtitles", {font: "80px Verdana"})
         let fullscreenimage = this.add.text(game.config.width*.08,game.config.height*.475, "📺", {font: "80px Verdana"}).setAlpha(0)
         let subtitlesimage = this.add.text(game.config.width*.08,game.config.height*.575, "🔤", {font: "80px Verdana"}).setAlpha(0)
+        let settingstitle = this.add.text(game.config.width*.15,game.config.height*.5 - 350, "Settings", {font: "80px Verdana"})
+        let settingstitle2 = this.add.text(game.config.width*.15+10,game.config.height*.5 - 350+10, "Settings", {font: "80px Verdana", color: 0xffffff})
 
         
-        let settingsmenu = this.add.container(0,0, [rect,triangle,exit,fullscreenbutton, subtitlesbutton,fullscreenbuttoneffect,subtitlesbuttoneffect, 
-                                                    fullscreenimage, subtitlesimage, fullscreentext,subtitlestext])
-            //.setAlpha(0)
+        let settingsmenu = this.add.container(0,10, [rect,triangle,exit,fullscreenbutton, subtitlesbutton,fullscreenbuttoneffect,subtitlesbuttoneffect, 
+                                                    fullscreenimage, subtitlesimage, fullscreentext,subtitlestext, settingstitle2, settingstitle])
+            .setAlpha(0)
         
         //
         //NEED GLOBAL VARIABLES FOR FULLSCREEN AND SUBTITLES
@@ -298,13 +300,13 @@ class titleScreen extends Phaser.Scene{
     }
     update() {
         //background scroll
-            if (this.stars.y == game.config.height*1.5)
+            if (this.stars.y >= game.config.height*1.5)
             {
                 this.stars.y = game.config.height*-.5
             }
             this.stars.y += 5;
             //this.stars.y %= 1920;
-            if (this.stars2.y == game.config.height*1.5)
+            if (this.stars2.y >= game.config.height*1.5)
             {
                 this.stars2.y = game.config.height*-.5
             }
@@ -423,13 +425,13 @@ class transitionScreen extends Phaser.Scene{
     }
     update() {
         //background scroll
-        if (this.stars.x == game.config.width*-.5)
+        if (this.stars.x <= game.config.width*-.5)
         {
             this.stars.x = game.config.width*1.5
         }
         this.stars.x -= .5;
         //this.stars.y %= 1920;
-        if (this.stars2.x == game.config.width*-.5)
+        if (this.stars2.x <= game.config.width*-.5)
         {
             this.stars2.x = game.config.width*1.5
         }
