@@ -62,7 +62,7 @@ class Demo extends Phaser.Scene {
             });
         // player character sprite
         this.player = this.physics.add.sprite(540, 960, 'player');
-
+        
         // temporary rectangle used to visualize sides of the screen
         this.physics.add.existing(new Phaser.GameObjects.Rectangle(this, 540, 960, 10, 1920)).body.allowGravity = false;
         
@@ -78,6 +78,8 @@ class Demo extends Phaser.Scene {
         this.input.on('pointerdown', (pointer) => {
             this.booster.play();
             this.playerBullets.fire(this.player.x, this.player.y - 50, 0, -500);
+            this.input.disable(this);
+            this.time.delayedCall(300, () => {this.input.enable(this)});
             if (pointer.x > 540) {
                 this.player.setVelocityX(400);
                 this.player.setVelocityY(-500);
@@ -125,9 +127,8 @@ class Demo extends Phaser.Scene {
 
         //resets position if player goes off screen
         if (this.player.y > 2000 || this.player.y < 0) {
-            this.player.x = 540;
-            this.player.y = 960;
-            this.player.setVelocityY(0);
+            this.game.sound.stopAll();
+            this.scene.start('death');
         }
 
         if (this.player.x > 1200) {
