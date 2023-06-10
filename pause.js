@@ -8,6 +8,8 @@ class Pause extends Phaser.Scene {
     create() {
         this.add.text(320, 800, "PAUSED", {fontSize: 120});
         this.add.text(200, 920, "Click button below to resume", {fontSize: 40});
+        
+        // button for resuming the game
         this.add.text(485, 1000, "▶️", {fontSize: 80})
             .setInteractive()
             .on('pointerdown', () => {
@@ -27,11 +29,9 @@ class Pause extends Phaser.Scene {
                 if (this.bgm.mute) {
                     audioButton.setText("🔊")
                     this.bgm.mute = false;
-                    this.game.config.bgmMuted = false;
                 } else {
                     audioButton.setText("🔈")
                     this.bgm.mute = true;
-                    this.game.config.bgmMuted = true;
                 }
             });
         
