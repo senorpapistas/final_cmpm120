@@ -2,6 +2,9 @@ class Demo extends Phaser.Scene {
     constructor() {
         super('demo');
     }
+    init(data) {
+        this.bgm = data.bgm;
+    }
     preload() {
         this.load.path = './assets/';
         this.load.image('player', 'player.png');
@@ -17,49 +20,26 @@ class Demo extends Phaser.Scene {
 
         // sounds
         this.booster = this.sound.add('boost');
+        console.log(this.game.config.bgmMuted)
         this.bgm = this.sound.add('bgm');
         this.bgm.loop = true;
         this.bgm.play();
         this.bgm.pauseOnBlur = true;
 
-        // button for muting bgm
+        // game config data
         this.w = this.game.config.width;
         this.h = this.game.config.height;
         this.s = this.game.config.width * 0.01;
-        let audioButton = this.add.text(this.w*0.93, this.h*0.01, "🔊")
-            .setStyle({fontSize: `${5 * this.s}px`})
-            .setInteractive({useHandCursor: true})
-            .on('pointerdown', () => {
-                // change this.game.sound.mute to this.bgm.mute to mute only the background music
-                if (this.bgm.mute) {
-                    audioButton.setText("🔊")
-                    this.bgm.mute = false;
-                } else {
-                    audioButton.setText("🔈")
-                    this.bgm.mute = true;
-                }
-            });
         
-        // button for resetting level
-        let resetButton = this.add.text(this.w*0.87, this.h*0.05, "RESET")
-            .setStyle({fontSize: `${4 * this.s}px`, color: '#ff0000'})
+        // button that pauses the scene and opens a pause menu
+        let pauseButton = this.add.text(this.game.config.width*0.03, this.game.config.height*0.02, "⏸️")
+            .setStyle({fontSize: `${7 * this.game.config.width * 0.01}px`, color: '#ff0000'})
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
-                this.game.sound.stopAll();
-                this.scene.start('demo');
+                this.scene.launch('pause', {bgm: this.bgm});
+                this.scene.pause(this);
             });
-        
-        // button for making game fullscreen
-        let fullscreenButton = this.add.text(this.w*0.87, this.h*0.09, "FULL?")
-            .setStyle({fontSize: `${4 * this.s}px`, color: '#00ff00'})
-            .setInteractive({useHandCursor: true})
-            .on('pointerdown', () => {
-                if (this.scale.isFullscreen) {
-                    this.scale.stopFullscreen();
-                } else {
-                    this.scale.startFullscreen();
-                }
-            });
+
         // player character sprite
         this.player = this.physics.add.sprite(540, 960, 'player');
         
@@ -100,18 +80,20 @@ class Demo extends Phaser.Scene {
         }});
         //console.log(testEnemy);
         
+        // checks if enemy is hit by bullet
         this.physics.add.overlap(testEnemy, this.playerBullets, (enemy, bullet) => {
             console.log('wow');
             bullet.disableBody(true, true);
             enemy.enemyKilled();
         });
 
+        // checks if player touches enemy
         this.physics.add.overlap(testEnemy, this.player, (enemy, player) => {
             this.game.sound.stopAll();
             this.scene.start('death');
         });
 
-        // checking if object hits world bounds
+        // checks if object hits world bounds
         this.physics.world.on('worldbounds', (body) => {body.gameObject.onWorldBounds();})
     }
     update(time, delta) {
