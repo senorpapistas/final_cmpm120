@@ -108,6 +108,15 @@ class titleScreen extends Phaser.Scene{
         this.load.path = '../assets/'
         this.load.image('player', 'player.png');
         this.load.image('space', 'space.jpg');
+        
+        //explosion gif
+        this.load.image('megumin1', 'megumin/megumin1.png')
+        this.load.image('megumin2', 'megumin/megumin2.png')
+        this.load.image('megumin3', 'megumin/megumin3.png')
+        this.load.image('megumin4', 'megumin/megumin4.png')
+        this.load.image('megumin5', 'megumin/megumin5.png')
+        this.load.image('megumin6', 'megumin/megumin6.png')
+        this.load.image('megumin7', 'megumin/megumin7.png')
     }
     create() {
 
@@ -292,8 +301,6 @@ class titleScreen extends Phaser.Scene{
             settings = 0
         })    
 
-
-
     }
     update() {
         //background scroll
@@ -404,11 +411,24 @@ class transitionScreen extends Phaser.Scene{
             this.tweens.add({
                 targets: unoob,
                 alpha: 0,
-                duration: 1000
+                duration: 1000,
             })
         }
 
+/*
+        //explosion animation
+         this.anims.create({
+            key: 'megumin',
+            frames: [
+                {key: 'megumin2'}, {key: 'megumin3'}, {key: 'megumin4'}, {key: 'megumin5'}, {key: 'megumin6'}, {key: 'megumin7', duration: 50},
+            ] ,
+            frameRate: 8,
+                repeat: -1
+        })
 
+        let explosion = this.add.sprite(500,500,'megumin1')
+            .play('megumin')
+            */
 
         //text
         let text = this.add.text(game.config.width*.5,game.config.height*.5, "Score: 0", {font: "80px Verdana"}).setOrigin(0.5);
@@ -434,6 +454,7 @@ class transitionScreen extends Phaser.Scene{
         this.input.once('pointerdown', () => {
             this.scene.start('victoryScreen');
         });
+
     }
     update() {
         //background scroll
@@ -579,7 +600,7 @@ let config = {
             }
         }
     },
-    scene: [titleScreen, transitionScreen,instructionScreen, cutscene, victoryScreen],
+    scene: [transitionScreen,titleScreen,instructionScreen, cutscene, victoryScreen],
 }
 
 let game = new Phaser.Game(config);
