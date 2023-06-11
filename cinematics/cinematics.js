@@ -131,7 +131,10 @@ class titleScreen extends Phaser.Scene{
             .setOrigin(0,0)
         let t4 = this.add.triangle(game.config.width, game.config.height*.5, 0, 0, 0, -300, -2500, 0, 0x000000)
             .setOrigin(0,0)
- 
+
+        //player
+        let player = this.add.image(game.config.width*.5, game.config.height*.8, 'player');
+
 
         //title
         let title = this.add.text(game.config.width*.5,game.config.height*-.1, "Title", {font: "80px Verdana"}).setOrigin(0.5);
@@ -185,18 +188,24 @@ class titleScreen extends Phaser.Scene{
             })
             .on('pointerdown',()=>{
                 if (settings == 0) {
+
+                    //background disappears, spaceship leaves
                     this.tweens.add({targets:t1, x:-3000, duration: 700})
                     this.tweens.add({targets:t2, x:5000, duration: 500})
                     this.tweens.add({targets:t3, x: -5000, duration: 600})
-                    this.tweens.add({targets:t4, x:5000, duration: 700,
+                    this.tweens.add({targets:t4, x:5000, duration: 700,})
+
+                    this.tweens.add({
+                        targets: [player],
+                        y: -500,
+                        duration: 1000, 
+                        ease: 'Cubic',
                         onComplete:() => {
                             this.scene.start('transitionScreen');
-                        }})
+                        }
+                    });
                 }
             })
-
-        //player
-        let player = this.add.image(game.config.width*.5, game.config.height*.8, 'player');
 
         this.add.text(game.config.width*.5, game.config.height*.9, "titleScreen", {font: "40px Arial"}).setOrigin(0.5);
 
@@ -455,7 +464,16 @@ class transitionScreen extends Phaser.Scene{
                             let value = Math.round(tween.getValue());
                             scoretext.setText(`Score: ${value}`);
                         },
-                        onComplete:()=> {this.add.text(game.config.width*.5,game.config.height*.65, "click to continue",{font: "40px Verdana"}).setOrigin(.5)}
+                        onComplete:()=> {
+                            this.add.text(game.config.width*.5,game.config.height*.65, "click to continue",{font: "40px Verdana"}).setOrigin(.5)
+
+                            this.tweens.add({
+                                targets: player,
+                                x: 1500,
+                                duration: 1000,
+                                onComplete:()=>{player.destroy()}
+                            })
+                        }
                     })
 
                 }})
@@ -465,6 +483,10 @@ class transitionScreen extends Phaser.Scene{
         this.add.text(game.config.width*.5, game.config.height*.9, "transitionScreen", {font: "40px Arial"}).setOrigin(0.5);
 
         this.input.once('pointerdown', () => {
+            this.tweens.add({
+                targets: player,
+                x: 1500,
+            })
             this.scene.start('victoryScreen');
         });
 
