@@ -5,26 +5,18 @@ class cutscene extends Phaser.Scene {
     preload() {
         this.load.path = '../assets/'
         this.load.image('player', 'player.png');
-        this.load.image('space', 'space.jpg');
+        this.load.image('space', 'Spacebackground.png');
     }
     create() {
         this.click = 0;
 
         //parallax effect: 2 backgrounds scroll down after each other
         this.stars = this.add.image(game.config.width*.5, game.config.height*.5, 'space')
-        this.stars.angle = 90
-        this.stars.scale = 2
-
         this.stars2 = this.add.image(game.config.width*.5, game.config.height*1.5, 'space')
-        this.stars2.angle = 90
-        this.stars2.scale = 2
-
 
         //initial still background
         this.shadow = this.add.rectangle(game.config.width*.5, game.config.height*.5,1080,1920, 0x000000)
         this.background = this.add.image(game.config.width*.5, game.config.height*.5, 'space')
-        this.background.angle = 90
-        this.background.scale = 2
 
         //title
         let title = this.add.text(game.config.width*.5,game.config.height*.1, "Click to start", {font: "80px Verdana"}).setOrigin(0.5);
@@ -107,20 +99,14 @@ class titleScreen extends Phaser.Scene{
     preload() {
         this.load.path = '../assets/'
         this.load.image('player', 'player.png');
-        this.load.image('space', 'space.jpg');
+        this.load.image('space', 'Spacebackground.png');
         
     }
     create() {
 
         //parallax effect: 2 backgrounds scroll down after each other
         this.stars = this.add.image(game.config.width*.5, game.config.height*.5, 'space')
-        this.stars.angle = 90
-        this.stars.scale = 2
-
         this.stars2 = this.add.image(game.config.width*.5, game.config.height*1.5, 'space')
-        this.stars2.angle = 90
-        this.stars2.scale = 2
-
     
         //background (made of chunks, will disappear on Play)
         let t1 = this.add.triangle(0, 0, 0, 0, 0, 700, 1080, 0, 0x000000)
@@ -327,8 +313,10 @@ class transitionScreen extends Phaser.Scene{
     preload() {
         this.load.path = '../assets/'
         this.load.image('player', 'player.png')
-        this.load.image('space', 'space.jpg')
+        this.load.image('space', 'Spacebackground.png');
         this.load.image('enemy', 'enemy.png')
+        this.load.image('planet1', 'planet1.png')
+        this.load.image('planet2','planet2.png')
 
         //explosion gif
         this.load.image('megumin1', 'megumin/megumin1.png')
@@ -342,16 +330,14 @@ class transitionScreen extends Phaser.Scene{
     create() {
         //parallax effect: 2 backgrounds scroll sideways after each other
         this.stars = this.add.image(game.config.width*.5, game.config.height*.5, 'space')
-        this.stars.angle = 90
-        this.stars.scale = 2
-
         this.stars2 = this.add.image(game.config.width*1.5, game.config.height*.5, 'space')
-        this.stars2.angle = 90
-        this.stars2.scale = 2
 
         //planet logic
-        let planet = this.add.rectangle(game.config.width*1.2, game.config.height*.5, 250, 250, 0xff0000)
-        let planet2 = this.add.rectangle(game.config.width*1.2, game.config.height*.5, 250, 250, 0xfcba03)
+        //let planet = this.add.rectangle(game.config.width*1.2, game.config.height*.5, 250, 250, 0xff0000)
+        //let planet2 = this.add.rectangle(game.config.width*1.2, game.config.height*.5, 250, 250, 0xfcba03)
+        let planet = this.add.image(game.config.width*1.2, game.config.height*.5, 'planet1')
+        let planet2 = this.add.image(game.config.width*1.2, game.config.height*.5, 'planet2')
+
         let planettween = this.tweens.add({
             targets: planet,
             x: -1000,
@@ -467,12 +453,7 @@ class transitionScreen extends Phaser.Scene{
                         onComplete:()=> {
                             this.add.text(game.config.width*.5,game.config.height*.65, "click to continue",{font: "40px Verdana"}).setOrigin(.5)
 
-                            this.tweens.add({
-                                targets: player,
-                                x: 1500,
-                                duration: 1000,
-                                onComplete:()=>{player.destroy()}
-                            })
+
                         }
                     })
 
@@ -482,12 +463,17 @@ class transitionScreen extends Phaser.Scene{
 
         this.add.text(game.config.width*.5, game.config.height*.9, "transitionScreen", {font: "40px Arial"}).setOrigin(0.5);
 
+        //click to animate ship and transition to next scene
         this.input.once('pointerdown', () => {
             this.tweens.add({
                 targets: player,
                 x: 1500,
+                duration: 1000,
+                onComplete:()=>{
+                    player.destroy()
+                    this.scene.start('victoryScreen');
+                }
             })
-            this.scene.start('victoryScreen');
         });
 
     }
@@ -606,7 +592,7 @@ class instructionScreen extends Phaser.Scene{
     preload(){
         this.load.path = '../assets/'
         this.load.image('player', 'player.png');
-        this.load.image('space', 'space.jpg');
+        this.load.image('space', 'Spacebackground.png');
     }
     create() {
         this.add.text(game.config.width*.5, game.config.height*.9, "instructionScreen", {font: "40px Arial"}).setOrigin(0.5);
