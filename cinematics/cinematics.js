@@ -10,9 +10,6 @@ class cutscene extends Phaser.Scene {
     create() {
         this.click = 0;
 
-        //title
-        let title = this.add.text(game.config.width*.5,game.config.height*.1, "Click to start", {font: "80px Verdana"}).setOrigin(0.5);
-
         //parallax effect: 2 backgrounds scroll down after each other
         this.stars = this.add.image(game.config.width*.5, game.config.height*.5, 'space')
         this.stars.angle = 90
@@ -29,11 +26,12 @@ class cutscene extends Phaser.Scene {
         this.background.angle = 90
         this.background.scale = 2
 
+        //title
+        let title = this.add.text(game.config.width*.5,game.config.height*.1, "Click to start", {font: "80px Verdana"}).setOrigin(0.5);
+
         //player
         let player = this.add.image(game.config.width*.5, game.config.height*.8, 'player');
         
-    
-
         //variable to turn on scrolling backgrounds
         this.scroll = 0;
 
@@ -48,7 +46,6 @@ class cutscene extends Phaser.Scene {
             this.input.once('pointerdown', () => {
                 this.scene.start('titleScreen');
             });
-
 
             title.destroy()
 
@@ -237,7 +234,7 @@ class titleScreen extends Phaser.Scene{
         let rect = this.add.rectangle(game.config.width*.5,game.config.height*.5,1000,800,0x2843b8)
             .setOrigin(.5)
         let triangle = this.add.triangle(game.config.width*.5,game.config.height*.5 -300,0,0,1000,200,1000,0,0x3c78d8)
-        let exit = this.add.rectangle(game.config.width*.8,game.config.height*.2 + 250, 50, 50, 0x3c0000).setInteractive()
+        let exit = this.add.triangle(game.config.width*.8 + 50,game.config.height*.2 + 250,0,0,0,100,75,50,0x3c0000).setInteractive()
         let fullscreenbutton = this.add.rectangle(game.config.width*.5,game.config.height*.5, 1000, 200, 0, 0x000000).setInteractive()
         let fullscreenbuttoneffect = this.add.rectangle(game.config.width*.5,game.config.height*.5, 1000, 200, 0x000000).setAlpha(0)
         let subtitlesbuttoneffect = this.add.rectangle(game.config.width*.5,game.config.height*.6, 1000, 200, 0x000000).setAlpha(0)
@@ -321,8 +318,9 @@ class transitionScreen extends Phaser.Scene{
     }
     preload() {
         this.load.path = '../assets/'
-        this.load.image('player', 'player.png');
-        this.load.image('space', 'space.jpg');
+        this.load.image('player', 'player.png')
+        this.load.image('space', 'space.jpg')
+        this.load.image('enemy', 'enemy.png')
     }
     create() {
         //parallax effect: 2 backgrounds scroll sideways after each other
@@ -398,9 +396,23 @@ class transitionScreen extends Phaser.Scene{
             repeat: -1
         });
 
+        //level summary
+        let enemiesdestroyed = 5
+        
+        for(let noob = 0; noob < 250; noob+=50) {
+            let unoob = this.add.rectangle(game.config.width*.5+noob, game.config.height*.5+noob, 50, 50, 0xff0000)
+            this.tweens.add({
+                targets: unoob,
+                alpha: 0,
+                duration: 1000
+            })
+        }
+
+
+
         //text
         let text = this.add.text(game.config.width*.5,game.config.height*.5, "Score: 0", {font: "80px Verdana"}).setOrigin(0.5);
-
+ 
         //score to be updated
         let score = 3500;
 
@@ -494,7 +506,7 @@ class victoryScreen extends Phaser.Scene{
                     targets: this.text3,
                     alpha: 1,
                     
-                    //final score counts upt
+                    //final score counts up
                     onComplete:() => {
                         let updatescore = this.tweens.addCounter({
                             from: 0,
@@ -520,7 +532,6 @@ class victoryScreen extends Phaser.Scene{
             ]
         })
 
-
         this.add.text(game.config.width*.5, game.config.height*.9, "victoryScreen", {font: "40px Arial"}).setOrigin(0.5);
 
         this.input.once('pointerdown', () => {
@@ -532,6 +543,23 @@ class victoryScreen extends Phaser.Scene{
     }
 }
 
+class instructionScreen extends Phaser.Scene{
+    constructor(){
+        super('instructionScreen');
+    }
+    preload(){
+        this.load.path = '../assets/'
+        this.load.image('player', 'player.png');
+        this.load.image('space', 'space.jpg');
+    }
+    create() {
+        this.add.text(game.config.width*.5, game.config.height*.9, "instructionScreen", {font: "40px Arial"}).setOrigin(0.5);
+
+        this.input.once('pointerdown', () => {
+            this.scene.start('titleScreen');
+        });
+    }
+}
 
 
 let config = {
@@ -551,7 +579,7 @@ let config = {
             }
         }
     },
-    scene: [titleScreen,transitionScreen, cutscene, victoryScreen],
+    scene: [titleScreen, transitionScreen,instructionScreen, cutscene, victoryScreen],
 }
 
 let game = new Phaser.Game(config);
