@@ -109,14 +109,6 @@ class titleScreen extends Phaser.Scene{
         this.load.image('player', 'player.png');
         this.load.image('space', 'space.jpg');
         
-        //explosion gif
-        this.load.image('megumin1', 'megumin/megumin1.png')
-        this.load.image('megumin2', 'megumin/megumin2.png')
-        this.load.image('megumin3', 'megumin/megumin3.png')
-        this.load.image('megumin4', 'megumin/megumin4.png')
-        this.load.image('megumin5', 'megumin/megumin5.png')
-        this.load.image('megumin6', 'megumin/megumin6.png')
-        this.load.image('megumin7', 'megumin/megumin7.png')
     }
     create() {
 
@@ -328,6 +320,15 @@ class transitionScreen extends Phaser.Scene{
         this.load.image('player', 'player.png')
         this.load.image('space', 'space.jpg')
         this.load.image('enemy', 'enemy.png')
+
+        //explosion gif
+        this.load.image('megumin1', 'megumin/megumin1.png')
+        this.load.image('megumin2', 'megumin/megumin2.png')
+        this.load.image('megumin3', 'megumin/megumin3.png')
+        this.load.image('megumin4', 'megumin/megumin4.png')
+        this.load.image('megumin5', 'megumin/megumin5.png')
+        this.load.image('megumin6', 'megumin/megumin6.png')
+        this.load.image('megumin7', 'megumin/megumin7.png')
     }
     create() {
         //parallax effect: 2 backgrounds scroll sideways after each other
@@ -403,51 +404,63 @@ class transitionScreen extends Phaser.Scene{
             repeat: -1
         });
 
-        //level summary
-        let enemiesdestroyed = 5
-        
-        for(let noob = 0; noob < 250; noob+=50) {
-            let unoob = this.add.rectangle(game.config.width*.5+noob, game.config.height*.5+noob, 50, 50, 0xff0000)
-            this.tweens.add({
-                targets: unoob,
-                alpha: 0,
-                duration: 1000,
-            })
-        }
-
-/*
         //explosion animation
-         this.anims.create({
+        this.anims.create({
             key: 'megumin',
             frames: [
                 {key: 'megumin2'}, {key: 'megumin3'}, {key: 'megumin4'}, {key: 'megumin5'}, {key: 'megumin6'}, {key: 'megumin7', duration: 50},
             ] ,
             frameRate: 8,
-                repeat: -1
         })
 
-        let explosion = this.add.sprite(500,500,'megumin1')
-            .play('megumin')
-            */
+        //level results
+        //displays enemies, then periodially shows an explosion
+        //after that, shows # of enemies destroyed and counts up the score
 
         //text
-        let text = this.add.text(game.config.width*.5,game.config.height*.5, "Score: 0", {font: "80px Verdana"}).setOrigin(0.5);
+        let scoretext = this.add.text(game.config.width*.5,game.config.height*.6, "Score: 0", {font: "80px Verdana"}).setOrigin(0.5);
  
         //score to be updated
         let score = 3500;
+        
+        //amount of enemies destroyed
+        let enemiesdestroyed = 20
+        let counter =0
 
-        //updates score
-        let updatescore = this.tweens.addCounter({
-            from: 0,
-            to: score,
-            duration: 1500,
-            onUpdate: tween =>
-            {
-                let value = Math.round(tween.getValue());
-                text.setText(`Score: ${value}`);
+        let broforce = this.time.addEvent({delay: 400, loop: true, callback: () => {
+            let enemy = this.add.image(game.config.width*.08+counter%1000, game.config.height*.2+Math.floor(counter/1000)*100, 'enemy').setScale(.4)
+
+            //explosion effect
+            let explosion = this.add.sprite(game.config.width*.08+counter%1000, game.config.height*.2+Math.floor(counter/1000)*100,'megumin1')
+            .play('megumin')
+            this.time.addEvent({delay: 400, loop: true, callback: () => {explosion.destroy()}})
+
+            counter +=100
+
+            //exit if amount of enemies is reached
+            if (counter == enemiesdestroyed*100) {
+                broforce.remove()
+
+
+                this.time.addEvent({delay: 400, loop: false, callback: () => {
+                    let killcounttext = this.add.text(game.config.width*.5,game.config.height*.5, `${enemiesdestroyed} enemies destroyed`, {font: "80px Verdana"}).setOrigin(0.5);
+
+                    //updates score
+                    this.tweens.addCounter({
+                        from: 0,
+                        to: score,
+                        duration: 1500,
+                        onUpdate: tween =>
+                        {
+                            let value = Math.round(tween.getValue());
+                            scoretext.setText(`Score: ${value}`);
+                        },
+                        onComplete:()=> {this.add.text(game.config.width*.5,game.config.height*.65, "click to continue",{font: "40px Verdana"}).setOrigin(.5)}
+                    })
+
+                }})
             }
-        })
-
+        }})
 
         this.add.text(game.config.width*.5, game.config.height*.9, "transitionScreen", {font: "40px Arial"}).setOrigin(0.5);
 
