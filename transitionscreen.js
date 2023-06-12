@@ -22,6 +22,7 @@ class TransitionScreen extends Phaser.Scene{
     }
     init (data) {
         this.enemiesdestroyed = data.enemiesdestroyed
+        this.playersprite = data.playersprite;
     }
     create() {
         //parallax effect: 2 backgrounds scroll sideways after each other
@@ -58,7 +59,7 @@ class TransitionScreen extends Phaser.Scene{
         this.add.rectangle(game.config.width*.5, game.config.height*.3, 1080, 1500, 0x000000)
 
         //player
-        let player = this.add.image(game.config.width*.5, game.config.height*.8, 'player')
+        let player = this.add.image(game.config.width*.5, game.config.height*.8, this.playersprite)
         player.angle = 90;
 
         //player spaceship bobbing

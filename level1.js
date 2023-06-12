@@ -116,7 +116,7 @@ class Level1 extends Phaser.Scene {
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
                 console.log(this.kills);
-                this.scene.start('transitionScreen', {enemiesdestroyed: this.kills})
+                this.scene.start('transitionScreen', {enemiesdestroyed: this.kills, playersprite: this.playersprite})
             });
 
         
@@ -155,7 +155,7 @@ class Level1 extends Phaser.Scene {
         
         if (this.killCount == 20) {
             this.time.delayedCall(2000, () => {
-                this.scene.start('transitionScreen', {enemiesdestroyed: this.kills})
+                this.scene.start('transitionScreen', {enemiesdestroyed: this.kills, playersprite: this.playersprite})
             })
         }
 
