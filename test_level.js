@@ -74,6 +74,8 @@ class Demo extends Phaser.Scene {
             }
         });
 
+        let killCount = 0;
+
         // creating an enemy group and spawning 1 in
         let testEnemy = this.add.existing(new Enemies(this.physics.world, this, {name: 'testEnemy'}));
         // testEnemy.create(0, 0, 'enemy');
@@ -82,14 +84,31 @@ class Demo extends Phaser.Scene {
         let enemySpawn1 = this.time.addEvent({delay: 1000, loop: true, /*repeat: 19,*/ callback: () => {
             testEnemy.spawn(Phaser.Math.RND.between(200, 900), -200, 0, 500, .5);
             testEnemyCounter++;
-            console.log(testEnemyCounter);
-            if(testEnemyCounter == 20) {enemySpawn1.remove(); console.log('wave cleared');}
+            //console.log(killCount);
+            if(testEnemyCounter == 20) {
+                enemySpawn1.remove();
+                console.log('wave cleared');
+                this.time.delayedCall(2000, () => {
+                    this.scene.start('transitionScreen', {enemiesdestroyed: killCount})
+                })
+            }
         }});
+
+        this.w = this.game.config.width;
+        this.h = this.game.config.height;
+        this.s = this.game.config.width * 0.01;
+        this.add.text(this.w*0.90, this.h*0.01, "DEV")
+            .setStyle({fontSize: `${5 * this.s}px`, color: '#00ff00'})
+            .setInteractive({useHandCursor: true})
+            .on('pointerdown', () => {
+                this.scene.start('transitionScreen', {enemiesdestroyed: killCount})
+            });
         // console.log(testEnemy);
         
         // checks if enemy is hit by bullet
         this.physics.add.overlap(testEnemy, this.playerBullets, (enemy, bullet) => {
             // console.log('wow');
+            killCount++;
             bullet.disableBody(true, true);
             enemy.enemyKilled();
         });

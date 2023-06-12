@@ -1,4 +1,4 @@
-class transitionScreen extends Phaser.Scene{
+class TransitionScreen extends Phaser.Scene{
     constructor(){
         super('transitionScreen');
     }
@@ -20,7 +20,7 @@ class transitionScreen extends Phaser.Scene{
         this.load.image('megumin7', 'megumin/megumin7.png')
     }
     init (data) {
-        let enemiesdestroyed = data.enemiesdestroyed
+        this.enemiesdestroyed = data.enemiesdestroyed
     }
     create() {
         //parallax effect: 2 backgrounds scroll sideways after each other
@@ -108,7 +108,7 @@ class transitionScreen extends Phaser.Scene{
         //after that, shows # of enemies destroyed and counts up the score
 
         //score to be updated
-        let score = enemiesdestroyed * 500;
+        let score = this.enemiesdestroyed * 500;
         let counter =0
 
         //text
@@ -126,12 +126,12 @@ class transitionScreen extends Phaser.Scene{
             counter +=100
 
             //exit if amount of enemies is reached
-            if (counter == enemiesdestroyed*100) {
+            if (counter == this.enemiesdestroyed*100) {
                 broforce.remove()
 
 
                 this.time.addEvent({delay: 400, loop: false, callback: () => {
-                    let killcounttext = this.add.text(game.config.width*.5,game.config.height*.5, `${enemiesdestroyed} enemies destroyed`, {font: "80px Verdana"}).setOrigin(0.5);
+                    let killcounttext = this.add.text(game.config.width*.5,game.config.height*.5, `${this.enemiesdestroyed} enemies destroyed`, {font: "80px Verdana"}).setOrigin(0.5);
 
                     //updates score
                     this.tweens.addCounter({
