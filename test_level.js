@@ -109,13 +109,21 @@ class Demo extends Phaser.Scene {
             .setStyle({fontSize: `${5 * this.s}px`, color: '#00ff00'})
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
-                this.scene.start('transitionScreen', {enemiesdestroyed: killCount})
+                console.log(kills);
+                this.scene.start('transitionScreen', {enemiesdestroyed: kills})
             });
         // console.log(testEnemy);
-        
+        let kills = [];
         // checks if enemy is hit by bullet
-        this.physics.add.overlap(this.playerBullets, [testEnemy, testEnemy2], (bullet, enemy) => {
-            // console.log('wow');
+        this.physics.add.overlap(this.playerBullets, testEnemy, (bullet, enemy) => {
+            kills.push(1);
+            killCount++;
+            bullet.disableBody(true, true);
+            enemy.enemyKilled();
+        });
+
+        this.physics.add.overlap(this.playerBullets, testEnemy2, (bullet, enemy) => {
+            kills.push(2);
             killCount++;
             bullet.disableBody(true, true);
             enemy.enemyKilled();
