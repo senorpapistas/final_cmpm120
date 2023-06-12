@@ -3,7 +3,7 @@ class cutscene extends Phaser.Scene {
         super('cutscene');
     }
     preload() {
-        this.load.path = '../assets/'
+        this.load.path = './assets/'
         this.load.image('player', 'player.png');
         this.load.image('space', 'Spacebackground.png');
     }
@@ -100,7 +100,7 @@ class titleScreen extends Phaser.Scene{
         super('titleScreen');
     }
     preload() {
-        this.load.path = '../assets/'
+        this.load.path = './assets/'
         this.load.image('player', 'player.png');
         this.load.image('space', 'Spacebackground.png');
         
@@ -347,7 +347,7 @@ class victoryScreen extends Phaser.Scene{
         super('victoryScreen');
     }
     preload(){
-        this.load.path = '../assets/'
+        this.load.path = './assets/'
         this.load.image('player', 'player.png')
         this.load.image('space', 'Spacebackground.png');
         this.load.image('enemy', 'enemy.png')
@@ -456,7 +456,7 @@ class selectScreen extends Phaser.Scene{
         super('selectScreen');
     }
     preload(){
-        this.load.path = '../assets/'
+        this.load.path = './assets/'
         this.load.image('player', 'player.png');
         this.load.image('player_og', 'player_og.png');
         this.load.image('space', 'Spacebackground.png');
