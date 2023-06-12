@@ -7,6 +7,7 @@ class TransitionScreen extends Phaser.Scene{
         this.load.image('player', 'player.png')
         this.load.image('space', 'Spacebackground.png');
         this.load.image('enemy', 'enemy.png')
+        this.load.image('enemy2', 'enemy2.png')
         this.load.image('planet1', 'planet1.png')
         this.load.image('planet2','planet2.png')
 
@@ -106,7 +107,7 @@ class TransitionScreen extends Phaser.Scene{
         //after that, shows # of enemies destroyed and counts up the score
 
         //score to be updated
-        let score = this.enemiesdestroyed * 500;
+        let score = this.enemiesdestroyed.length * 500;
         let counter =0
 
         //text
@@ -116,12 +117,12 @@ class TransitionScreen extends Phaser.Scene{
         let broforce = this.time.addEvent({delay: 400, loop: true, callback: () => {
             
             //exit if amount of enemies is reached
-            if (counter == this.enemiesdestroyed*100) {
+            if (counter == this.enemiesdestroyed.length*100) {
                 broforce.remove()
 
 
                 this.time.addEvent({delay: 400, loop: false, callback: () => {
-                    let killcounttext = this.add.text(game.config.width*.5,game.config.height*.5, `${this.enemiesdestroyed} enemies destroyed`, {font: "80px Verdana"}).setOrigin(0.5);
+                    let killcounttext = this.add.text(game.config.width*.5,game.config.height*.5, `${this.enemiesdestroyed.length} enemies destroyed`, {font: "80px Verdana"}).setOrigin(0.5);
 
                     //updates score
                     this.tweens.addCounter({
@@ -144,7 +145,12 @@ class TransitionScreen extends Phaser.Scene{
             }
             else {
             //spawns enemy 
+            if (this.enemiesdestroyed[counter/100] == 1){
             let enemy = this.add.image(game.config.width*.08+counter%1000, game.config.height*.2+Math.floor(counter/1000)*100, 'enemy').setScale(.4)
+            }
+            else if (this.enemiesdestroyed[counter/100] == 1){
+                let enemy = this.add.image(game.config.width*.08+counter%1000, game.config.height*.2+Math.floor(counter/1000)*100, 'enemy2').setScale(.4)
+            }
 
             //explosion effect
             let explosion = this.add.sprite(game.config.width*.08+counter%1000, game.config.height*.2+Math.floor(counter/1000)*100,'megumin1')

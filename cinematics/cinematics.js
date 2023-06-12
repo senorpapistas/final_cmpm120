@@ -633,7 +633,7 @@ class victoryScreen extends Phaser.Scene{
     }
 }
 
-class instructionScreen extends Phaser.Scene{
+class selectScreen extends Phaser.Scene{
     constructor(){
         super('instructionScreen');
     }
@@ -643,6 +643,9 @@ class instructionScreen extends Phaser.Scene{
         this.load.image('space', 'Spacebackground.png');
     }
     create() {
+
+        
+
         this.add.text(game.config.width*.5, game.config.height*.9, "instructionScreen", {font: "40px Arial"}).setOrigin(0.5);
 
         this.input.once('pointerdown', () => {
@@ -669,7 +672,7 @@ let config = {
             }
         }
     },
-    scene: [victoryScreen, titleScreen,transitionScreen,instructionScreen, cutscene],
+    scene: [selectScreen, victoryScreen, titleScreen,transitionScreen,cutscene],
 }
 
 let game = new Phaser.Game(config);
