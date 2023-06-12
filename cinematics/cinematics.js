@@ -7,6 +7,9 @@ class cutscene extends Phaser.Scene {
         this.load.image('player', 'player.png');
         this.load.image('space', 'Spacebackground.png');
     }
+    init (data) {
+        this.playersprite = data.playersprite
+    }
     create() {
         this.click = 0;
 
@@ -22,7 +25,7 @@ class cutscene extends Phaser.Scene {
         let title = this.add.text(game.config.width*.5,game.config.height*.1, "Click to start", {font: "80px Verdana"}).setOrigin(0.5);
 
         //player
-        let player = this.add.image(game.config.width*.5, game.config.height*.8, 'player');
+        let player = this.add.image(game.config.width*.5, game.config.height*.8, this.playersprite);
         
         //variable to turn on scrolling backgrounds
         this.scroll = 0;
@@ -71,7 +74,7 @@ class cutscene extends Phaser.Scene {
 
     }
     event() {
-        this.scene.start('titleScreen');
+        this.scene.start('titleScreen', {playersprite: this.playersprite})
     }
     update() {
         //background scroll
@@ -102,6 +105,9 @@ class titleScreen extends Phaser.Scene{
         this.load.image('space', 'Spacebackground.png');
         
     }
+    init (data) {
+        this.playersprite = data.playersprite
+    }
     create() {
 
         //parallax effect: 2 backgrounds scroll down after each other
@@ -119,7 +125,7 @@ class titleScreen extends Phaser.Scene{
             .setOrigin(0,0)
 
         //player
-        let player = this.add.image(game.config.width*.5, game.config.height*.8, 'player');
+        let player = this.add.image(game.config.width*.5, game.config.height*.8, this.playersprite);
 
 
         //title
@@ -187,7 +193,7 @@ class titleScreen extends Phaser.Scene{
                         duration: 1000, 
                         ease: 'Cubic',
                         onComplete:() => {
-                            this.scene.start('transitionScreen');
+                            this.scene.start('transitionScreen', {playersprite: this.playersprite})
                         }
                     });
                 }
@@ -357,6 +363,9 @@ class transitionScreen extends Phaser.Scene{
         this.load.image('megumin6', 'megumin/megumin6.png')
         this.load.image('megumin7', 'megumin/megumin7.png')
     }
+    init (data) {
+        this.playersprite = data.playersprite
+    }
     create() {
         //parallax effect: 2 backgrounds scroll sideways after each other
         this.stars = this.add.image(game.config.width*.5, game.config.height*.5, 'space')
@@ -394,7 +403,7 @@ class transitionScreen extends Phaser.Scene{
         this.add.rectangle(game.config.width*.5, game.config.height*.3, 1080, 1500, 0x000000)
 
         //player
-        let player = this.add.image(game.config.width*.5, game.config.height*.8, 'player')
+        let player = this.add.image(game.config.width*.5, game.config.height*.8, this.playersprite)
         player.angle = 90;
 
         //player spaceship bobbing
@@ -635,22 +644,45 @@ class victoryScreen extends Phaser.Scene{
 
 class selectScreen extends Phaser.Scene{
     constructor(){
-        super('instructionScreen');
+        super('selectScreen');
     }
     preload(){
         this.load.path = '../assets/'
         this.load.image('player', 'player.png');
+        this.load.image('player_og', 'player_og.png');
         this.load.image('space', 'Spacebackground.png');
     }
     create() {
 
-        
 
-        this.add.text(game.config.width*.5, game.config.height*.9, "instructionScreen", {font: "40px Arial"}).setOrigin(0.5);
 
-        this.input.once('pointerdown', () => {
-            this.scene.start('titleScreen');
-        });
+        let title = this.add.text(game.config.width*.5,game.config.height*.1, "Choose your ship", {font: "80px Verdana"}).setOrigin(0.5);
+
+        let box1 = this.add.isobox(game.config.width*.3, game.config.height*.7, 300, 200, 0x00b9f2, 0x016fce, 0x028fdf);
+        let box2 = this.add.isobox(game.config.width*.7, game.config.height*.7, 300, 200, 0x00b9f2, 0x016fce, 0x028fdf);
+
+        let player_og = this.add.image(game.config.width*.7, game.config.height*.57, 'player_og').setInteractive()
+        let player = this.add.image(game.config.width*.3, game.config.height*.57, 'player').setInteractive()
+
+        player.on('pointerover', ()=> {
+            box1.setFillStyle(0xffffff, 0xcccccc, 0xabcdef)
+        })
+        player.on('pointerout', ()=> {
+            box1.setFillStyle(0x00b9f2, 0x016fce, 0x028fdf)
+        })
+        player.on('pointerdown', ()=>{
+            this.scene.start('cutscene', {playersprite: 'player'})
+        })
+
+        player_og.on('pointerover', ()=> {
+            box2.setFillStyle(0xffffff, 0xcccccc, 0xabcdef)
+        })
+        player_og.on('pointerout', ()=> {
+            box2.setFillStyle(0x00b9f2, 0x016fce, 0x028fdf)
+        })
+        player_og.on('pointerdown', ()=>{
+            this.scene.start('cutscene', {playersprite: 'player_og'})
+        })
     }
 }
 
