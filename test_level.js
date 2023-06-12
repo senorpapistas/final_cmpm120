@@ -19,6 +19,9 @@ class Demo extends Phaser.Scene {
         // changed world bounds to allow enemies to spawn outside without being destroyed
         this.physics.world.setBounds(-200, -500, 1480, 2720);
 
+        this.stars = this.add.image(game.config.width*.5, game.config.height*.5, 'space')
+        this.stars2 = this.add.image(game.config.width*.5, game.config.height*1.5, 'space')
+
         // sounds
         this.booster = this.sound.add('boost');
         this.bgm = this.sound.add('bgm');
@@ -90,7 +93,7 @@ class Demo extends Phaser.Scene {
                 enemySpawn1.remove();
                 console.log('wave cleared');
                 this.time.delayedCall(2000, () => {
-                    this.scene.start('transitionScreen', {enemiesdestroyed: killCount})
+                    this.scene.start('transitionScreen', {enemiesdestroyed: kills})
                 })
             }
         }});
@@ -139,6 +142,11 @@ class Demo extends Phaser.Scene {
         this.physics.world.on('worldbounds', (body) => {body.gameObject.onWorldBounds();})
     }
     update(time, delta) {
+        if (this.stars.y >= game.config.height*1.5) {this.stars.y = game.config.height*-.5}
+        this.stars.y += 5;
+        if (this.stars2.y >= game.config.height*1.5) {this.stars2.y = game.config.height*-.5}
+        this.stars2.y += 5;
+        
         // following block of code used to settle the ship to 0 x_gravity faster
         let velx = this.player.body.velocity.x;
         if (velx > 0) {
