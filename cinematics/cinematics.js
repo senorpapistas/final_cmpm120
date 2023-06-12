@@ -542,7 +542,7 @@ class victoryScreen extends Phaser.Scene{
 
         this.add.rectangle(game.config.width*.5, game.config.height*.5, 1080, 1000, 0x000000)
 
-        this.add.image(game.config.width*.5, game.config.height*.8, 'planet2').setScale(5)
+        this.add.image(game.config.width*.5, game.config.height*.9, 'planet2').setScale(5)
 
         //title
         let title = this.add.text(game.config.width*.5,game.config.height*.1, "You Win!", {font: "80px Verdana"}).setOrigin(0.5);
@@ -563,16 +563,18 @@ class victoryScreen extends Phaser.Scene{
         this.finalscore = this.score1+this.score2+this.score3;
 
         //score text        
-        this.text1 = this.add.text(game.config.width*.5,game.config.height*.3, `Score: ${this.score1}`, {font: "80px Verdana"}).setOrigin(0.5)
+        this.text1 = this.add.text(game.config.width*.15,game.config.height*.3, `Level 1 score: ${this.score1}`, {font: "80px Verdana"}) //.setOrigin(0.5)
             .setAlpha(0);
-        this.text2 = this.add.text(game.config.width*.5,game.config.height*.4, `Score: ${this.score2}`, {font: "80px Verdana"}).setOrigin(0.5)
+        this.text2 = this.add.text(game.config.width*.15,game.config.height*.4, `Level 2 Score: ${this.score2}`, {font: "80px Verdana"}) //.setOrigin(0.5)
             .setAlpha(0);
-        this.text3 = this.add.text(game.config.width*.5,game.config.height*.5, `Score: ${this.score3}`, {font: "80px Verdana"}).setOrigin(0.5)
+        this.text3 = this.add.text(game.config.width*.15,game.config.height*.5, `Level 3 Score: ${this.score3}`, {font: "80px Verdana"}) //.setOrigin(0.5)
             .setAlpha(0);
         this.text4 = this.add.text(game.config.width*.5,game.config.height*.6, "Total:  ", {font: "80px Verdana"}).setOrigin(0.5);
 
 
         //score text description
+        let descriptionbackground = this.add.rectangle(game.config.width*.5,game.config.height*.8, 600, 200, 0x000000)
+            .setAlpha(0)
         let description = this.add.text(game.config.width*.5,game.config.height*.8, "You're mid!", {font: "80px Verdana"}).setOrigin(0.5)
             .setAlpha(0);
 
@@ -609,7 +611,7 @@ class victoryScreen extends Phaser.Scene{
                             //score description pops up
                             onComplete:()=>{
                                 this.tweens.add({
-                                    targets: description,
+                                    targets: [description, descriptionbackground],
                                     alpha: 1,
                                     delay: 1000
                                 })
