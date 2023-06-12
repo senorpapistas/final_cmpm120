@@ -77,9 +77,13 @@ class Demo extends Phaser.Scene {
         // creating an enemy group and spawning 1 in
         let testEnemy = this.add.existing(new Enemies(this.physics.world, this, {name: 'testEnemy'}));
         // testEnemy.create(0, 0, 'enemy');
-        testEnemy.createMultiple({key: 'enemy', quantity: 3});
-        this.time.addEvent({delay: 1000, loop: true, callback: () => {
+        let testEnemyCounter = 0;
+        testEnemy.createMultiple({key: 'enemy', quantity: 5});
+        let enemySpawn1 = this.time.addEvent({delay: 1000, loop: true, /*repeat: 19,*/ callback: () => {
             testEnemy.spawn(Phaser.Math.RND.between(200, 900), -200, 0, 500, .5);
+            testEnemyCounter++;
+            console.log(testEnemyCounter);
+            if(testEnemyCounter == 20) {enemySpawn1.remove(); console.log('wave cleared');}
         }});
         // console.log(testEnemy);
         
