@@ -167,7 +167,7 @@ class Pause extends Phaser.Scene {
 
         exit.on('pointerdown',()=>{
             this.pauseButton.setAlpha(1);
-            this.scene.resume('demo', {bgm: this.bgm});
+            this.scene.resume('level1', {bgm: this.bgm});
             this.scene.stop();
         })    
     }

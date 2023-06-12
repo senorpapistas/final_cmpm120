@@ -1,6 +1,6 @@
-class Demo extends Phaser.Scene {
+class Level1 extends Phaser.Scene {
     constructor() {
-        super('demo');
+        super('level1');
     }
     init(data) {
         this.bgm = data.bgm;

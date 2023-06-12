@@ -179,7 +179,7 @@ class TransitionScreen extends Phaser.Scene{
                 duration: 1000,
                 onComplete:()=>{
                     player.destroy()
-                    this.scene.start('demo');
+                    this.scene.start('level1');
                 }
             })
         });
