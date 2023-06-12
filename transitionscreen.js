@@ -28,8 +28,6 @@ class TransitionScreen extends Phaser.Scene{
         this.stars2 = this.add.image(game.config.width*1.5, game.config.height*.5, 'space')
 
         //planet logic
-        //let planet = this.add.rectangle(game.config.width*1.2, game.config.height*.5, 250, 250, 0xff0000)
-        //let planet2 = this.add.rectangle(game.config.width*1.2, game.config.height*.5, 250, 250, 0xfcba03)
         let planet = this.add.image(game.config.width*1.2, game.config.height*.5, 'planet1')
         let planet2 = this.add.image(game.config.width*1.2, game.config.height*.5, 'planet2')
 
@@ -157,8 +155,6 @@ class TransitionScreen extends Phaser.Scene{
             }
         }})
 
-        this.add.text(game.config.width*.5, game.config.height*.9, "transitionScreen", {font: "40px Arial"}).setOrigin(0.5);
-
         //click to animate ship and transition to next scene
         this.input.once('pointerdown', () => {
             this.tweens.add({
@@ -180,12 +176,10 @@ class TransitionScreen extends Phaser.Scene{
             this.stars.x = game.config.width*1.5
         }
         this.stars.x -= .5;
-        //this.stars.y %= 1920;
         if (this.stars2.x <= game.config.width*-.5)
         {
             this.stars2.x = game.config.width*1.5
         }
         this.stars2.x -= .5;
-        //this.stars2.y %= 1920;
     }
 }
