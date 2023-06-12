@@ -116,13 +116,7 @@ class TransitionScreen extends Phaser.Scene{
 
         //fancy animation
         let broforce = this.time.addEvent({delay: 400, loop: true, callback: () => {
-            let enemy = this.add.image(game.config.width*.08+counter%1000, game.config.height*.2+Math.floor(counter/1000)*100, 'enemy').setScale(.4)
-
-            //explosion effect
-            let explosion = this.add.sprite(game.config.width*.08+counter%1000, game.config.height*.2+Math.floor(counter/1000)*100,'megumin1')
-            .play('megumin')
-            this.time.addEvent({delay: 400, loop: true, callback: () => {explosion.destroy()}})
-
+            
             //exit if amount of enemies is reached
             if (counter == this.enemiesdestroyed*100) {
                 broforce.remove()
@@ -150,6 +144,14 @@ class TransitionScreen extends Phaser.Scene{
 
                 }})
             }
+
+            //spawns enemy 
+            let enemy = this.add.image(game.config.width*.08+counter%1000, game.config.height*.2+Math.floor(counter/1000)*100, 'enemy').setScale(.4)
+
+            //explosion effect
+            let explosion = this.add.sprite(game.config.width*.08+counter%1000, game.config.height*.2+Math.floor(counter/1000)*100,'megumin1')
+            .play('megumin')
+            this.time.addEvent({delay: 400, loop: true, callback: () => {explosion.destroy()}})
 
             counter +=100
         }})
