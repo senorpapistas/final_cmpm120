@@ -46,6 +46,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     };
     onWorldBounds() {
         this.disableBody(true, true);
+        return true;
     };
     enemyKilled() {
         // add line(s) of code to add points
@@ -64,7 +65,9 @@ class Enemies extends Phaser.Physics.Arcade.Group {
         let enemy =  this.getFirstDead(false);
         if (enemy) {
             enemy.spawn(x, y, vx, vy, scale);
+            return true;
         }
+        return false;
     };
     onCreate(enemy) {
         enemy.onCreate();

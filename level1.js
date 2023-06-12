@@ -57,7 +57,7 @@ class Level1 extends Phaser.Scene {
             this.playerBullets.fire(this.player.x, this.player.y - 50, 0, -500)
         }});*/
         // console.log(this.playerBullets)
-    
+        
         // jumping mechanic
         this.input.on('pointerdown', (pointer) => {
             this.booster.play();
@@ -78,25 +78,25 @@ class Level1 extends Phaser.Scene {
             }
         });
 
-        let killCount = 0;
+        this.killCount = 0;
 
         // creating an enemy group and spawning 1 in
-        let testEnemy = this.add.existing(new Enemies(this.physics.world, this, {name: 'testEnemy'}));
+        let enemy1 = this.add.existing(new Enemies(this.physics.world, this, {name: 'enemy1'}));
         // testEnemy.create(0, 0, 'enemy');
-        let testEnemyCounter = 0;
-        testEnemy.createMultiple({key: 'enemy', quantity: 5});
-        let enemySpawn1 = this.time.addEvent({delay: 1000, loop: true, /*repeat: 19,*/ callback: () => {
-            testEnemy.spawn(Phaser.Math.RND.between(200, 900), -200, 0, 350, .5);
-            testEnemyCounter++;
-            //console.log(killCount);
-            if(testEnemyCounter == 20) {
+        let enemy1Counter = 0;
+        enemy1.createMultiple({key: 'enemy', quantity: 4});
+        let enemySpawn1 = this.time.addEvent({delay: 1000, loop: true, callback: () => {
+            if(enemy1.spawn(Phaser.Math.RND.between(200, 900), -200, 0, 350, .5)) {enemy1Counter++}
+            if(enemy1Counter == 20) {
                 enemySpawn1.remove();
                 console.log('wave cleared');
-                this.time.delayedCall(2000, () => {
+                /*this.time.delayedCall(2000, () => {
                     this.scene.start('transitionScreen', {enemiesdestroyed: kills})
-                })
+                })*/
             }
         }});
+
+        /*
         let testEnemy2 = this.add.existing(new Enemies(this.physics.world, this, {name: 'testEnemy2'}));
         testEnemy2.createMultiple({key: 'enemy2', quantity: 3})
         let enemySpawn2 = this.time.addEvent({delay: 1500, loop: true, callback: () => {
@@ -104,7 +104,9 @@ class Level1 extends Phaser.Scene {
             let x_move = Phaser.Math.RND.pick([-1, 1]);
             testEnemy2.spawn(spawnCoeff, -200, spawnCoeff * 0.2 * x_move, 350, .5);
         }})
+        */
 
+        // Dev button to test out level transitions
         this.w = this.game.config.width;
         this.h = this.game.config.height;
         this.s = this.game.config.width * 0.01;
@@ -112,34 +114,37 @@ class Level1 extends Phaser.Scene {
             .setStyle({fontSize: `${5 * this.s}px`, color: '#00ff00'})
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
-                console.log(kills);
-                this.scene.start('transitionScreen', {enemiesdestroyed: kills})
+                console.log(this.kills);
+                this.scene.start('transitionScreen', {enemiesdestroyed: this.kills})
             });
-        // console.log(testEnemy);
-        let kills = [];
-        // checks if enemy is hit by bullet
-        this.physics.add.overlap(this.playerBullets, testEnemy, (bullet, enemy) => {
-            kills.push(1);
-            killCount++;
+
+        
+        this.kills = [];
+
+        // checks if enemy1 is hit by bullet
+        this.physics.add.overlap(this.playerBullets, enemy1, (bullet, enemy) => {
+            this.kills.push(1);
+            this.killCount++;
             bullet.disableBody(true, true);
             enemy.enemyKilled();
         });
 
+        /*
         this.physics.add.overlap(this.playerBullets, testEnemy2, (bullet, enemy) => {
             kills.push(2);
             killCount++;
             bullet.disableBody(true, true);
             enemy.enemyKilled();
         });
+        */
 
         // checks if player touches enemy
-        this.physics.add.overlap(this.player, [testEnemy, testEnemy2], (player, enemy) => {
+        this.physics.add.overlap(this.player, enemy1 /*[testEnemy, testEnemy2]*/, (player, enemy) => {
             this.game.sound.stopAll();
             this.scene.start('death');
         });
-
         // checks if object hits world bounds
-        this.physics.world.on('worldbounds', (body) => {body.gameObject.onWorldBounds();})
+        this.physics.world.on('worldbounds', (body) => {if (body.gameObject.onWorldBounds()) {this.killCount++};})
     }
     update(time, delta) {
         if (this.stars.y >= game.config.height*1.5) {this.stars.y = game.config.height*-.5}
@@ -147,6 +152,12 @@ class Level1 extends Phaser.Scene {
         if (this.stars2.y >= game.config.height*1.5) {this.stars2.y = game.config.height*-.5}
         this.stars2.y += 5;
         
+        if (this.killCount == 20) {
+            this.time.delayedCall(2000, () => {
+                this.scene.start('transitionScreen', {enemiesdestroyed: this.kills})
+            })
+        }
+
         // following block of code used to settle the ship to 0 x_gravity faster
         let velx = this.player.body.velocity.x;
         if (velx > 0) {
