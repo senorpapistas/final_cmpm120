@@ -20,7 +20,7 @@ let game = new Phaser.Game({
     },
     captions: false,
     type: Phaser.WEBGL,
-    scene: [Level1, Pause, TransitionScreen, Death],
+    scene: [selectScreen, cutscene, titleScreen, Level1, Pause, TransitionScreen, Death],
     title: 'Hotline Albuquerque',
 });
 game.config.captions = false;
