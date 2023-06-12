@@ -144,7 +144,7 @@ class TransitionScreen extends Phaser.Scene{
 
                 }})
             }
-
+            else {
             //spawns enemy 
             let enemy = this.add.image(game.config.width*.08+counter%1000, game.config.height*.2+Math.floor(counter/1000)*100, 'enemy').setScale(.4)
 
@@ -154,6 +154,7 @@ class TransitionScreen extends Phaser.Scene{
             this.time.addEvent({delay: 400, loop: true, callback: () => {explosion.destroy()}})
 
             counter +=100
+            }
         }})
 
         this.add.text(game.config.width*.5, game.config.height*.9, "transitionScreen", {font: "40px Arial"}).setOrigin(0.5);
