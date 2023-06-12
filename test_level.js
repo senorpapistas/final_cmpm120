@@ -10,7 +10,7 @@ class Demo extends Phaser.Scene {
         this.load.image('player', 'player.png');
         this.load.image('enemy', 'enemy.png');
         this.load.image('bullet', 'bullet.png');
-        this.load.image('space', 'space.jpg');
+        this.load.image('space', 'Spacebackground.png');
         this.load.audio('boost', 'boost.wav');
         this.load.audio('bgm', 'creamy tomato.mp3');
     }
@@ -20,7 +20,6 @@ class Demo extends Phaser.Scene {
 
         // sounds
         this.booster = this.sound.add('boost');
-        console.log(this.game.config.bgmMuted)
         this.bgm = this.sound.add('bgm');
         this.bgm.loop = true;
         this.bgm.play();
@@ -36,12 +35,13 @@ class Demo extends Phaser.Scene {
             .setStyle({fontSize: `${7 * this.game.config.width * 0.01}px`, color: '#ff0000'})
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
-                this.scene.launch('pause', {bgm: this.bgm});
+                pauseButton.setAlpha(0);
+                this.scene.launch('pause', {bgm: this.bgm, pB: pauseButton});
                 this.scene.pause(this);
             });
 
         // player character sprite
-        this.player = this.physics.add.sprite(540, 960, 'player');
+        this.player = this.physics.add.sprite(540, 960, 'player').setSize(150, 100).setScale(.9);
         
         // temporary rectangle used to visualize sides of the screen
         this.physics.add.existing(new Phaser.GameObjects.Rectangle(this, 540, 960, 10, 1920)).body.allowGravity = false;
@@ -52,7 +52,7 @@ class Demo extends Phaser.Scene {
         /*this.playerFiring = this.time.addEvent({delay: 500, loop: true, callback: () => {
             this.playerBullets.fire(this.player.x, this.player.y - 50, 0, -500)
         }});*/
-        console.log(this.playerBullets)
+        // console.log(this.playerBullets)
     
         // jumping mechanic
         this.input.on('pointerdown', (pointer) => {
@@ -68,21 +68,24 @@ class Demo extends Phaser.Scene {
                 this.player.setVelocityX(-400);
                 this.player.setVelocityY(-500);
             }
-            let boosttext = this.add.text(440, 1800, '(whoosh)', {fontSize: '40px'});
-            this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})})
+            if (game.config.captions == true) {
+                let boosttext = this.add.text(440, 1800, '(whoosh)', {fontSize: '40px'});
+                this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
+            }
         });
 
         // creating an enemy group and spawning 1 in
         let testEnemy = this.add.existing(new Enemies(this.physics.world, this, {name: 'testEnemy'}));
+        // testEnemy.create(0, 0, 'enemy');
         testEnemy.createMultiple({key: 'enemy', quantity: 3});
         this.time.addEvent({delay: 1000, loop: true, callback: () => {
             testEnemy.spawn(Phaser.Math.RND.between(200, 900), -200, 0, 500, .5);
         }});
-        //console.log(testEnemy);
+        // console.log(testEnemy);
         
         // checks if enemy is hit by bullet
         this.physics.add.overlap(testEnemy, this.playerBullets, (enemy, bullet) => {
-            console.log('wow');
+            // console.log('wow');
             bullet.disableBody(true, true);
             enemy.enemyKilled();
         });

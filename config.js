@@ -18,9 +18,9 @@ let game = new Phaser.Game({
             }
         }
     },
-    captions: true,
+    captions: false,
     type: Phaser.WEBGL,
     scene: [Demo, Pause, Death],
     title: 'Hotline Albuquerque',
 });
-game.config.captions = true;
+game.config.captions = false;
