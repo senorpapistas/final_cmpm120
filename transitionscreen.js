@@ -123,8 +123,6 @@ class TransitionScreen extends Phaser.Scene{
             .play('megumin')
             this.time.addEvent({delay: 400, loop: true, callback: () => {explosion.destroy()}})
 
-            counter +=100
-
             //exit if amount of enemies is reached
             if (counter == this.enemiesdestroyed*100) {
                 broforce.remove()
@@ -152,6 +150,8 @@ class TransitionScreen extends Phaser.Scene{
 
                 }})
             }
+
+            counter +=100
         }})
 
         this.add.text(game.config.width*.5, game.config.height*.9, "transitionScreen", {font: "40px Arial"}).setOrigin(0.5);
