@@ -144,20 +144,20 @@ class TransitionScreen extends Phaser.Scene{
                 }})
             }
             else {
-            //spawns enemy 
-            if (this.enemiesdestroyed[counter/100] == 1){
-            let enemy = this.add.image(game.config.width*.08+counter%1000, game.config.height*.2+Math.floor(counter/1000)*100, 'enemy').setScale(.4)
-            }
-            else if (this.enemiesdestroyed[counter/100] == 1){
-                let enemy = this.add.image(game.config.width*.08+counter%1000, game.config.height*.2+Math.floor(counter/1000)*100, 'enemy2').setScale(.4)
-            }
+                //spawns enemy 
+                if (this.enemiesdestroyed[counter/100] == 1){
+                let enemy = this.add.image(game.config.width*.08+counter%1000, game.config.height*.2+Math.floor(counter/1000)*100, 'enemy').setScale(.4)
+                }
+                else if (this.enemiesdestroyed[counter/100] == 2){
+                    let enemy = this.add.image(game.config.width*.08+counter%1000, game.config.height*.2+Math.floor(counter/1000)*100, 'enemy2').setScale(.4)
+                }
 
-            //explosion effect
-            let explosion = this.add.sprite(game.config.width*.08+counter%1000, game.config.height*.2+Math.floor(counter/1000)*100,'megumin1')
-            .play('megumin')
-            this.time.addEvent({delay: 400, loop: true, callback: () => {explosion.destroy()}})
+                //explosion effect
+                let explosion = this.add.sprite(game.config.width*.08+counter%1000, game.config.height*.2+Math.floor(counter/1000)*100,'megumin1')
+                .play('megumin')
+                this.time.addEvent({delay: 400, loop: true, callback: () => {explosion.destroy()}})
 
-            counter +=100
+                counter +=100
             }
         }})
 
