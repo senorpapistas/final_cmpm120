@@ -9,6 +9,7 @@ class Demo extends Phaser.Scene {
         this.load.path = './assets/';
         this.load.image('player', 'player.png');
         this.load.image('enemy', 'enemy.png');
+        this.load.image('enemy2', 'enemy2.png');
         this.load.image('bullet', 'bullet.png');
         this.load.image('space', 'Spacebackground.png');
         this.load.audio('boost', 'boost.wav');
@@ -82,7 +83,7 @@ class Demo extends Phaser.Scene {
         let testEnemyCounter = 0;
         testEnemy.createMultiple({key: 'enemy', quantity: 5});
         let enemySpawn1 = this.time.addEvent({delay: 1000, loop: true, /*repeat: 19,*/ callback: () => {
-            testEnemy.spawn(Phaser.Math.RND.between(200, 900), -200, 0, 500, .5);
+            testEnemy.spawn(Phaser.Math.RND.between(200, 900), -200, 0, 350, .5);
             testEnemyCounter++;
             //console.log(killCount);
             if(testEnemyCounter == 20) {
@@ -93,6 +94,13 @@ class Demo extends Phaser.Scene {
                 })
             }
         }});
+        let testEnemy2 = this.add.existing(new Enemies(this.physics.world, this, {name: 'testEnemy2'}));
+        testEnemy2.createMultiple({key: 'enemy2', quantity: 3})
+        let enemySpawn2 = this.time.addEvent({delay: 1500, loop: true, callback: () => {
+            let spawnCoeff = Phaser.Math.RND.between(200, 900);
+            let x_move = Phaser.Math.RND.pick([-1, 1]);
+            testEnemy2.spawn(spawnCoeff, -200, spawnCoeff * 0.2 * x_move, 350, .5);
+        }})
 
         this.w = this.game.config.width;
         this.h = this.game.config.height;
@@ -106,7 +114,7 @@ class Demo extends Phaser.Scene {
         // console.log(testEnemy);
         
         // checks if enemy is hit by bullet
-        this.physics.add.overlap(testEnemy, this.playerBullets, (enemy, bullet) => {
+        this.physics.add.overlap(this.playerBullets, [testEnemy, testEnemy2], (bullet, enemy) => {
             // console.log('wow');
             killCount++;
             bullet.disableBody(true, true);
@@ -114,7 +122,7 @@ class Demo extends Phaser.Scene {
         });
 
         // checks if player touches enemy
-        this.physics.add.overlap(testEnemy, this.player, (enemy, player) => {
+        this.physics.add.overlap(this.player, [testEnemy, testEnemy2], (player, enemy) => {
             this.game.sound.stopAll();
             this.scene.start('death');
         });
