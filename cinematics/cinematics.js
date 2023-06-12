@@ -528,7 +528,22 @@ class victoryScreen extends Phaser.Scene{
     constructor(){
         super('victoryScreen');
     }
+    preload(){
+        this.load.path = '../assets/'
+        this.load.image('player', 'player.png')
+        this.load.image('space', 'Spacebackground.png');
+        this.load.image('enemy', 'enemy.png')
+        this.load.image('planet1', 'planet1.png')
+        this.load.image('planet2','planet2.png')
+    }
     create() {
+        //background
+        this.background = this.add.image(game.config.width*.5, game.config.height*.5, 'space')
+
+        this.add.rectangle(game.config.width*.5, game.config.height*.5, 1080, 1000, 0x000000)
+
+        this.add.image(game.config.width*.5, game.config.height*.8, 'planet2').setScale(5)
+
         //title
         let title = this.add.text(game.config.width*.5,game.config.height*.1, "You Win!", {font: "80px Verdana"}).setOrigin(0.5);
 
@@ -539,6 +554,7 @@ class victoryScreen extends Phaser.Scene{
             yoyo: true,
             repeat: -1
         });
+
 
         //score to be updated
         this.score1 = 3500;
@@ -651,7 +667,7 @@ let config = {
             }
         }
     },
-    scene: [titleScreen,transitionScreen,instructionScreen, cutscene, victoryScreen],
+    scene: [victoryScreen, titleScreen,transitionScreen,instructionScreen, cutscene],
 }
 
 let game = new Phaser.Game(config);
