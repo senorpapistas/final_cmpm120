@@ -654,12 +654,22 @@ class selectScreen extends Phaser.Scene{
     }
     create() {
 
+        //background
+        this.background = this.add.image(game.config.width*.5, game.config.height*.5, 'space')
 
-
+        //title
         let title = this.add.text(game.config.width*.5,game.config.height*.1, "Choose your ship", {font: "80px Verdana"}).setOrigin(0.5);
 
-        let box1 = this.add.isobox(game.config.width*.3, game.config.height*.7, 300, 200, 0x00b9f2, 0x016fce, 0x028fdf);
-        let box2 = this.add.isobox(game.config.width*.7, game.config.height*.7, 300, 200, 0x00b9f2, 0x016fce, 0x028fdf);
+        //animate title
+        this.tweens.add({
+            targets: [title],
+            scale: 1.1,
+            yoyo: true,
+            repeat: -1
+        });
+
+        let box1 = this.add.isobox(game.config.width*.3, game.config.height*.7, 300, 200, 0x2bd62b, 0x1b961b, 0x14c714);
+        let box2 = this.add.isobox(game.config.width*.7, game.config.height*.7, 300, 200, 0xd91630, 0xb3172c, 0xe80c29);
 
         let player_og = this.add.image(game.config.width*.7, game.config.height*.57, 'player_og').setInteractive()
         let player = this.add.image(game.config.width*.3, game.config.height*.57, 'player').setInteractive()
@@ -668,7 +678,7 @@ class selectScreen extends Phaser.Scene{
             box1.setFillStyle(0xffffff, 0xcccccc, 0xabcdef)
         })
         player.on('pointerout', ()=> {
-            box1.setFillStyle(0x00b9f2, 0x016fce, 0x028fdf)
+            box1.setFillStyle(0x2bd62b, 0x1b961b, 0x14c714)
         })
         player.on('pointerdown', ()=>{
             this.scene.start('cutscene', {playersprite: 'player'})
@@ -678,7 +688,7 @@ class selectScreen extends Phaser.Scene{
             box2.setFillStyle(0xffffff, 0xcccccc, 0xabcdef)
         })
         player_og.on('pointerout', ()=> {
-            box2.setFillStyle(0x00b9f2, 0x016fce, 0x028fdf)
+            box2.setFillStyle(0xd91630, 0xb3172c, 0xe80c29)
         })
         player_og.on('pointerdown', ()=>{
             this.scene.start('cutscene', {playersprite: 'player_og'})
