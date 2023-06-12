@@ -45,7 +45,6 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.body.allowGravity = false;
     };
     onWorldBounds() {
-        console.log(this.alpha);
         this.disableBody(true, true);
     };
     enemyKilled() {
