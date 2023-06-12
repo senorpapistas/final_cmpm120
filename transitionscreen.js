@@ -107,7 +107,17 @@ class TransitionScreen extends Phaser.Scene{
         //after that, shows # of enemies destroyed and counts up the score
 
         //score to be updated
-        let score = this.enemiesdestroyed.length * 500;
+        let score = 0;
+
+        for (let i = 0; x <this.enemiesdestroyed.length; x++) {
+            if (this.enemiesdestroyed[i] == 1) {
+                score+= 500
+            }
+            else if (this.enemiesdestroyed[i] == 2) {
+                score+= 800
+            }
+        }
+        
         let counter =0
 
         //text
