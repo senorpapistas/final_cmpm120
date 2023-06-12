@@ -144,7 +144,7 @@ class titleScreen extends Phaser.Scene{
         let buttontext = this.add.text(game.config.width*.5,game.config.height*.5, "Play", {font: "80px Verdana"}).setOrigin(0.5);
 
         //button breathing
-        let anim = this.tweens.add({    //button breathing
+        let anim = this.tweens.add({
             targets: [button],
             scale: 1.1,
             yoyo: true,
@@ -231,20 +231,27 @@ class titleScreen extends Phaser.Scene{
             .setOrigin(.5)
         let triangle = this.add.triangle(game.config.width*.5,game.config.height*.5 -300,0,0,1000,200,1000,0,0x3c78d8)
         let exit = this.add.triangle(game.config.width*.8 + 50,game.config.height*.2 + 250,0,0,0,100,75,50,0x3c0000).setInteractive()
-        let fullscreenbutton = this.add.rectangle(game.config.width*.5,game.config.height*.5, 1000, 200, 0, 0x000000).setInteractive()
-        let fullscreenbuttoneffect = this.add.rectangle(game.config.width*.5,game.config.height*.5, 1000, 200, 0x000000).setAlpha(0)
-        let subtitlesbuttoneffect = this.add.rectangle(game.config.width*.5,game.config.height*.6, 1000, 200, 0x000000).setAlpha(0)
-        let subtitlesbutton = this.add.rectangle(game.config.width*.5,game.config.height*.6, 1000, 200, 0, 0x000000).setInteractive()
-        let fullscreentext = this.add.text(game.config.width*.15,game.config.height*.475, "  fullscreen", {font: "80px Verdana"})
-        let subtitlestext = this.add.text(game.config.width*.15,game.config.height*.575, "  subtitles", {font: "80px Verdana"})
-        let fullscreenimage = this.add.text(game.config.width*.08,game.config.height*.475, "📺", {font: "80px Verdana"}).setAlpha(0)
-        let subtitlesimage = this.add.text(game.config.width*.08,game.config.height*.575, "🔤", {font: "80px Verdana"}).setAlpha(0)
+        let fullscreenbutton = this.add.rectangle(game.config.width*.5,game.config.height*.45, 1000, 200, 0, 0x000000).setInteractive()
+        let fullscreenbuttoneffect = this.add.rectangle(game.config.width*.5,game.config.height*.45, 1000, 200, 0x000000).setAlpha(0)
+        let fullscreentext = this.add.text(game.config.width*.15,game.config.height*.425, "  fullscreen", {font: "80px Verdana"})
+        let fullscreenimage = this.add.text(game.config.width*.08,game.config.height*.425, "📺", {font: "80px Verdana"}).setAlpha(0)
+
+        let subtitlesbutton = this.add.rectangle(game.config.width*.5,game.config.height*.55, 1000, 200, 0, 0x000000).setInteractive()
+        let subtitlesbuttoneffect = this.add.rectangle(game.config.width*.5,game.config.height*.55, 1000, 200, 0x000000).setAlpha(0)
+        let subtitlestext = this.add.text(game.config.width*.15,game.config.height*.525, "  subtitles", {font: "80px Verdana"})
+        let subtitlesimage = this.add.text(game.config.width*.08,game.config.height*.525, "🔤", {font: "80px Verdana"}).setAlpha(0)
+
+        let musicbutton = this.add.rectangle(game.config.width*.5,game.config.height*.65, 1000, 200, 0, 0x000000).setInteractive()
+        let musicbuttoneffect = this.add.rectangle(game.config.width*.5,game.config.height*.65, 1000, 200, 0x000000).setAlpha(0)
+        let musictext = this.add.text(game.config.width*.15,game.config.height*.625, "  music", {font: "80px Verdana"})
+        let musicimage = this.add.text(game.config.width*.08,game.config.height*.625, "🔊", {font: "80px Verdana"})
+
         let settingstitle = this.add.text(game.config.width*.15,game.config.height*.5 - 350, "Settings", {font: "80px Verdana"})
         let settingstitle2 = this.add.text(game.config.width*.15+10,game.config.height*.5 - 350+10, "Settings", {font: "80px Verdana", color: 0xffffff})
 
         
-        let settingsmenu = this.add.container(0,10, [rect,triangle,exit,fullscreenbutton, subtitlesbutton,fullscreenbuttoneffect,subtitlesbuttoneffect, 
-                                                    fullscreenimage, subtitlesimage, fullscreentext,subtitlestext, settingstitle2, settingstitle])
+        let settingsmenu = this.add.container(0,10, [rect,triangle,exit,fullscreenbutton, subtitlesbutton, musicbutton, fullscreenbuttoneffect,subtitlesbuttoneffect, musicbuttoneffect,
+                                                    fullscreenimage, subtitlesimage, musicimage, fullscreentext, subtitlestext, musictext, settingstitle2, settingstitle])
             .setAlpha(0)
         
         //
@@ -252,6 +259,7 @@ class titleScreen extends Phaser.Scene{
         //
         let subtitles = 0;
         let fullscreen = 0;
+        let music = 1;
 
         //settings buttons
         fullscreenbutton.on('pointerover',()=>{
@@ -283,10 +291,32 @@ class titleScreen extends Phaser.Scene{
             //subtitles code goes here
             //
         })
+
+        musicbutton.on('pointerover',()=>{
+            musicbuttoneffect.setAlpha(1)
+        })
+        musicbutton.on('pointerout',()=>{
+            musicbuttoneffect.setAlpha(0)
+        })
+        musicbutton.on('pointerdown',()=>{
+            if (music == 0) {
+                music = 1
+                musicimage.setText('🔊')
+                }
+            else{
+                music= 0
+                musicimage.setText('🔈')
+            }
+            //
+            //subtitles code goes here
+            //
+        })
+
         exit.on('pointerdown',()=>{
             settingsmenu.setAlpha(0)
             settings = 0
         })    
+
 
     }
     update() {
@@ -621,7 +651,7 @@ let config = {
             }
         }
     },
-    scene: [transitionScreen,titleScreen,instructionScreen, cutscene, victoryScreen],
+    scene: [titleScreen,transitionScreen,instructionScreen, cutscene, victoryScreen],
 }
 
 let game = new Phaser.Game(config);
