@@ -109,7 +109,7 @@ class TransitionScreen extends Phaser.Scene{
         //score to be updated
         let score = 0;
 
-        for (let i = 0; x <this.enemiesdestroyed.length; x++) {
+        for (let i = 0; i <this.enemiesdestroyed.length; i++) {
             if (this.enemiesdestroyed[i] == 1) {
                 score+= 500
             }
@@ -117,7 +117,7 @@ class TransitionScreen extends Phaser.Scene{
                 score+= 800
             }
         }
-        
+
         let counter =0
 
         //text
