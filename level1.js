@@ -4,6 +4,7 @@ class Level1 extends Phaser.Scene {
     }
     init(data) {
         this.bgm = data.bgm;
+        this.playersprite = data.playersprite;
     }
     preload() {
         this.load.path = './assets/';
@@ -45,7 +46,7 @@ class Level1 extends Phaser.Scene {
             });
 
         // player character sprite
-        this.player = this.physics.add.sprite(540, 960, 'player').setSize(150, 100).setScale(.9);
+        this.player = this.physics.add.sprite(540, 960, this.playersprite).setSize(150, 100).setScale(.9);
         
         // temporary rectangle used to visualize sides of the screen
         this.physics.add.existing(new Phaser.GameObjects.Rectangle(this, 540, 960, 10, 1920)).body.allowGravity = false;
