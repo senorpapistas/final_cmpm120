@@ -39,7 +39,7 @@ class cutscene extends Phaser.Scene {
 
             //click again to skip animation
             this.input.once('pointerdown', () => {
-                this.scene.start('titleScreen');
+                this.scene.start('titleScreen', {playersprite: this.playersprite})
             });
 
             title.destroy()
