@@ -29,7 +29,7 @@ class cutscene extends Phaser.Scene {
         let title = this.add.text(game.config.width*.5,game.config.height*.1, "Click to start", {font: "80px Verdana"}).setOrigin(0.5);
 
         //player
-        let player = this.add.image(game.config.width*.5, game.config.height*.8, this.playersprite);
+        let player = this.add.image(game.config.width*.5, game.config.height*.8, this.playersprite[0]);
         
         //variable to turn on scrolling backgrounds
         this.scroll = 0;
@@ -133,7 +133,7 @@ class titleScreen extends Phaser.Scene{
             .setOrigin(0,0)
 
         //player
-        let player = this.add.image(game.config.width*.5, game.config.height*.8, this.playersprite);
+        let player = this.add.image(game.config.width*.5, game.config.height*.8, this.playersprite[0]);
 
 
         //title
@@ -502,6 +502,9 @@ class selectScreen extends Phaser.Scene{
     create() {
         let sound = this.sound.add('click');
 
+        let spriteSelect = ['player', 'germ1', 'germ2', 'germ3', 0.75, 0.6];
+        let spriteSelect_og = ['player_og', 'enemy', 'enemy2', 'enemy3', 0.5, 0.4];
+
         //background
         this.background = this.add.image(game.config.width*.5, game.config.height*.5, 'space')
 
@@ -530,7 +533,7 @@ class selectScreen extends Phaser.Scene{
         })
         player.on('pointerdown', ()=>{
             sound.play()
-            this.scene.start('cutscene', {playersprite: 'player'})
+            this.scene.start('cutscene', {playersprite: spriteSelect})
         })
 
         player_og.on('pointerover', ()=> {
@@ -541,7 +544,7 @@ class selectScreen extends Phaser.Scene{
         })
         player_og.on('pointerdown', ()=>{
             sound.play()
-            this.scene.start('cutscene', {playersprite: 'player_og'})
+            this.scene.start('cutscene', {playersprite: spriteSelect_og})
         })
     }
 }

@@ -52,7 +52,7 @@ class Level1 extends Phaser.Scene {
             })
 
         // player character sprite
-        this.player = this.physics.add.sprite(540, 960, this.playersprite).setSize(150, 100).setScale(.9);
+        this.player = this.physics.add.sprite(540, 960, this.playersprite[0]).setSize(150, 100).setScale(.9);
         
         // temporary rectangle used to visualize sides of the screen
         this.physics.add.existing(new Phaser.GameObjects.Rectangle(this, 540, 960, 10, 1920)).body.allowGravity = false;
@@ -94,9 +94,9 @@ class Level1 extends Phaser.Scene {
         let enemy1 = this.add.existing(new Enemies(this.physics.world, this, {name: 'enemy1'}));
         // testEnemy.create(0, 0, 'enemy');
         let enemy1Counter = 0;
-        enemy1.createMultiple({key: 'enemy', quantity: 4});
+        enemy1.createMultiple({key: this.playersprite[1], quantity: 4});
         let enemySpawn1 = this.time.addEvent({delay: 1000, loop: true, callback: () => {
-            if(enemy1.spawn(Phaser.Math.RND.between(200, 900), -200, 0, 350, .5)) {enemy1Counter++}
+            if(enemy1.spawn(Phaser.Math.RND.between(200, 900), -200, 0, 350, this.playersprite[4])) {enemy1Counter++}
             if(enemy1Counter == 20) {
                 enemySpawn1.remove();
                 console.log('wave cleared');

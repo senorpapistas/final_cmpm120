@@ -42,7 +42,7 @@ class Level2 extends Phaser.Scene {
             })
 
         // player character sprite
-        this.player = this.physics.add.sprite(540, 960, this.playersprite).setSize(150, 100).setScale(.9);
+        this.player = this.physics.add.sprite(540, 960, this.playersprite[0]).setSize(150, 100).setScale(.9);
         
         // temporary rectangle used to visualize sides of the screen
         this.physics.add.existing(new Phaser.GameObjects.Rectangle(this, 540, 960, 10, 1920)).body.allowGravity = false;
@@ -81,9 +81,9 @@ class Level2 extends Phaser.Scene {
         let enemy1 = this.add.existing(new Enemies(this.physics.world, this, {name: 'enemy1'}));
         // testEnemy.create(0, 0, 'enemy');
         let enemy1Counter = 0;
-        enemy1.createMultiple({key: 'enemy', quantity: 4});
+        enemy1.createMultiple({key: this.playersprite[1], quantity: 4});
         let enemySpawn1 = this.time.addEvent({delay: 1000, loop: true, callback: () => {
-            if(enemy1.spawn(Phaser.Math.RND.between(200, 900), -200, 0, 350, .5)) {enemy1Counter++;}
+            if(enemy1.spawn(Phaser.Math.RND.between(200, 900), -200, 0, 350, this.playersprite[4])) {enemy1Counter++;}
             if(enemy1Counter == 15) {
                 enemySpawn1.remove();
                 //console.log('wave cleared');
@@ -95,11 +95,11 @@ class Level2 extends Phaser.Scene {
 
         let enemy2 = this.add.existing(new Enemies(this.physics.world, this, {name: 'enemy2'}));
         let enemy2Counter = 0;
-        enemy2.createMultiple({key: 'enemy2', quantity: 3})
+        enemy2.createMultiple({key: this.playersprite[2], quantity: 3})
         let enemySpawn2 = this.time.addEvent({delay: 1500, loop: true, callback: () => {
             let spawnCoeff = Phaser.Math.RND.between(200, 900);
             let x_move = Phaser.Math.RND.pick([-1, 1]);
-            if(enemy2.spawn(spawnCoeff, -200, spawnCoeff * 0.2 * x_move, 350, .5)) {enemy2Counter++;}
+            if(enemy2.spawn(spawnCoeff, -200, spawnCoeff * 0.2 * x_move, 350, this.playersprite[4])) {enemy2Counter++;}
             if(enemy2Counter == 15) {
                 enemySpawn2.remove();
                 //console.log('wave cleared');

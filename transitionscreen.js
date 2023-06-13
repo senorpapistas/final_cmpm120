@@ -68,7 +68,7 @@ class TransitionScreen extends Phaser.Scene{
         this.add.rectangle(game.config.width*.5, game.config.height*.3, 1080, 1500, 0x000000)
 
         //player
-        let player = this.add.image(game.config.width*.5, game.config.height*.8, this.playersprite)
+        let player = this.add.image(game.config.width*.5, game.config.height*.8, this.playersprite[0])
         player.angle = 90;
 
         //player spaceship bobbing
@@ -170,13 +170,13 @@ class TransitionScreen extends Phaser.Scene{
             else {
                 //spawns enemy 
                 if (this.enemiesdestroyed[counter/100] == 1){
-                let enemy = this.add.image(game.config.width*.08+counter%1000, game.config.height*.2+Math.floor(counter/1000)*100, 'enemy').setScale(.4)
+                let enemy = this.add.image(game.config.width*.08+counter%1000, game.config.height*.2+Math.floor(counter/1000)*100, this.playersprite[1]).setScale(this.playersprite[5])
                 }
                 else if (this.enemiesdestroyed[counter/100] == 2){
-                    let enemy = this.add.image(game.config.width*.08+counter%1000, game.config.height*.2+Math.floor(counter/1000)*100, 'enemy2').setScale(.4)
+                    let enemy = this.add.image(game.config.width*.08+counter%1000, game.config.height*.2+Math.floor(counter/1000)*100, this.playersprite[2]).setScale(this.playersprite[5])
                 }
                 else if (this.enemiesdestroyed[counter/100] == 3){
-                    let enemy = this.add.image(game.config.width*.08+counter%1000, game.config.height*.2+Math.floor(counter/1000)*100, 'enemy3').setScale(.4)
+                    let enemy = this.add.image(game.config.width*.08+counter%1000, game.config.height*.2+Math.floor(counter/1000)*100, this.playersprite[3]).setScale(this.playersprite[5])
                 }
 
                 //explosion effect
