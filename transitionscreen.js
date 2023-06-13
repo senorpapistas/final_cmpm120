@@ -162,9 +162,12 @@ class TransitionScreen extends Phaser.Scene{
                         },
                         onComplete:()=> {
                             sound.play()
+                            if (game.config.captions == true) {
+                                let boosttext = this.add.text(game.config.width*.5, 1800, '(click)', {fontSize: '40px'}).setOrigin(.5);
+                                this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
+                            }
+
                             this.add.text(game.config.width*.5,game.config.height*.65, "click to continue",{font: "40px Verdana", color: '#f0f024'}).setOrigin(.5)
-
-
                         }
                     })
 
@@ -189,6 +192,10 @@ class TransitionScreen extends Phaser.Scene{
                 let explosion = this.add.sprite(game.config.width*.08+counter%1000, game.config.height*.2+Math.floor(counter/1000)*100,'megumin1')
                 .play('megumin')
                 explosionsfx.play()
+                if (game.config.captions == true) {
+                    let boosttext = this.add.text(game.config.width*.5, 1770, '(explosion)', {fontSize: '40px'}).setOrigin(.5);
+                    this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
+                }
                 this.time.addEvent({delay: 400, loop: true, callback: () => {explosion.destroy()}})
 
                 counter +=100
@@ -198,6 +205,10 @@ class TransitionScreen extends Phaser.Scene{
         //click to animate ship and transition to next scene
         this.input.once('pointerdown', () => {
             sound.play()
+            if (game.config.captions == true) {
+                let boosttext = this.add.text(game.config.width*.5, 1800, '(click)', {fontSize: '40px'}).setOrigin(.5);
+                this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
+            }
             this.tweens.add({
                 targets: player,
                 x: 1500,
@@ -213,6 +224,11 @@ class TransitionScreen extends Phaser.Scene{
         this.pads = this.input.gamepad.gamepads;
         this.input.gamepad.on('down', () => {
             sound.play()
+            if (game.config.captions == true) {
+                let boosttext = this.add.text(game.config.width*.5, 1800, '(click)', {fontSize: '40px'});
+                this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
+            }
+
             this.tweens.add({
                 targets: player,
                 x: 1500,

@@ -180,6 +180,10 @@ class titleScreen extends Phaser.Scene{
             .on('pointerdown',()=>{
                 if (settings == 0) {
                     sound.play()
+                    if (game.config.captions == true) {
+                        let boosttext = this.add.text(game.config.width*.5, 1800, '(click)', {fontSize: '40px'}).setOrigin(.5);
+                        this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
+                    }
                     //background disappears, spaceship leaves
                     this.tweens.add({targets:t1, x:-3000, duration: 700})
                     this.tweens.add({targets:t2, x:5000, duration: 500})
@@ -225,6 +229,10 @@ class titleScreen extends Phaser.Scene{
             //opens settings menu
             .on('pointerdown',()=>{
                 sound.play()
+                if (game.config.captions == true) {
+                    let boosttext = this.add.text(game.config.width*.5, 1800, '(click)', {fontSize: '40px'}).setOrigin(.5);
+                    this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
+                }
                 this.tweens.add({targets:effect2, alpha: 0, duration: 500})
                 settings = 1
                 settingsmenu.setAlpha(1)
@@ -275,6 +283,10 @@ class titleScreen extends Phaser.Scene{
         //fullscreen code goes here
         //
         sound.play()
+        if (game.config.captions == true) {
+            let boosttext = this.add.text(game.config.width*.5, 1800, '(click)', {fontSize: '40px'}).setOrigin(.5);
+            this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
+        }
         if (this.scale.isFullscreen) {
             this.scale.stopFullscreen();
             fullscreenimage.setAlpha(0)
@@ -293,6 +305,10 @@ class titleScreen extends Phaser.Scene{
         //subtitles code goes here
         //
         sound.play()
+        if (game.config.captions == true) {
+            let boosttext = this.add.text(game.config.width*.5, 1800, '(click)', {fontSize: '40px'}).setOrigin(.5);
+            this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
+        }
         if (game.config.captions) {
             game.config.captions = false;
             subtitlesimage.setAlpha(0);
@@ -306,6 +322,10 @@ class titleScreen extends Phaser.Scene{
         musicbutton.on('pointerout',()=>{musicbuttoneffect.setAlpha(0)})
         musicbutton.on('pointerdown',()=>{
             sound.play()
+            if (game.config.captions == true) {
+                let boosttext = this.add.text(game.config.width*.5, 1800, '(click)', {fontSize: '40px'}).setOrigin(.5);
+                this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
+            }
         if (this.bgm.mute) {
             musicimage.setText('🔊')
             this.bgm.mute = false;
@@ -318,15 +338,19 @@ class titleScreen extends Phaser.Scene{
             exit.on('pointerout',()=>{exit.setScale(1)})
             exit.on('pointerdown',()=>{
                 sound.play()
+                if (game.config.captions == true) {
+                    let boosttext = this.add.text(game.config.width*.5, 1800, '(click)', {fontSize: '40px'}).setOrigin(.5);
+                    this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
+                }
                 settingsmenu.setAlpha(0)
                 settings = 0
             })    
 
 
         //ship select button
-        let shipbuttonback = this.add.rectangle(game.config.width*.35, game.config.height*.95, 220, 120, 0xffffff)
-        let shipbuttonbody = this.add.rectangle(game.config.width*.35, game.config.height*.95, 200, 100, 0x3c78d8).setInteractive()
-        let shipbuttontext = this.add.text(game.config.width*.35, game.config.height*.95, "Ship", {font: "50px Verdana"}).setOrigin(.5)
+        let shipbuttonback = this.add.rectangle(game.config.width*.2, game.config.height*.95, 220, 120, 0xffffff)
+        let shipbuttonbody = this.add.rectangle(game.config.width*.2, game.config.height*.95, 200, 100, 0x3c78d8).setInteractive()
+        let shipbuttontext = this.add.text(game.config.width*.2, game.config.height*.95, "Ship", {font: "50px Verdana"}).setOrigin(.5)
 
             shipbuttonbody.on('pointerover',()=>{ 
                 shipbuttonback.setScale(1.1)
@@ -340,13 +364,17 @@ class titleScreen extends Phaser.Scene{
             })
             shipbuttonbody.on('pointerdown',()=>{
                 sound.play()
+                if (game.config.captions == true) {
+                    let boosttext = this.add.text(game.config.width*.5, 1800, '(click)', {fontSize: '40px'}).setOrigin(.5);
+                    this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
+                }
                 this.scene.start('selectScreen')
             })
 
             //level select button
-        let levelbuttonback = this.add.rectangle(game.config.width*.65, game.config.height*.95, 220, 120, 0xffffff)
-        let levelbuttonbody = this.add.rectangle(game.config.width*.65, game.config.height*.95, 200, 100, 0x3c78d8).setInteractive()
-        let levelbuttontext = this.add.text(game.config.width*.65, game.config.height*.95, "Level", {font: "50px Verdana"}).setOrigin(.5)
+        let levelbuttonback = this.add.rectangle(game.config.width*.8, game.config.height*.95, 220, 120, 0xffffff)
+        let levelbuttonbody = this.add.rectangle(game.config.width*.8, game.config.height*.95, 200, 100, 0x3c78d8).setInteractive()
+        let levelbuttontext = this.add.text(game.config.width*.8, game.config.height*.95, "Level", {font: "50px Verdana"}).setOrigin(.5)
 
             levelbuttonbody.on('pointerover',()=>{ 
                 levelbuttonback.setScale(1.1)
@@ -360,6 +388,10 @@ class titleScreen extends Phaser.Scene{
             })
             levelbuttonbody.on('pointerdown',()=>{
                 sound.play()
+                if (game.config.captions == true) {
+                    let boosttext = this.add.text(game.config.width*.5, 1800, '(click)', {fontSize: '40px'}).setOrigin(.5);
+                    this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
+                }
                 this.scene.start('levelselectScreen', {playersprite: this.playersprite, bgm: this.bgm})
             })
     }
@@ -381,6 +413,8 @@ class levelselectScreen extends Phaser.Scene{
         this.playersprite = data.playersprite;
     }
     create() {
+        let sound = this.sound.add('click')
+
         //initial still background
         this.shadow = this.add.rectangle(game.config.width*.5, game.config.height*.5,1080,1920, 0x000000)
         this.background = this.add.image(game.config.width*.5, game.config.height*.5, 'space')
@@ -405,6 +439,11 @@ class levelselectScreen extends Phaser.Scene{
             this.tweens.add({targets:effect, alpha: 0, duration: 500})
         })
         .on('pointerdown',()=>{
+            sound.play()
+            if (game.config.captions == true) {
+                let boosttext = this.add.text(game.config.width*.5, 1800, '(click)', {fontSize: '40px'}).setOrigin(.5);
+                this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
+            }
             this.scene.start('level1', {playersprite: this.playersprite, bgm: this.bgm})
         })
 
@@ -430,6 +469,11 @@ class levelselectScreen extends Phaser.Scene{
             this.tweens.add({targets:effect2, alpha: 0, duration: 500})
         })
         .on('pointerdown',()=>{
+            sound.play()
+            if (game.config.captions == true) {
+                let boosttext = this.add.text(game.config.width*.5, 1800, '(click)', {fontSize: '40px'}).setOrigin(.5);
+                this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
+            }
             this.scene.start('level2', {playersprite: this.playersprite, bgm: this.bgm})
         })
 
@@ -454,6 +498,11 @@ class levelselectScreen extends Phaser.Scene{
             this.tweens.add({targets:effect3, alpha: 0, duration: 500})
         })
         .on('pointerdown',()=>{
+            sound.play()
+            if (game.config.captions == true) {
+                let boosttext = this.add.text(game.config.width*.5, 1800, '(click)', {fontSize: '40px'}).setOrigin(.5);
+                this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
+            }
             this.scene.start('level3', {playersprite: this.playersprite, bgm: this.bgm})
         })
     }
@@ -529,12 +578,20 @@ class victoryScreen extends Phaser.Scene{
                 {
                     targets: this.text1,
                     alpha: 1,
-                    onComplete:()=>{sound_click.play()}
+                    onComplete:()=>{sound_click.play()
+                        if (game.config.captions == true) {
+                            let boosttext = this.add.text(game.config.width*.5, 1800, '(click)', {fontSize: '40px'}).setOrigin(.5);
+                            this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
+                        }}
                 },
                 {
                     targets: this.text2,
                     alpha: 1,
-                    onComplete:()=>{sound_click.play()}
+                    onComplete:()=>{sound_click.play()
+                        if (game.config.captions == true) {
+                            let boosttext = this.add.text(game.config.width*.5, 1800, '(click)', {fontSize: '40px'}).setOrigin(.5);
+                            this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
+                        }}
                 },
                 {
                     targets: this.text3,
@@ -543,6 +600,10 @@ class victoryScreen extends Phaser.Scene{
                     //final score counts up
                     onComplete:() => {
                         sound_click.play()
+                        if (game.config.captions == true) {
+                            let boosttext = this.add.text(game.config.width*.5, 1800, '(click)', {fontSize: '40px'}).setOrigin(.5);
+                            this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
+                        }
                         let updatescore = this.tweens.addCounter({
                             from: 0,
                             to: this.finalscore,
@@ -569,6 +630,10 @@ class victoryScreen extends Phaser.Scene{
 
         this.input.once('pointerdown', () => {
             sound_click.play();
+            if (game.config.captions == true) {
+                let boosttext = this.add.text(game.config.width*.5, 1800, '(click)', {fontSize: '40px'}).setOrigin(.5);
+                this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
+            }
             this.bgm.stop();
             this.scene.start('selectScreen');
         });
@@ -634,6 +699,10 @@ class selectScreen extends Phaser.Scene{
         })
         player.on('pointerdown', ()=>{
             sound.play()
+            if (game.config.captions == true) {
+                let boosttext = this.add.text(game.config.width*.5, 1800, '(click)', {fontSize: '40px'}).setOrigin(.5);
+                this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
+            }
             this.scene.start('cutscene', {playersprite: spriteSelect})
         })
 
@@ -650,6 +719,10 @@ class selectScreen extends Phaser.Scene{
         })
         player_og.on('pointerdown', ()=>{
             sound.play()
+            if (game.config.captions == true) {
+                let boosttext = this.add.text(game.config.width*.5, 1800, '(click)', {fontSize: '40px'}).setOrigin(.5);
+                this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
+            }
             this.scene.start('cutscene', {playersprite: spriteSelect_og})
         })
     }
