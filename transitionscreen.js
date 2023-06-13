@@ -129,6 +129,9 @@ class TransitionScreen extends Phaser.Scene{
             else if (this.enemiesdestroyed[i] == 3) {
                 score+= 1000
             }
+            else if (this.enemiesdestroyed[i] == 4) {
+                score+= 5000
+            }
         }
 
         let counter =0
@@ -176,6 +179,9 @@ class TransitionScreen extends Phaser.Scene{
                     let enemy = this.add.image(game.config.width*.08+counter%1000, game.config.height*.2+Math.floor(counter/1000)*100, this.playersprite[2]).setScale(this.playersprite[5])
                 }
                 else if (this.enemiesdestroyed[counter/100] == 3){
+                    let enemy = this.add.image(game.config.width*.08+counter%1000, game.config.height*.2+Math.floor(counter/1000)*100, this.playersprite[3]).setScale(this.playersprite[5])
+                }
+                else if (this.enemiesdestroyed[counter/100] == 4){
                     let enemy = this.add.image(game.config.width*.08+counter%1000, game.config.height*.2+Math.floor(counter/1000)*100, this.playersprite[3]).setScale(this.playersprite[5])
                 }
 

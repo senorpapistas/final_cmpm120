@@ -496,21 +496,43 @@ class selectScreen extends Phaser.Scene{
             repeat: -1
         });
 
+        //description text
+        let name = this.add.text(game.config.width*.5, game.config.height*.8, '', {fontSize: 120, color: '#ff0000'}).setOrigin(.5);
+        let description = this.add.text(game.config.width*.5, game.config.height*.9, '', {fontSize: 60}).setOrigin(.5);
+
         let box1 = this.add.isobox(game.config.width*.3, game.config.height*.7, 300, 200, 0x2bd62b, 0x1b961b, 0x14c714);
         let box2 = this.add.isobox(game.config.width*.7, game.config.height*.7, 300, 200, 0xd91630, 0xb3172c, 0xe80c29);
 
         let player_og = this.add.image(game.config.width*.7, game.config.height*.57, 'player_og').setInteractive()
         let player = this.add.image(game.config.width*.3, game.config.height*.57, 'player').setInteractive()
 
-        player.on('pointerover', ()=> {box1.setFillStyle(0xffffff, 0xcccccc, 0xabcdef)})
-        player.on('pointerout', ()=> {box1.setFillStyle(0x2bd62b, 0x1b961b, 0x14c714)})
+        //new ship
+        player.on('pointerover', ()=> {
+            box1.setFillStyle(0xffffff, 0xcccccc, 0xabcdef)
+            name.setText("THE ALPHA").setColor('#14c714')
+            description.setText('Mission: \ndestroy the ancient germs')
+        })
+        player.on('pointerout', ()=> {
+            box1.setFillStyle(0x2bd62b, 0x1b961b, 0x14c714)
+            name.setText('')
+            description.setText('')    
+        })
         player.on('pointerdown', ()=>{
             sound.play()
             this.scene.start('cutscene', {playersprite: spriteSelect})
         })
 
-        player_og.on('pointerover', ()=> {box2.setFillStyle(0xffffff, 0xcccccc, 0xabcdef)})
-        player_og.on('pointerout', ()=> {box2.setFillStyle(0xd91630, 0xb3172c, 0xe80c29)})
+        //old ship
+        player_og.on('pointerover', ()=> {
+            box2.setFillStyle(0xffffff, 0xcccccc, 0xabcdef)
+            name.setText("THE OG").setColor('#e80c29')
+            description.setText('Mission: \nKILL. THEM. ALL.')
+        })
+        player_og.on('pointerout', ()=> {
+            box2.setFillStyle(0xd91630, 0xb3172c, 0xe80c29)
+            name.setText('')
+            description.setText('')   
+        })
         player_og.on('pointerdown', ()=>{
             sound.play()
             this.scene.start('cutscene', {playersprite: spriteSelect_og})
