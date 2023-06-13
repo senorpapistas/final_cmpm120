@@ -201,7 +201,7 @@ class titleScreen extends Phaser.Scene{
                         duration: 1000, 
                         ease: 'Cubic',
                         onComplete:() => {
-                            console.log(this.bgm.mute)
+                            //console.log(this.bgm.mute)
                             this.scene.start('level1', {playersprite: this.playersprite, bgm: this.bgm})
                         }
                     });

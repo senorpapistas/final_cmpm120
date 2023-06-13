@@ -17,7 +17,8 @@ class Level1 extends Phaser.Scene {
         this.load.audio('bgm', 'audio/creamy tomato.mp3');
     }
     create() {
-        
+        this.game.config.lvl1score = 0;
+
         // changed world bounds to allow enemies to spawn outside without being destroyed
         this.physics.world.setBounds(-200, -500, 1480, 2720);
 
@@ -123,7 +124,7 @@ class Level1 extends Phaser.Scene {
             .setStyle({fontSize: `${5 * this.s}px`, color: '#00ff00'})
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
-                console.log(this.kills);
+                //console.log(this.kills);
                 this.scene.start('transitionScreen', {enemiesdestroyed: this.kills, playersprite: this.playersprite})
             });
 
@@ -160,7 +161,7 @@ class Level1 extends Phaser.Scene {
             player.setVelocityX(0).setVelocityY(0).body.allowGravity = false;
             this.time.delayedCall(400, () => {
                 this.game.sound.stopAll();
-                this.scene.start('death');
+                this.scene.start('death', {level: 'level1'});
             });
         });
         // checks if object hits world bounds
@@ -174,7 +175,7 @@ class Level1 extends Phaser.Scene {
         
         if (this.killCount == 20) {
             this.time.delayedCall(2000, () => {
-                this.scene.start('transitionScreen', {enemiesdestroyed: this.kills, playersprite: this.playersprite})
+                this.scene.start('transitionScreen', {enemiesdestroyed: this.kills, playersprite: this.playersprite, nextLevel: 'level2'})
             })
         }
 
