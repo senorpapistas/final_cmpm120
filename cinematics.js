@@ -106,6 +106,7 @@ class titleScreen extends Phaser.Scene{
         this.playersprite = data.playersprite;
     }
     create() {
+        
         let sound = this.sound.add('click');
 
         //music?
@@ -359,7 +360,7 @@ class titleScreen extends Phaser.Scene{
             })
             levelbuttonbody.on('pointerdown',()=>{
                 sound.play()
-                this.scene.start('levelselectScreen')
+                this.scene.start('levelselectScreen', {playersprite: this.playersprite, bgm: this.bgm})
             })
     }
     update() {
@@ -375,9 +376,86 @@ class levelselectScreen extends Phaser.Scene{
     constructor() {
         super('levelselectScreen')
     }
+    init(data) {
+        this.bgm = data.bgm;
+        this.playersprite = data.playersprite;
+    }
     create() {
-        
-        this.scene.start('level1', {playersprite: this.playersprite, bgm: this.bgm})
+        //initial still background
+        this.shadow = this.add.rectangle(game.config.width*.5, game.config.height*.5,1080,1920, 0x000000)
+        this.background = this.add.image(game.config.width*.5, game.config.height*.5, 'space')
+
+        //settings button
+        let effect = this.add.rectangle(game.config.width *.5, game.config.height*.5, 1080, 50, 0xffffff)
+            .setAlpha(0)
+        let buttonback = this.add.rectangle(game.config.width *.5 + 20, game.config.height*.5 + 20, 500, 200, 0xffffff);
+        let button = this.add.rectangle(game.config.width *.5, game.config.height*.5, 500, 200, 0x3c78d8).setInteractive();
+        let buttontext = this.add.text(game.config.width*.5,game.config.height*.5, "Level 1", {font: "80px Verdana"}).setOrigin(0.5);
+
+        button.on('pointerover',()=>{
+                button.scale = 1.1
+                buttonback.scale = 1.1
+                buttontext.scale = 1.1
+                this.tweens.add({targets:effect, alpha: 1, duration: 500})
+        })
+        .on('pointerout',()=> {
+            button.scale = 1
+            buttonback.scale = 1
+            buttontext.scale = 1
+            this.tweens.add({targets:effect, alpha: 0, duration: 500})
+        })
+        .on('pointerdown',()=>{
+            this.scene.start('level1', {playersprite: this.playersprite, bgm: this.bgm})
+        })
+
+
+        //settings2 button
+        let effect2 = this.add.rectangle(game.config.width *.5, game.config.height*.65, 1080, 50, 0xffffff)
+            .setAlpha(0);
+        let button2back = this.add.rectangle(game.config.width *.5 + 20, game.config.height*.65 + 20, 500, 200, 0xffffff);
+        let button2 = this.add.rectangle(game.config.width *.5, game.config.height*.65, 500, 200, 0x3c78d8).setInteractive();
+        let button2text = this.add.text(game.config.width*.5,game.config.height*.65, "Level 2", {font: "80px Verdana"}).setOrigin(0.5);
+
+        //settings2 button effects
+        button2.on('pointerover',()=>{
+            button2.scale = 1.1
+            button2back.scale = 1.1
+            button2text.scale = 1.1
+            this.tweens.add({targets:effect2, alpha: 1, duration: 500}) 
+        })
+        .on('pointerout',()=> {
+            button2.scale = 1
+            button2back.scale = 1
+            button2text.scale = 1
+            this.tweens.add({targets:effect2, alpha: 0, duration: 500})
+        })
+        .on('pointerdown',()=>{
+            this.scene.start('level2', {playersprite: this.playersprite, bgm: this.bgm})
+        })
+
+
+        let effect3 = this.add.rectangle(game.config.width *.5, game.config.height*.8, 1080, 50, 0xffffff)
+            .setAlpha(0);
+        let button3back = this.add.rectangle(game.config.width *.5 + 20, game.config.height*.8 + 20, 500, 200, 0xffffff);
+        let button3 = this.add.rectangle(game.config.width *.5, game.config.height*.8, 500, 200, 0x3c78d8).setInteractive();
+        let button3text = this.add.text(game.config.width*.5,game.config.height*.8, "Level 3", {font: "80px Verdana"}).setOrigin(0.5);
+
+        //settings3 button effects
+        button3.on('pointerover',()=>{
+            button3.scale = 1.1
+            button3back.scale = 1.1
+            button3text.scale = 1.1
+            this.tweens.add({targets:effect3, alpha: 1, duration: 500}) 
+        })
+        .on('pointerout',()=> {
+            button3.scale = 1
+            button3back.scale = 1
+            button3text.scale = 1
+            this.tweens.add({targets:effect3, alpha: 0, duration: 500})
+        })
+        .on('pointerdown',()=>{
+            this.scene.start('level3', {playersprite: this.playersprite, bgm: this.bgm})
+        })
     }
 }
 
@@ -509,6 +587,10 @@ class selectScreen extends Phaser.Scene{
 
         this.load.audio('click', '/audio/click.mp3');
     }*/
+    init(data) {
+        this.bgm = data.bgm;
+        this.playersprite = data.playersprite;
+    }
     create() {
         let sound = this.sound.add('click');
 
