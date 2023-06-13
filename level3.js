@@ -14,8 +14,15 @@ class Level3 extends Phaser.Scene {
         // changed world bounds to allow enemies to spawn outside without being destroyed
         this.physics.world.setBounds(-200, -500, 1480, 2720);
 
-        this.stars = this.add.image(game.config.width*.5, game.config.height*.5, 'space')
-        this.stars2 = this.add.image(game.config.width*.5, game.config.height*1.5, 'space')
+        this.stars = this.add.image(game.config.width*.5, game.config.height*.5, 'space');
+        this.stars2 = this.add.image(game.config.width*.5, game.config.height*1.5, 'space');
+
+        let bottomBound = this.physics.add.existing(new Phaser.GameObjects.Rectangle(this, 540, 2000, 1080, 70));
+        bottomBound.body.setImmovable(true);
+        bottomBound.body.allowGravity = false;
+        let topBound = this.physics.add.existing(new Phaser.GameObjects.Rectangle(this, 540, -100, 1080, 70));
+        topBound.body.setImmovable(true);
+        topBound.body.allowGravity = false;
         
         this.scoreCounter = this.add.text(540, 100, '0', {font: '80px Verdana'}).setOrigin(0.5);
 
@@ -49,6 +56,9 @@ class Level3 extends Phaser.Scene {
         // player character sprite
         this.player = this.physics.add.sprite(540, 960, this.playersprite[0]).setSize(150, 100).setScale(.9);
         
+        this.physics.add.collider(this.player, bottomBound);
+        this.physics.add.collider(this.player, topBound);
+
         // temporary rectangle used to visualize sides of the screen
         this.physics.add.existing(new Phaser.GameObjects.Rectangle(this, 540, 960, 10, 1920)).body.allowGravity = false;
 
@@ -252,13 +262,7 @@ class Level3 extends Phaser.Scene {
             this.player.setVelocityX(velx);
         }
 
-        //resets position if player goes off screen
-        if (this.player.y > 2000) {
-            this.player.x = 540;
-            this.player.y = 960;
-            this.player.setVelocityY(0);
-        }
-
+        // player wraps around to other side of screen
         if (this.player.x > 1200) {
             this.player.setX(-120);
         } else if (this.player.x < -120) {
