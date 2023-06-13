@@ -70,6 +70,7 @@ class Death extends Phaser.Scene {
                 this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
             }
 
+            losesfx.stop();
             this.scene.start('titleScreen')
             this.scene.stop();
             this.scene.stop(this.currLevel);
