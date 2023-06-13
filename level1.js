@@ -47,7 +47,7 @@ class Level1 extends Phaser.Scene {
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
                 pauseButton.setAlpha(0);
-                this.scene.launch('pause', {bgm: this.bgm, pB: pauseButton});
+                this.scene.launch('pause', {bgm: this.bgm, pB: pauseButton, currLevel: 'level1'});
                 this.scene.pause(this);
             })
 

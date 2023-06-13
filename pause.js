@@ -5,6 +5,7 @@ class Pause extends Phaser.Scene {
     init(data) {
         this.bgm = data.bgm;
         this.pauseButton = data.pB;
+        this.currLevel = data.currLevel;
     }
     create() {
         /*
@@ -174,7 +175,7 @@ class Pause extends Phaser.Scene {
         quitbutton.on('pointerdown',()=>{
             this.scene.start('titleScreen')
             this.scene.stop();
-            this.scene.stop('level1');
+            this.scene.stop(this.currLevel);
             
         })
         //exit pause screen
@@ -182,7 +183,7 @@ class Pause extends Phaser.Scene {
         exit.on('pointerout',()=>{exit.setScale(1)})
         exit.on('pointerdown',()=>{
             this.pauseButton.setAlpha(1);
-            this.scene.resume('level1', {bgm: this.bgm});
+            this.scene.resume(this.currLevel, {bgm: this.bgm});
             this.scene.stop();
         })    
     }
