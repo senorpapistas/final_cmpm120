@@ -158,6 +158,7 @@ class TransitionScreen extends Phaser.Scene{
                             scoretext.setText(`Score: ${value}`);
                         },
                         onComplete:()=> {
+                            sound.play()
                             this.add.text(game.config.width*.5,game.config.height*.65, "click to continue",{font: "40px Verdana"}).setOrigin(.5)
 
 
