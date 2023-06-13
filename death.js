@@ -24,5 +24,18 @@ class Death extends Phaser.Scene {
             losesfx.stop();
             this.scene.start(this.level);
         })
+
+        //quit to main menu button
+        let quitbuttonbody = this.add.rectangle(game.config.width*.5, game.config.height*.8, 550, 250, 0x000000).setOrigin(.5)
+        let quitbutton = this.add.rectangle(game.config.width*.5, game.config.height*.8, 500, 200, 0xff0000).setOrigin(.5).setInteractive()
+        let quittext = this.add.text (game.config.width*.5, game.config.height*.8, "ABORT", {font: "80px Verdana"}).setOrigin(.5)
+
+        quitbutton.on('pointerover',()=>{quittext.setScale(1.2)})
+        quitbutton.on('pointerout',()=>{quittext.setScale(1)})
+        quitbutton.on('pointerdown',()=>{
+            this.scene.start('titleScreen')
+            this.scene.stop();
+            this.scene.stop(this.currLevel);
+        })
     };
 };
