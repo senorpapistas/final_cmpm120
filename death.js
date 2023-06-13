@@ -18,5 +18,11 @@ class Death extends Phaser.Scene {
             losesfx.stop();
             this.scene.start(this.level);
         });
+
+        this.pads = this.input.gamepad.gamepads;
+        this.input.gamepad.on('down', () => {
+            losesfx.stop();
+            this.scene.start(this.level);
+        })
     };
 };
