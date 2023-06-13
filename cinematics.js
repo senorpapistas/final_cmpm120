@@ -6,11 +6,15 @@ class cutscene extends Phaser.Scene {
         this.load.path = './assets/'
         this.load.image('player', 'player.png');
         this.load.image('space', 'Spacebackground.png');
+        
+        this.load.audio('click', '/audio/click.mp3');
     }
     init (data) {
         this.playersprite = data.playersprite
     }
     create() {
+        let sound = this.sound.add('click');
+
         this.click = 0;
 
         //parallax effect: 2 backgrounds scroll down after each other
@@ -35,10 +39,12 @@ class cutscene extends Phaser.Scene {
 
         //activate fx on click
         this.input.once('pointerdown', () => {
+            sound.play()
             this.click = 1;
 
             //click again to skip animation
             this.input.once('pointerdown', () => {
+                sound.play()
                 this.scene.start('titleScreen', {playersprite: this.playersprite})
             });
 
@@ -99,12 +105,15 @@ class titleScreen extends Phaser.Scene{
         this.load.image('player', 'player.png');
         this.load.image('space', 'Spacebackground.png');
         
+        this.load.audio('click', '/audio/click.mp3');
     }
     init(data) {
         this.bgm = data.bgm;
         this.playersprite = data.playersprite;
     }
     create() {
+        let sound = this.sound.add('click');
+
         //music?
         this.bgm = this.sound.add('bgm');
 
@@ -179,7 +188,7 @@ class titleScreen extends Phaser.Scene{
             })
             .on('pointerdown',()=>{
                 if (settings == 0) {
-
+                    sound.play()
                     //background disappears, spaceship leaves
                     this.tweens.add({targets:t1, x:-3000, duration: 700})
                     this.tweens.add({targets:t2, x:5000, duration: 500})
@@ -226,6 +235,7 @@ class titleScreen extends Phaser.Scene{
             })
             //opens settings menu
             .on('pointerdown',()=>{
+                sound.play()
                 this.tweens.add({targets:effect2, alpha: 0, duration: 500})
                 settings = 1
                 settingsmenu.setAlpha(1)
@@ -287,7 +297,7 @@ class titleScreen extends Phaser.Scene{
         //
         //fullscreen code goes here
         //
-
+        sound.play()
         if (this.scale.isFullscreen) {
             this.scale.stopFullscreen();
             fullscreenimage.setAlpha(0)
@@ -312,7 +322,7 @@ class titleScreen extends Phaser.Scene{
         //
         //subtitles code goes here
         //
-
+        sound.play()
         if (game.config.captions) {
             game.config.captions = false;
             subtitlesimage.setAlpha(0);
@@ -329,6 +339,7 @@ class titleScreen extends Phaser.Scene{
         musicbuttoneffect.setAlpha(0)
         })
         musicbutton.on('pointerdown',()=>{
+            sound.play()
         if (this.bgm.mute) {
             musicimage.setText('🔊')
             this.bgm.mute = false;
@@ -339,6 +350,7 @@ class titleScreen extends Phaser.Scene{
     })
 
             exit.on('pointerdown',()=>{
+                sound.play()
                 settingsmenu.setAlpha(0)
                 settings = 0
             })    
@@ -371,8 +383,12 @@ class victoryScreen extends Phaser.Scene{
         this.load.image('enemy', 'enemy.png')
         this.load.image('planet1', 'planet1.png')
         this.load.image('planet2','planet2.png')
+
+        this.load.audio('click', '/audio/click.mp3');
     }
     create() {
+        let sound = this.sound.add('click');
+
         //background
         this.background = this.add.image(game.config.width*.5, game.config.height*.5, 'space')
 
@@ -459,6 +475,7 @@ class victoryScreen extends Phaser.Scene{
         })
 
         this.input.once('pointerdown', () => {
+            sound.play()
             this.scene.start('cutscene');
         });
     }
@@ -476,8 +493,11 @@ class selectScreen extends Phaser.Scene{
         this.load.image('player', 'player.png');
         this.load.image('player_og', 'player_og.png');
         this.load.image('space', 'Spacebackground.png');
+
+        this.load.audio('click', '/audio/click.mp3');
     }
     create() {
+        let sound = this.sound.add('click');
 
         //background
         this.background = this.add.image(game.config.width*.5, game.config.height*.5, 'space')
@@ -506,6 +526,7 @@ class selectScreen extends Phaser.Scene{
             box1.setFillStyle(0x2bd62b, 0x1b961b, 0x14c714)
         })
         player.on('pointerdown', ()=>{
+            sound.play()
             this.scene.start('cutscene', {playersprite: 'player'})
         })
 
@@ -516,6 +537,7 @@ class selectScreen extends Phaser.Scene{
             box2.setFillStyle(0xd91630, 0xb3172c, 0xe80c29)
         })
         player_og.on('pointerdown', ()=>{
+            sound.play()
             this.scene.start('cutscene', {playersprite: 'player_og'})
         })
     }
