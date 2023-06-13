@@ -124,16 +124,14 @@ class Level1 extends Phaser.Scene {
                 this.scene.start('transitionScreen', {enemiesdestroyed: this.kills, playersprite: this.playersprite})
             });
 
-        
         this.kills = [];
-        let explosionEffect;
+
         // checks if enemy1 is hit by bullet
         this.physics.add.overlap(this.playerBullets, enemy1, (bullet, enemy) => {
             this.kills.push(1);
             this.killCount++;
-            explosionEffect = this.add.sprite(enemy.x, enemy.y,'megumin1').play('megumin');
-            //this.time.addEvent({delay: 400, callback: () => {explosionEffect.destroy();}});
-            explosionEffect.anims.hideOnComplete = true;
+            let explosionEffect = this.add.sprite(enemy.x, enemy.y,'megumin1').play('megumin').on('animationcomplete', () => {explosionEffect.destroy()});
+            this.time.addEvent({delay: 400, callback: () => {explosionEffect.destroy()}});
             explosionsfx.play();
             bullet.disableBody(true, true);
             enemy.enemyKilled();
