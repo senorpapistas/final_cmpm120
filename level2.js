@@ -174,6 +174,22 @@ class Level2 extends Phaser.Scene {
             })
         }
 
+        // movement for gamepad
+        const pads = this.input.gamepad.gamepads;
+        for (let i = 0; i < pads.length; i++)
+        {
+            const gamepad = pads[i];
+            if (!gamepad) {continue;}
+            if (gamepad.right || gamepad.B || gamepad.R1) {
+                this.booster.play();
+                this.player.setVelocityX(400);
+                this.player.setVelocityY(-500);
+            } else if (gamepad.left || gamepad.A || gamepad.L1) {
+                this.player.setVelocityX(-400);
+                this.player.setVelocityY(-500);
+            }
+        }
+
         // following block of code used to settle the ship to 0 x_gravity faster
         let velx = this.player.body.velocity.x;
         if (velx > 0) {

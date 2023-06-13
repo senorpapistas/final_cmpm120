@@ -12,6 +12,7 @@ class Preloader extends Phaser.Scene {
         this.load.image('germ1', 'germ1.png');
         this.load.image('germ2', 'germ2.png');
         this.load.image('germ3', 'germ3.png');
+        this.load.image('boss', 'boss.png');
         this.load.image('bullet', 'bullet.png');
         this.load.image('space', 'Spacebackground.png');
 

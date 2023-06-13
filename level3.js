@@ -184,8 +184,12 @@ class Level3 extends Phaser.Scene {
                 this.scene.start('death', {level: 'level3'});
             });
         });
+
         // checks if object hits world bounds
         this.physics.world.on('worldbounds', (body) => {if (body.gameObject.onWorldBounds()) {this.killCount++};})
+
+        this.boss;
+        this.bossHP = 20;
     }
     update(time, delta) {
         if (this.stars.y >= game.config.height*1.5) {this.stars.y = game.config.height*-.5}
@@ -193,10 +197,26 @@ class Level3 extends Phaser.Scene {
         if (this.stars2.y >= game.config.height*1.5) {this.stars2.y = game.config.height*-.5}
         this.stars2.y += 5;
         
-        if (this.killCount == 36) {
+        /*if (this.killCount == 36) {
             this.time.delayedCall(2000, () => {
                 this.scene.start('transitionScreen', {enemiesdestroyed: this.kills, playersprite: this.playersprite, nextLevel: 'victoryScreen', bgm: this.bgm})
             })
+        }*/
+
+        // movement for gamepad
+        const pads = this.input.gamepad.gamepads;
+        for (let i = 0; i < pads.length; i++)
+        {
+            const gamepad = pads[i];
+            if (!gamepad) {continue;}
+            if (gamepad.right || gamepad.B || gamepad.R1) {
+                this.booster.play();
+                this.player.setVelocityX(400);
+                this.player.setVelocityY(-500);
+            } else if (gamepad.left || gamepad.A || gamepad.L1) {
+                this.player.setVelocityX(-400);
+                this.player.setVelocityY(-500);
+            }
         }
 
         // following block of code used to settle the ship to 0 x_gravity faster
@@ -222,4 +242,8 @@ class Level3 extends Phaser.Scene {
             this.player.setX(1200);
         }
     }
+    /*spawnBoss() {
+        this.boss = this.physics.add.sprite(540, -700, 'boss').body.allowGravity = false;
+        this.tweens.add({targets})
+    }*/
 }
