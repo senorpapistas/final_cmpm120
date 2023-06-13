@@ -159,7 +159,7 @@ class Level1 extends Phaser.Scene {
             let explosionEffect = this.add.sprite(player.x, player.y,'megumin1').play('megumin').on('animationcomplete', () => {explosionEffect.destroy()});
             deathSound.play();
             player.setVelocityX(0).setVelocityY(0).body.allowGravity = false;
-            this.time.delayedCall(400, () => {
+            this.time.delayedCall(1000, () => {
                 this.game.sound.stopAll();
                 this.scene.start('death', {level: 'level1'});
             });
