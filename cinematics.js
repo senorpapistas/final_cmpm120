@@ -11,6 +11,16 @@ class cutscene extends Phaser.Scene {
     }*/
     init (data) {
         this.playersprite = data.playersprite
+
+        {
+            this.cameras.main.fadeIn(100);
+            const fxCamera = this.cameras.main.postFX.addPixelate(40);
+            this.add.tween({
+                targets: fxCamera,
+                duration: 700,
+                amount: -1,
+            });
+        }
     }
     create() {
         let sound = this.sound.add('click');
@@ -104,6 +114,16 @@ class titleScreen extends Phaser.Scene{
     init(data) {
         this.bgm = data.bgm;
         this.playersprite = data.playersprite;
+
+        {
+            this.cameras.main.fadeIn(100);
+            const fxCamera = this.cameras.main.postFX.addPixelate(40);
+            this.add.tween({
+                targets: fxCamera,
+                duration: 700,
+                amount: -1,
+            });
+        }
     }
     create() {
         
@@ -411,6 +431,16 @@ class levelselectScreen extends Phaser.Scene{
     init(data) {
         this.bgm = data.bgm;
         this.playersprite = data.playersprite;
+
+        {
+            this.cameras.main.fadeIn(100);
+            const fxCamera = this.cameras.main.postFX.addPixelate(40);
+            this.add.tween({
+                targets: fxCamera,
+                duration: 700,
+                amount: -1,
+            });
+        }
     }
     create() {
         let sound = this.sound.add('click')
@@ -524,6 +554,16 @@ class victoryScreen extends Phaser.Scene{
     }*/
     init(data) {
         this.bgm = data.bgm;
+
+        {
+            this.cameras.main.fadeIn(100);
+            const fxCamera = this.cameras.main.postFX.addPixelate(40);
+            this.add.tween({
+                targets: fxCamera,
+                duration: 700,
+                amount: -1,
+            });
+        }
     }
     create() {
         let sound_click = this.sound.add('click');
@@ -655,6 +695,16 @@ class selectScreen extends Phaser.Scene{
     init(data) {
         this.bgm = data.bgm;
         this.playersprite = data.playersprite;
+
+        {
+            this.cameras.main.fadeIn(100);
+            const fxCamera = this.cameras.main.postFX.addPixelate(40);
+            this.add.tween({
+                targets: fxCamera,
+                duration: 700,
+                amount: -1,
+            });
+        }
     }
     create() {
         let sound = this.sound.add('click');
