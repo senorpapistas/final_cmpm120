@@ -9,8 +9,8 @@ class Death extends Phaser.Scene {
     create() {
         let losesfx = this.sound.add('lose', { loop: true});
         losesfx.play()
-        this.add.text(300, 960, 'YOU DIED', {fontSize: 120, color: '#ff0000'});
-        this.add.text(400, 1100, "Click to restart", {fontSize: 40});
+        this.add.text(game.config.width*.5, game.config.height*.2, 'YOU DIED', {fontSize: 120, color: '#ff0000'}).setOrigin(.5);
+        this.add.text(game.config.width*.5, game.config.height*.3, "Click to restart", {fontSize: 40}).setOrigin(.5);
         this.input.on('pointerdown', () => {
             this.scene.start('level1');
         });
