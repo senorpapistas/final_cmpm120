@@ -5,6 +5,13 @@ class Level3 extends Phaser.Scene {
     init(data) {
         this.bgm = data.bgm;
         this.playersprite = data.playersprite;
+        this.cameras.main.fadeIn(100);
+        const fxCamera = this.cameras.main.postFX.addPixelate(40);
+        this.add.tween({
+            targets: fxCamera,
+            duration: 700,
+            amount: -1,
+        });
     }
     create() {
         this.game.config.lvl3score = 0;
@@ -155,6 +162,10 @@ class Level3 extends Phaser.Scene {
             let explosionEffect = this.add.sprite(enemy.x, enemy.y,'megumin1').play('megumin').on('animationcomplete', () => {explosionEffect.destroy()});
             this.time.addEvent({delay: 400, callback: () => {explosionEffect.destroy()}});
             this.explosionsfx.play();
+            if (game.config.captions == true) {
+                let explosiontext = this.add.text(540, 1770, '(EXPLOSION)', {fontSize: '40px'}).setOrigin(0.5);
+                this.time.delayedCall(500, () => {this.tweens.add({targets: explosiontext, alpha: 0, duration: 500})});
+            };
             bullet.disableBody(true, true);
             enemy.enemyKilled();
         });
@@ -169,6 +180,10 @@ class Level3 extends Phaser.Scene {
             let explosionEffect = this.add.sprite(enemy.x, enemy.y,'megumin1').play('megumin').on('animationcomplete', () => {explosionEffect.destroy()});
             this.time.addEvent({delay: 400, callback: () => {explosionEffect.destroy()}});
             this.explosionsfx.play();
+            if (game.config.captions == true) {
+                let explosiontext = this.add.text(540, 1770, '(EXPLOSION)', {fontSize: '40px'}).setOrigin(0.5);
+                this.time.delayedCall(500, () => {this.tweens.add({targets: explosiontext, alpha: 0, duration: 500})});
+            };
             bullet.disableBody(true, true);
             enemy.enemyKilled();
         });
@@ -183,6 +198,10 @@ class Level3 extends Phaser.Scene {
             let explosionEffect = this.add.sprite(enemy.x, enemy.y,'megumin1').play('megumin').on('animationcomplete', () => {explosionEffect.destroy()});
             //this.time.addEvent({delay: 400, callback: () => {explosionEffect.destroy()}});
             this.explosionsfx.play();
+            if (game.config.captions == true) {
+                let explosiontext = this.add.text(540, 1770, '(EXPLOSION)', {fontSize: '40px'}).setOrigin(0.5);
+                this.time.delayedCall(500, () => {this.tweens.add({targets: explosiontext, alpha: 0, duration: 500})});
+            };
             bullet.disableBody(true, true);
             enemy.enemyKilled();
         });
@@ -192,6 +211,10 @@ class Level3 extends Phaser.Scene {
             let explosionEffect = this.add.sprite(player.x, player.y,'megumin1').play('megumin').on('animationcomplete', () => {explosionEffect.destroy()});
             this.deathSound.play();
             player.setVelocityX(0).setVelocityY(0).body.allowGravity = false;
+            if (game.config.captions == true) {
+                let deathtext = this.add.text(540, 1720, '(*spaceship explodes*)', {fontSize: '40px'}).setOrigin(0.5);
+                this.time.delayedCall(500, () => {this.tweens.add({targets: deathtext, alpha: 0, duration: 500})});
+            };
             this.time.delayedCall(1000, () => {
                 this.game.sound.stopAll();
                 this.scene.start('death', {level: 'level3'});
@@ -211,7 +234,7 @@ class Level3 extends Phaser.Scene {
         if (this.stars2.y >= game.config.height*1.5) {this.stars2.y = game.config.height*-.5}
         this.stars2.y += 5;
         
-        if (this.killCount == 36) {
+        if (this.killCount == 6) {
             this.time.delayedCall(800, () => {
                 this.spawnBoss();
             });
@@ -226,8 +249,16 @@ class Level3 extends Phaser.Scene {
                 this.boss.setTint(0x000000);
                 let bossexplosionEffect = this.add.sprite(this.boss.x + (Math.random()*500 - 250), this.boss.y + (Math.random()*500 - 250),'megumin1').play('megumin').on('animationcomplete', () => {bossexplosionEffect.destroy()});
                 this.blomby.play();
+                if (game.config.captions == true) {
+                    let explosiontext = this.add.text(540, 1770, '(SUPER EXPLOSION)', {fontSize: '40px'}).setOrigin(0.5);
+                    this.time.delayedCall(500, () => {this.tweens.add({targets: explosiontext, alpha: 0, duration: 500})});
+                };
             }});
             this.bluggy.play();
+            if (game.config.captions == true) {
+                let exittext = this.add.text(540, 1680, '(demonic death speech)', {fontSize: '40px'}).setOrigin(0.5);
+                this.time.delayedCall(1000, () => {this.tweens.add({targets: exittext, alpha: 0, duration: 500})});
+            };
             this.kills.push(4);
             let bossPoints = this.add.text(this.boss.x, this.boss.y - 30, '5000', {font: '50px Verdana'}).setOrigin(0.5);
             this.tweens.add({targets: bossPoints, alpha: 0, y: this.boss.y - 150, duration: 1000});
@@ -281,7 +312,13 @@ class Level3 extends Phaser.Scene {
     spawnBoss() {
         this.boss = this.physics.add.sprite(540, -700, 'boss');
         this.boss.body.allowGravity = false;
-        this.time.delayedCall(1500, () => {this.entrance.play();});
+        this.time.delayedCall(1500, () => {
+            this.entrance.play();
+            if (game.config.captions == true) {
+                let entrancetext = this.add.text(540, 1680, '(demonic speech)', {fontSize: '40px'}).setOrigin(0.5);
+                this.time.delayedCall(1000, () => {this.tweens.add({targets: entrancetext, alpha: 0, duration: 500})});
+            };
+        });
         let tween1 = this.tweens.chain({tweens: [{targets: this.boss, y: 400, duration: 1500}, {targets: this.boss, x: 140, duration: 1500}, {targets: this.boss, props: {x: {from: 140, to: 940, duration: 2500}}, ease: 'Sine.easeInOut', yoyo: true, repeat: -1}]});
         
         this.bossBullets = this.add.existing(new Bullets(this.physics.world, this, {name: 'bossBullets'}));
@@ -304,11 +341,19 @@ class Level3 extends Phaser.Scene {
             this.bossHP--;
             let explosionEffect = this.add.sprite(bullet.x, bullet.y,'megumin1').play('megumin').on('animationcomplete', () => {explosionEffect.destroy()});
             this.blomby.play();
+            if (game.config.captions == true) {
+                let explosiontext = this.add.text(540, 1770, '(SUPER EXPLOSION)', {fontSize: '40px'}).setOrigin(0.5);
+                this.time.delayedCall(500, () => {this.tweens.add({targets: explosiontext, alpha: 0, duration: 500})});
+            };
         });
         this.physics.add.overlap(this.player, [this.boss, this.bossBullets], (player, enemy) => {
             let explosionEffect = this.add.sprite(player.x, player.y,'megumin1').play('megumin').on('animationcomplete', () => {explosionEffect.destroy()});
             this.deathSound.play();
             player.setVelocityX(0).setVelocityY(0).body.allowGravity = false;
+            if (game.config.captions == true) {
+                let deathtext = this.add.text(540, 1720, '(*spaceship explodes*)', {fontSize: '40px'}).setOrigin(0.5);
+                this.time.delayedCall(500, () => {this.tweens.add({targets: deathtext, alpha: 0, duration: 500})});
+            };
             this.time.delayedCall(1000, () => {
                 this.game.sound.stopAll();
                 this.scene.start('death', {level: 'level3'});

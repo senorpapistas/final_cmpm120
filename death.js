@@ -2,10 +2,10 @@ class Death extends Phaser.Scene {
     constructor() {
         super('death');
     };
-    preload() {
+    /*preload() {
         this.load.path = '../assets/'
         this.load.audio('lose', '/audio/lose.mp3');
-    };
+    };*/
     init(data) {
         this.level = data.level;
     }

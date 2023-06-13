@@ -151,9 +151,9 @@ class Level1 extends Phaser.Scene {
             this.time.addEvent({delay: 400, callback: () => {explosionEffect.destroy()}});
             explosionsfx.play();
             if (game.config.captions == true) {
-                let explosiontext = this.add.text(540, 1780, '(EXPLOSION)', {fontSize: '40px'}).setOrigin(0.5);
+                let explosiontext = this.add.text(540, 1770, '(EXPLOSION)', {fontSize: '40px'}).setOrigin(0.5);
                 this.time.delayedCall(500, () => {this.tweens.add({targets: explosiontext, alpha: 0, duration: 500})});
-            }
+            };
             bullet.disableBody(true, true);
             enemy.enemyKilled();
         });
@@ -172,6 +172,10 @@ class Level1 extends Phaser.Scene {
             let explosionEffect = this.add.sprite(player.x, player.y,'megumin1').play('megumin').on('animationcomplete', () => {explosionEffect.destroy()});
             deathSound.play();
             player.setVelocityX(0).setVelocityY(0).body.allowGravity = false;
+            if (game.config.captions == true) {
+                let deathtext = this.add.text(540, 1720, '(*spaceship explodes*)', {fontSize: '40px'}).setOrigin(0.5);
+                this.time.delayedCall(500, () => {this.tweens.add({targets: deathtext, alpha: 0, duration: 500})});
+            };
             this.time.delayedCall(1000, () => {
                 this.game.sound.stopAll();
                 this.scene.start('death', {level: 'level1'});

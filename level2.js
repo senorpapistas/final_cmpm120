@@ -5,6 +5,13 @@ class Level2 extends Phaser.Scene {
     init(data) {
         this.bgm = data.bgm;
         this.playersprite = data.playersprite;
+        this.cameras.main.fadeIn(100);
+        const fxCamera = this.cameras.main.postFX.addPixelate(40);
+        this.add.tween({
+            targets: fxCamera,
+            duration: 700,
+            amount: -1,
+        });
     }
     create() {
         this.game.config.lvl2score = 0;
@@ -139,6 +146,10 @@ class Level2 extends Phaser.Scene {
             let explosionEffect = this.add.sprite(enemy.x, enemy.y,'megumin1').play('megumin').on('animationcomplete', () => {explosionEffect.destroy()});
             this.time.addEvent({delay: 400, callback: () => {explosionEffect.destroy()}});
             explosionsfx.play();
+            if (game.config.captions == true) {
+                let explosiontext = this.add.text(540, 1770, '(EXPLOSION)', {fontSize: '40px'}).setOrigin(0.5);
+                this.time.delayedCall(500, () => {this.tweens.add({targets: explosiontext, alpha: 0, duration: 500})});
+            };
             bullet.disableBody(true, true);
             enemy.enemyKilled();
         });
@@ -153,6 +164,10 @@ class Level2 extends Phaser.Scene {
             let explosionEffect = this.add.sprite(enemy.x, enemy.y,'megumin1').play('megumin').on('animationcomplete', () => {explosionEffect.destroy()});
             this.time.addEvent({delay: 400, callback: () => {explosionEffect.destroy()}});
             explosionsfx.play();
+            if (game.config.captions == true) {
+                let explosiontext = this.add.text(540, 1770, '(EXPLOSION)', {fontSize: '40px'}).setOrigin(0.5);
+                this.time.delayedCall(500, () => {this.tweens.add({targets: explosiontext, alpha: 0, duration: 500})});
+            };
             bullet.disableBody(true, true);
             enemy.enemyKilled();
         });
@@ -162,6 +177,10 @@ class Level2 extends Phaser.Scene {
             let explosionEffect = this.add.sprite(player.x, player.y,'megumin1').play('megumin').on('animationcomplete', () => {explosionEffect.destroy()});
             deathSound.play();
             player.setVelocityX(0).setVelocityY(0).body.allowGravity = false;
+            if (game.config.captions == true) {
+                let deathtext = this.add.text(540, 1720, '(*spaceship explodes*)', {fontSize: '40px'}).setOrigin(0.5);
+                this.time.delayedCall(500, () => {this.tweens.add({targets: deathtext, alpha: 0, duration: 500})});
+            };
             this.time.delayedCall(1000, () => {
                 this.game.sound.stopAll();
                 this.scene.start('death', {level: 'level2'});
