@@ -25,10 +25,10 @@ class Level1 extends Phaser.Scene {
         this.stars = this.add.image(game.config.width*.5, game.config.height*.5, 'space');
         this.stars2 = this.add.image(game.config.width*.5, game.config.height*1.5, 'space');
 
-        let bottomBound = this.physics.add.existing(new Phaser.GameObjects.Rectangle(this, 540, 2000, 1080, 70));
+        let bottomBound = this.physics.add.existing(new Phaser.GameObjects.Rectangle(this, 540, 2000, 3000, 70));
         bottomBound.body.setImmovable(true);
         bottomBound.body.allowGravity = false;
-        let topBound = this.physics.add.existing(new Phaser.GameObjects.Rectangle(this, 540, -100, 1080, 70));
+        let topBound = this.physics.add.existing(new Phaser.GameObjects.Rectangle(this, 540, -100, 3000, 70));
         topBound.body.setImmovable(true);
         topBound.body.allowGravity = false;
         //this.add.existing(bottomBound);
