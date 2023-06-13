@@ -82,15 +82,9 @@ class cutscene extends Phaser.Scene {
     update() {
         //background scroll
         if(this.scroll == 1) {
-            if (this.stars.y == game.config.height*1.5)
-            {
-                this.stars.y = game.config.height*-.5
-            }
+            if (this.stars.y == game.config.height*1.5) {this.stars.y = game.config.height*-.5}
             this.stars.y += 5;
-            if (this.stars2.y == game.config.height*1.5)
-            {
-                this.stars2.y = game.config.height*-.5
-            }
+            if (this.stars2.y == game.config.height*1.5) {this.stars2.y = game.config.height*-.5}
             this.stars2.y += 5;
         }
     }
@@ -204,8 +198,6 @@ class titleScreen extends Phaser.Scene{
                 }
             })
 
-        this.add.text(game.config.width*.5, game.config.height*.9, "titleScreen", {font: "40px Arial"}).setOrigin(0.5);
-
         //settings button
         let effect2 = this.add.rectangle(game.config.width *.5, game.config.height*.65, 1080, 50, 0xffffff)
             .setAlpha(0);
@@ -275,16 +267,9 @@ class titleScreen extends Phaser.Scene{
 
         //settings buttons
         fullscreenbutton.on('pointerover',()=>{
-        fullscreenbuttoneffect.setAlpha(1)
-        })
-        fullscreenbutton.on('pointerout',()=>{
-        fullscreenbuttoneffect.setAlpha(0)
-        })
+        fullscreenbuttoneffect.setAlpha(1)})
+        fullscreenbutton.on('pointerout',()=>{fullscreenbuttoneffect.setAlpha(0)})
         fullscreenbutton.on('pointerdown',()=>{
-        /*
-        if (fullscreen == 0) {fullscreen = 1}
-            else{fullscreen= 0}
-            */
         //
         //fullscreen code goes here
         //
@@ -300,16 +285,9 @@ class titleScreen extends Phaser.Scene{
 
 
 
-        subtitlesbutton.on('pointerover',()=>{
-        subtitlesbuttoneffect.setAlpha(1)
-        })
-        subtitlesbutton.on('pointerout',()=>{
-        subtitlesbuttoneffect.setAlpha(0)
-        })
+        subtitlesbutton.on('pointerover',()=>{subtitlesbuttoneffect.setAlpha(1)})
+        subtitlesbutton.on('pointerout',()=>{subtitlesbuttoneffect.setAlpha(0)})
         subtitlesbutton.on('pointerdown',()=>{
-        /*if (subtitles == 0) {subtitles = 1}
-            else{subtitles= 0}
-        subtitlesimage.setAlpha(subtitles)*/
         //
         //subtitles code goes here
         //
@@ -323,12 +301,8 @@ class titleScreen extends Phaser.Scene{
         }
         })
 
-        musicbutton.on('pointerover',()=>{
-        musicbuttoneffect.setAlpha(1)
-        })
-        musicbutton.on('pointerout',()=>{
-        musicbuttoneffect.setAlpha(0)
-        })
+        musicbutton.on('pointerover',()=>{musicbuttoneffect.setAlpha(1)})
+        musicbutton.on('pointerout',()=>{musicbuttoneffect.setAlpha(0)})
         musicbutton.on('pointerdown',()=>{
             sound.play()
         if (this.bgm.mute) {
@@ -338,7 +312,7 @@ class titleScreen extends Phaser.Scene{
             musicimage.setText('🔈')
             this.bgm.mute = true;
         }
-    })
+        })
             exit.on('pointerover',()=>{exit.setScale(1.05)})
             exit.on('pointerout',()=>{exit.setScale(1)})
             exit.on('pointerdown',()=>{
@@ -351,15 +325,9 @@ class titleScreen extends Phaser.Scene{
     }
     update() {
         //background scroll
-            if (this.stars.y >= game.config.height*1.5)
-            {
-                this.stars.y = game.config.height*-.5
-            }
+            if (this.stars.y >= game.config.height*1.5) {this.stars.y = game.config.height*-.5}
             this.stars.y += 5;
-            if (this.stars2.y >= game.config.height*1.5)
-            {
-                this.stars2.y = game.config.height*-.5
-            }
+            if (this.stars2.y >= game.config.height*1.5){this.stars2.y = game.config.height*-.5}
             this.stars2.y += 5;
     }
 }
@@ -414,10 +382,8 @@ class victoryScreen extends Phaser.Scene{
 
 
         //score text description
-        let descriptionbackground = this.add.rectangle(game.config.width*.5,game.config.height*.8, 600, 200, 0x000000)
-            .setAlpha(0)
-        let description = this.add.text(game.config.width*.5,game.config.height*.8, "You're mid!", {font: "80px Verdana"}).setOrigin(0.5)
-            .setAlpha(0);
+        let descriptionbackground = this.add.rectangle(game.config.width*.5,game.config.height*.8, 600, 200, 0x000000).setAlpha(0)
+        let description = this.add.text(game.config.width*.5,game.config.height*.8, "You're mid!", {font: "80px Verdana"}).setOrigin(0.5).setAlpha(0);
         
         if(this.finalscore >= 15000) {description.setText("You're ok!")}
         else if(this.finalscore >= 20000) {description.setText("You're great!")}
@@ -470,9 +436,6 @@ class victoryScreen extends Phaser.Scene{
             this.bgm.stop();
             this.scene.start('selectScreen');
         });
-    }
-    update() {
-
     }
 }
 
