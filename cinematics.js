@@ -148,7 +148,7 @@ class titleScreen extends Phaser.Scene{
 
 
         //title
-        let title = this.add.text(game.config.width*.5,game.config.height*-.1, "Germa", {font: "80px Verdana"}).setOrigin(0.5);
+        let title = this.add.text(game.config.width*.5,game.config.height*-.1, "GERMA", {font: "80px Verdana"}).setOrigin(0.5);
 
 
         //title drop down
