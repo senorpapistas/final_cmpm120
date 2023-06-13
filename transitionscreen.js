@@ -27,6 +27,7 @@ class TransitionScreen extends Phaser.Scene{
         this.enemiesdestroyed = data.enemiesdestroyed;
         this.playersprite = data.playersprite;
         this.nextLevel = data.nextLevel;
+        this.bgm = data.bgm;
     }
     create() {
         let sound = this.sound.add('click');
@@ -189,7 +190,7 @@ class TransitionScreen extends Phaser.Scene{
                 duration: 1000,
                 onComplete:()=>{
                     player.destroy()
-                    this.scene.start(this.nextLevel);
+                    this.scene.start(this.nextLevel, {playersprite: this.playersprite, bgm: this.bgm});
                 }
             })
         });

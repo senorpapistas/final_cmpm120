@@ -46,9 +46,6 @@ class Level2 extends Phaser.Scene {
         
         // temporary rectangle used to visualize sides of the screen
         this.physics.add.existing(new Phaser.GameObjects.Rectangle(this, 540, 960, 10, 1920)).body.allowGravity = false;
-        
-        this.scene.launch('tutorial', {currScene: 'level1'});
-        this.scene.pause(this);
 
         // makes the player ship automatically shoot bullets every .5 seconds
         this.playerBullets = this.add.existing(new Bullets(this.physics.world, this, {name: 'playerBullets'}));
@@ -96,13 +93,13 @@ class Level2 extends Phaser.Scene {
             }
         }});
 
-        let testEnemy2 = this.add.existing(new Enemies(this.physics.world, this, {name: 'testEnemy2'}));
+        let enemy2 = this.add.existing(new Enemies(this.physics.world, this, {name: 'enemy2'}));
         let enemy2Counter = 0;
-        testEnemy2.createMultiple({key: 'enemy2', quantity: 3})
+        enemy2.createMultiple({key: 'enemy2', quantity: 3})
         let enemySpawn2 = this.time.addEvent({delay: 1500, loop: true, callback: () => {
             let spawnCoeff = Phaser.Math.RND.between(200, 900);
             let x_move = Phaser.Math.RND.pick([-1, 1]);
-            if(testEnemy2.spawn(spawnCoeff, -200, spawnCoeff * 0.2 * x_move, 350, .5)) {enemy2Counter++;}
+            if(enemy2.spawn(spawnCoeff, -200, spawnCoeff * 0.2 * x_move, 350, .5)) {enemy2Counter++;}
             if(enemy2Counter == 15) {
                 enemySpawn2.remove();
                 //console.log('wave cleared');
@@ -118,7 +115,7 @@ class Level2 extends Phaser.Scene {
             .setInteractive({useHandCursor: true})
             .on('pointerdown', () => {
                 //console.log(this.kills);
-                this.scene.start('transitionScreen', {enemiesdestroyed: this.kills, playersprite: this.playersprite})
+                this.scene.start('transitionScreen', {enemiesdestroyed: this.kills, playersprite: this.playersprite, nextLevel: 'level3', bgm: this.bgm})
             });
 
         this.kills = [];
@@ -139,8 +136,8 @@ class Level2 extends Phaser.Scene {
         });
 
         this.physics.add.overlap(this.playerBullets, enemy2, (bullet, enemy) => {
-            kills.push(2);
-            killCount++;
+            this.kills.push(2);
+            this.killCount++;
             let enemy2Points = this.add.text(enemy.x, enemy.y - 30, '800', {font: '50px Verdana'}).setOrigin(0.5);
             this.tweens.add({targets: enemy2Points, alpha: 0, y: enemy.y - 150, duration: 1000});
             this.tweens.addCounter({from: this.game.config.lvl2score, to: this.game.config.lvl2score + 800, duration: 1500, onUpdate: tween => {let value = Math.round(tween.getValue()); scoreCounter.setText(`${value}`)}});
@@ -173,7 +170,7 @@ class Level2 extends Phaser.Scene {
         
         if (this.killCount == 30) {
             this.time.delayedCall(2000, () => {
-                this.scene.start('transitionScreen', {enemiesdestroyed: this.kills, playersprite: this.playersprite, nextLevel: 'level3'})
+                this.scene.start('transitionScreen', {enemiesdestroyed: this.kills, playersprite: this.playersprite, nextLevel: 'level3', bgm: this.bgm})
             })
         }
 
