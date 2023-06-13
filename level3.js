@@ -181,7 +181,7 @@ class Level3 extends Phaser.Scene {
             player.setVelocityX(0).setVelocityY(0).body.allowGravity = false;
             this.time.delayedCall(1000, () => {
                 this.game.sound.stopAll();
-                this.scene.start('death', {level: 'level2'});
+                this.scene.start('death', {level: 'level3'});
             });
         });
         // checks if object hits world bounds
