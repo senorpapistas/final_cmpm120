@@ -515,6 +515,17 @@ class transitionScreen extends Phaser.Scene{
             })
         });
 
+        let boss
+        //let boss.x = 1000, boss.y = 1000
+        this.add.rectangle(500,1000, 500,500, 0xff0000)
+
+        //boss explosion effect
+        this.time.addEvent({delay: 400, loop: true, callback: () => {
+            let bossexplosionEffect = this.add.sprite(500 + (Math.random()*500 - 250), 1000 + (Math.random()*500 - 250),'megumin1').play('megumin').on('animationcomplete', () => {bossexplosionEffect.destroy()});
+            explosionsfx.play();
+        }})
+
+
     }
     update() {
         //background scroll
@@ -714,7 +725,7 @@ let config = {
             }
         }
     },
-    scene: [selectScreen, victoryScreen, titleScreen,transitionScreen,cutscene],
+    scene: [transitionScreen,selectScreen, victoryScreen, titleScreen,cutscene],
 }
 
 let game = new Phaser.Game(config);
