@@ -172,9 +172,11 @@ class Pause extends Phaser.Scene {
         quitbutton.on('pointerover',()=>{quittext.setScale(1.2)})
         quitbutton.on('pointerout',()=>{quittext.setScale(1)})
         quitbutton.on('pointerdown',()=>{
+            this.scene.start('titleScreen')
+            this.scene.stop();
+            this.scene.stop('level1');
             
         })
-
         //exit pause screen
         exit.on('pointerover',()=>{exit.setScale(1.05)})
         exit.on('pointerout',()=>{exit.setScale(1)})
