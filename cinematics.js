@@ -337,7 +337,10 @@ class titleScreen extends Phaser.Scene{
                 shipbuttonbody.setScale(1)
                 shipbuttontext.setScale(1)
             })
-            shipbuttonbody.on('pointerdown',()=>{this.scene.start('selectScreen')})
+            shipbuttonbody.on('pointerdown',()=>{
+                sound.play()
+                this.scene.start('selectScreen')
+            })
     }
     update() {
         //background scroll
