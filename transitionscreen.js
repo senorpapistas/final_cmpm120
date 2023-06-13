@@ -177,7 +177,7 @@ class TransitionScreen extends Phaser.Scene{
 
                 counter +=100
             }
-        }})
+        }}) 
 
         //click to animate ship and transition to next scene
         this.input.once('pointerdown', () => {
