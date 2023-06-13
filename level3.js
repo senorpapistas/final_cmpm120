@@ -57,10 +57,6 @@ class Level3 extends Phaser.Scene {
         
         // jumping mechanic
         this.input.on('pointerdown', (pointer) => {
-            this.booster.play();
-            this.playerBullets.fire(this.player.x, this.player.y - 50, 0, -500);
-            this.input.disable(this);
-            this.time.delayedCall(300, () => {this.input.enable(this)});
             if (pointer.x > 540) {
                 this.player.setVelocityX(400);
                 this.player.setVelocityY(-500);
@@ -69,11 +65,13 @@ class Level3 extends Phaser.Scene {
                 this.player.setVelocityX(-400);
                 this.player.setVelocityY(-500);
             }
-            if (game.config.captions == true) {
-                let boosttext = this.add.text(440, 1800, '(whoosh)', {fontSize: '40px'});
-                this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
-            }
+            this.shoot();
         });
+
+        this.pads = this.input.gamepad.gamepads;
+        this.input.gamepad.on('down', () => {
+            this.shoot();
+        })
 
         this.killCount = 0;
 
@@ -204,13 +202,11 @@ class Level3 extends Phaser.Scene {
         }*/
 
         // movement for gamepad
-        const pads = this.input.gamepad.gamepads;
-        for (let i = 0; i < pads.length; i++)
+        for (let i = 0; i < this.pads.length; i++)
         {
-            const gamepad = pads[i];
+            const gamepad = this.pads[i];
             if (!gamepad) {continue;}
             if (gamepad.right || gamepad.B || gamepad.R1) {
-                this.booster.play();
                 this.player.setVelocityX(400);
                 this.player.setVelocityY(-500);
             } else if (gamepad.left || gamepad.A || gamepad.L1) {
@@ -240,6 +236,15 @@ class Level3 extends Phaser.Scene {
             this.player.setX(-120);
         } else if (this.player.x < -120) {
             this.player.setX(1200);
+        }
+    }
+    shoot() {
+        this.booster.play();
+        this.playerBullets.fire(this.player.x, this.player.y - 50, 0, -500);
+        this.input.disable(this);
+        this.time.delayedCall(300, () => {this.input.enable(this)});if (game.config.captions == true) {
+            let boosttext = this.add.text(440, 1800, '(whoosh)', {fontSize: '40px'});
+            this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
         }
     }
     /*spawnBoss() {
