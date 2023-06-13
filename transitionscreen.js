@@ -8,6 +8,7 @@ class TransitionScreen extends Phaser.Scene{
         this.load.image('space', 'Spacebackground.png');
         this.load.image('enemy', 'enemy.png')
         this.load.image('enemy2', 'enemy2.png')
+        this.load.image('enemy3', 'enemy3.png')
         this.load.image('planet1', 'planet1.png')
         this.load.image('planet2','planet2.png')
 
@@ -125,6 +126,9 @@ class TransitionScreen extends Phaser.Scene{
             else if (this.enemiesdestroyed[i] == 2) {
                 score+= 800
             }
+            else if (this.enemiesdestroyed[i] == 3) {
+                score+= 1000
+            }
         }
 
         let counter =0
@@ -169,6 +173,9 @@ class TransitionScreen extends Phaser.Scene{
                 }
                 else if (this.enemiesdestroyed[counter/100] == 2){
                     let enemy = this.add.image(game.config.width*.08+counter%1000, game.config.height*.2+Math.floor(counter/1000)*100, 'enemy2').setScale(.4)
+                }
+                else if (this.enemiesdestroyed[counter/100] == 3){
+                    let enemy = this.add.image(game.config.width*.08+counter%1000, game.config.height*.2+Math.floor(counter/1000)*100, 'enemy3').setScale(.4)
                 }
 
                 //explosion effect

@@ -409,17 +409,18 @@ class victoryScreen extends Phaser.Scene{
 
 
         //score to be updated
-        this.score1 = 3500;
-        this.score2 = 4500;
-        this.score3 = 1;
-        this.finalscore = this.score1+this.score2+this.score3;
+        //this.score1 = 3500;
+        //this.score2 = 4500;
+        //this.score3 = 1;
+        //this.finalscore = this.score1+this.score2+this.score3;
+        this.finalscore = this.game.config.lvl1score + this.game.config.lvl2score + this.game.config.lvl3score
 
         //score text        
-        this.text1 = this.add.text(game.config.width*.15,game.config.height*.3, `Level 1 score: ${this.score1}`, {font: "80px Verdana"}) //.setOrigin(0.5)
+        this.text1 = this.add.text(game.config.width*.15,game.config.height*.3, `Level 1 score: ${this.game.config.lvl1score}`, {font: "80px Verdana"}) //.setOrigin(0.5)
             .setAlpha(0);
-        this.text2 = this.add.text(game.config.width*.15,game.config.height*.4, `Level 2 Score: ${this.score2}`, {font: "80px Verdana"}) //.setOrigin(0.5)
+        this.text2 = this.add.text(game.config.width*.15,game.config.height*.4, `Level 2 Score: ${game.config.lvl2score}`, {font: "80px Verdana"}) //.setOrigin(0.5)
             .setAlpha(0);
-        this.text3 = this.add.text(game.config.width*.15,game.config.height*.5, `Level 3 Score: ${this.score3}`, {font: "80px Verdana"}) //.setOrigin(0.5)
+        this.text3 = this.add.text(game.config.width*.15,game.config.height*.5, `Level 3 Score: ${game.config.lvl3score}`, {font: "80px Verdana"}) //.setOrigin(0.5)
             .setAlpha(0);
         this.text4 = this.add.text(game.config.width*.5,game.config.height*.6, "Total:  ", {font: "80px Verdana"}).setOrigin(0.5);
 
@@ -429,7 +430,9 @@ class victoryScreen extends Phaser.Scene{
             .setAlpha(0)
         let description = this.add.text(game.config.width*.5,game.config.height*.8, "You're mid!", {font: "80px Verdana"}).setOrigin(0.5)
             .setAlpha(0);
-
+        
+        if(this.finalscore >= 15000) {description.setText("You're ok!")}
+        else if(this.finalscore >= 20000) {description.setText("You're great!")}
         
         //score animation
         //
