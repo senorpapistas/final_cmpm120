@@ -69,9 +69,6 @@ class cutscene extends Phaser.Scene {
             this.timedEvent = this.time.delayedCall(6000, this.event, [], this);
         });
 
-
-        this.add.text(game.config.width*.5, game.config.height*.9, "cutscene", {font: "40px Arial"}).setOrigin(0.5);
-
     }
     event() {
         this.scene.start('titleScreen', {playersprite: this.playersprite})
@@ -105,10 +102,14 @@ class titleScreen extends Phaser.Scene{
         this.load.image('space', 'Spacebackground.png');
         
     }
-    init (data) {
-        this.playersprite = data.playersprite
+    init(data) {
+        this.bgm = data.bgm;
+        this.playersprite = data.playersprite;
     }
     create() {
+        //music?
+        this.bgm = this.sound.add('bgm');
+
 
         //parallax effect: 2 backgrounds scroll down after each other
         this.stars = this.add.image(game.config.width*.5, game.config.height*.5, 'space')
@@ -232,96 +233,116 @@ class titleScreen extends Phaser.Scene{
             })
     
 
+        
+
         //settings menu
         let rect = this.add.rectangle(game.config.width*.5,game.config.height*.5,1000,800,0x2843b8)
-            .setOrigin(.5)
+        .setOrigin(.5)
         let triangle = this.add.triangle(game.config.width*.5,game.config.height*.5 -300,0,0,1000,200,1000,0,0x3c78d8)
         let exit = this.add.triangle(game.config.width*.8 + 50,game.config.height*.2 + 250,0,0,0,100,75,50,0x3c0000).setInteractive()
         let fullscreenbutton = this.add.rectangle(game.config.width*.5,game.config.height*.45, 1000, 200, 0, 0x000000).setInteractive()
         let fullscreenbuttoneffect = this.add.rectangle(game.config.width*.5,game.config.height*.45, 1000, 200, 0x000000).setAlpha(0)
         let fullscreentext = this.add.text(game.config.width*.15,game.config.height*.425, "  fullscreen", {font: "80px Verdana"})
-        let fullscreenimage = this.add.text(game.config.width*.08,game.config.height*.425, "📺", {font: "80px Verdana"}).setAlpha(0)
+        let fullscreenimage = this.add.text(game.config.width*.08,game.config.height*.425, "📺", {font: "80px Verdana"})
+        if (!this.scale.isFullscreen) {fullscreenimage.setAlpha(0)}
 
         let subtitlesbutton = this.add.rectangle(game.config.width*.5,game.config.height*.55, 1000, 200, 0, 0x000000).setInteractive()
         let subtitlesbuttoneffect = this.add.rectangle(game.config.width*.5,game.config.height*.55, 1000, 200, 0x000000).setAlpha(0)
         let subtitlestext = this.add.text(game.config.width*.15,game.config.height*.525, "  subtitles", {font: "80px Verdana"})
-        let subtitlesimage = this.add.text(game.config.width*.08,game.config.height*.525, "🔤", {font: "80px Verdana"}).setAlpha(0)
+        let subtitlesimage = this.add.text(game.config.width*.08,game.config.height*.525, "🔤", {font: "80px Verdana"})
+        if (game.config.captions == false) {subtitlesimage.setAlpha(0)}
 
         let musicbutton = this.add.rectangle(game.config.width*.5,game.config.height*.65, 1000, 200, 0, 0x000000).setInteractive()
         let musicbuttoneffect = this.add.rectangle(game.config.width*.5,game.config.height*.65, 1000, 200, 0x000000).setAlpha(0)
         let musictext = this.add.text(game.config.width*.15,game.config.height*.625, "  music", {font: "80px Verdana"})
-        let musicimage = this.add.text(game.config.width*.08,game.config.height*.625, "🔊", {font: "80px Verdana"})
+        let musicicon;
+        if (this.bgm.mute) {musicicon = '🔈'} else {musicicon = '🔊'}
+        let musicimage = this.add.text(game.config.width*.08,game.config.height*.625, musicicon, {font: "80px Verdana"})
 
         let settingstitle = this.add.text(game.config.width*.15,game.config.height*.5 - 350, "Settings", {font: "80px Verdana"})
         let settingstitle2 = this.add.text(game.config.width*.15+10,game.config.height*.5 - 350+10, "Settings", {font: "80px Verdana", color: 0xffffff})
 
-        
+
         let settingsmenu = this.add.container(0,10, [rect,triangle,exit,fullscreenbutton, subtitlesbutton, musicbutton, fullscreenbuttoneffect,subtitlesbuttoneffect, musicbuttoneffect,
-                                                    fullscreenimage, subtitlesimage, musicimage, fullscreentext, subtitlestext, musictext, settingstitle2, settingstitle])
+                                                fullscreenimage, subtitlesimage, musicimage, fullscreentext, subtitlestext, musictext, settingstitle2, settingstitle])
             .setAlpha(0)
-        
         //
         //NEED GLOBAL VARIABLES FOR FULLSCREEN AND SUBTITLES
         //
-        let subtitles = 0;
-        let fullscreen = 0;
-        let music = 1;
+        //let subtitles = 0;
+        //let fullscreen = 0;
+        //let music = 1;
 
         //settings buttons
         fullscreenbutton.on('pointerover',()=>{
-            fullscreenbuttoneffect.setAlpha(1)
+        fullscreenbuttoneffect.setAlpha(1)
         })
         fullscreenbutton.on('pointerout',()=>{
-            fullscreenbuttoneffect.setAlpha(0)
+        fullscreenbuttoneffect.setAlpha(0)
         })
         fullscreenbutton.on('pointerdown',()=>{
-            if (fullscreen == 0) {fullscreen = 1}
-                else{fullscreen= 0}
-            fullscreenimage.setAlpha(fullscreen)
-            //
-            //fullscreen code goes here
-            //
-        })
+        /*
+        if (fullscreen == 0) {fullscreen = 1}
+            else{fullscreen= 0}
+            */
+        //
+        //fullscreen code goes here
+        //
+
+        if (this.scale.isFullscreen) {
+            this.scale.stopFullscreen();
+            fullscreenimage.setAlpha(0)
+        } else {
+            this.scale.startFullscreen();
+            fullscreenimage.setAlpha(1)
+        }
+    })
+
+
 
         subtitlesbutton.on('pointerover',()=>{
-            subtitlesbuttoneffect.setAlpha(1)
+        subtitlesbuttoneffect.setAlpha(1)
         })
         subtitlesbutton.on('pointerout',()=>{
-            subtitlesbuttoneffect.setAlpha(0)
+        subtitlesbuttoneffect.setAlpha(0)
         })
         subtitlesbutton.on('pointerdown',()=>{
-            if (subtitles == 0) {subtitles = 1}
-                else{subtitles= 0}
-            subtitlesimage.setAlpha(subtitles)
-            //
-            //subtitles code goes here
-            //
+        /*if (subtitles == 0) {subtitles = 1}
+            else{subtitles= 0}
+        subtitlesimage.setAlpha(subtitles)*/
+        //
+        //subtitles code goes here
+        //
+
+        if (game.config.captions) {
+            game.config.captions = false;
+            subtitlesimage.setAlpha(0);
+        } else {
+            game.config.captions = true;
+            subtitlesimage.setAlpha(1);
+        }
         })
 
         musicbutton.on('pointerover',()=>{
-            musicbuttoneffect.setAlpha(1)
+        musicbuttoneffect.setAlpha(1)
         })
         musicbutton.on('pointerout',()=>{
-            musicbuttoneffect.setAlpha(0)
+        musicbuttoneffect.setAlpha(0)
         })
         musicbutton.on('pointerdown',()=>{
-            if (music == 0) {
-                music = 1
-                musicimage.setText('🔊')
-                }
-            else{
-                music= 0
-                musicimage.setText('🔈')
-            }
-            //
-            //subtitles code goes here
-            //
-        })
+        if (this.bgm.mute) {
+            musicimage.setText('🔊')
+            this.bgm.mute = false;
+        } else {
+            musicimage.setText('🔈')
+            this.bgm.mute = true;
+        }
+    })
 
-        exit.on('pointerdown',()=>{
-            settingsmenu.setAlpha(0)
-            settings = 0
-        })    
+            exit.on('pointerdown',()=>{
+                settingsmenu.setAlpha(0)
+                settings = 0
+            })    
 
 
     }
@@ -439,8 +460,6 @@ class victoryScreen extends Phaser.Scene{
                 }
             ]
         })
-
-        this.add.text(game.config.width*.5, game.config.height*.9, "victoryScreen", {font: "40px Arial"}).setOrigin(0.5);
 
         this.input.once('pointerdown', () => {
             this.scene.start('cutscene');
