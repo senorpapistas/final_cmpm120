@@ -362,6 +362,7 @@ class transitionScreen extends Phaser.Scene{
         this.load.image('megumin5', 'megumin/megumin5.png')
         this.load.image('megumin6', 'megumin/megumin6.png')
         this.load.image('megumin7', 'megumin/megumin7.png')
+
     }
     init (data) {
         this.playersprite = data.playersprite
@@ -522,7 +523,7 @@ class transitionScreen extends Phaser.Scene{
         //boss explosion effect
         this.time.addEvent({delay: 400, loop: true, callback: () => {
             let bossexplosionEffect = this.add.sprite(500 + (Math.random()*500 - 250), 1000 + (Math.random()*500 - 250),'megumin1').play('megumin').on('animationcomplete', () => {bossexplosionEffect.destroy()});
-            explosionsfx.play();
+            //explosionsfx.play();
         }})
 
 
