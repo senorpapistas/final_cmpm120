@@ -206,15 +206,9 @@ class TransitionScreen extends Phaser.Scene{
     }
     update() {
         //background scroll
-        if (this.stars.x <= game.config.width*-.5)
-        {
-            this.stars.x = game.config.width*1.5
-        }
+        if (this.stars.x <= game.config.width*-.5) {this.stars.x = game.config.width*1.5}
         this.stars.x -= .5;
-        if (this.stars2.x <= game.config.width*-.5)
-        {
-            this.stars2.x = game.config.width*1.5
-        }
+        if (this.stars2.x <= game.config.width*-.5) {this.stars2.x = game.config.width*1.5}
         this.stars2.x -= .5;
     }
 }
