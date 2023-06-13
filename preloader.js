@@ -13,6 +13,7 @@ class Preloader extends Phaser.Scene {
         this.load.image('germ2', 'germ2.png');
         this.load.image('germ3', 'germ3.png');
         this.load.image('boss', 'boss.png');
+        this.load.image('bossBullet', 'bossbullet.png');
         this.load.image('bullet', 'bullet.png');
         this.load.image('space', 'Spacebackground.png');
 
@@ -23,6 +24,9 @@ class Preloader extends Phaser.Scene {
         this.load.audio('explosionsfx','/audio/explosion.mp3');
         this.load.audio('death', '/audio/death.mp3');
         this.load.audio('lose', '/audio/lose.mp3');
+        this.load.audio('glaggle', '/audio/glaggle.mp3');
+        this.load.audio('bluggy', '/audio/bossdeath.mp3');
+        this.load.audio('blomby', '/audio/bossexplosion.mp3');
 
         this.load.image('planet1', 'planet1.png');
         this.load.image('planet2','planet2.png');

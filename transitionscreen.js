@@ -182,7 +182,7 @@ class TransitionScreen extends Phaser.Scene{
                     let enemy = this.add.image(game.config.width*.08+counter%1000, game.config.height*.2+Math.floor(counter/1000)*100, this.playersprite[3]).setScale(this.playersprite[5])
                 }
                 else if (this.enemiesdestroyed[counter/100] == 4){
-                    let enemy = this.add.image(game.config.width*.08+counter%1000, game.config.height*.2+Math.floor(counter/1000)*100, this.playersprite[3]).setScale(this.playersprite[5])
+                    let enemy = this.add.image(game.config.width*.08+counter%1000, game.config.height*.2+Math.floor(counter/1000)*100, 'boss').setScale(.5);
                 }
 
                 //explosion effect

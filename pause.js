@@ -178,7 +178,7 @@ class Pause extends Phaser.Scene {
         quitbutton.on('pointerdown',()=>{
             sound.play()
             this.scene.start('titleScreen')
-            this.scene.stop();
+            this.scene.stop(this);
             this.scene.stop(this.currLevel);
             
         })

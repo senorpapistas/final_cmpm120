@@ -9,18 +9,23 @@ class Level3 extends Phaser.Scene {
     create() {
         this.game.config.lvl3score = 0;
 
+        this.bossFiring;
+
         // changed world bounds to allow enemies to spawn outside without being destroyed
         this.physics.world.setBounds(-200, -500, 1480, 2720);
 
         this.stars = this.add.image(game.config.width*.5, game.config.height*.5, 'space')
         this.stars2 = this.add.image(game.config.width*.5, game.config.height*1.5, 'space')
         
-        let scoreCounter = this.add.text(540, 100, '0', {font: '80px Verdana'}).setOrigin(0.5);
+        this.scoreCounter = this.add.text(540, 100, '0', {font: '80px Verdana'}).setOrigin(0.5);
 
         // sounds
         this.booster = this.sound.add('boost');
-        let explosionsfx = this.sound.add('explosionsfx');
-        let deathSound = this.sound.add('death');
+        this.explosionsfx = this.sound.add('explosionsfx');
+        this.deathSound = this.sound.add('death');
+        this.entrance = this.sound.add('glaggle');
+        this.bluggy = this.sound.add('bluggy');
+        this.blomby = this.sound.add('blomby');
         //this.bgm = this.sound.add('bgm');
         this.bgm.loop = true;
         this.bgm.play();
@@ -135,11 +140,11 @@ class Level3 extends Phaser.Scene {
             this.killCount++;
             let enemy1Points = this.add.text(enemy.x, enemy.y - 30, '500', {font: '50px Verdana'}).setOrigin(0.5);
             this.tweens.add({targets: enemy1Points, alpha: 0, y: enemy.y - 150, duration: 1000});
-            this.tweens.addCounter({from: this.game.config.lvl3score, to: this.game.config.lvl3score + 500, duration: 1500, onUpdate: tween => {let value = Math.round(tween.getValue()); scoreCounter.setText(`${value}`)}});
+            this.tweens.addCounter({from: this.game.config.lvl3score, to: this.game.config.lvl3score + 500, duration: 1500, onUpdate: tween => {let value = Math.round(tween.getValue()); this.scoreCounter.setText(`${value}`)}});
             this.game.config.lvl3score += 500;
             let explosionEffect = this.add.sprite(enemy.x, enemy.y,'megumin1').play('megumin').on('animationcomplete', () => {explosionEffect.destroy()});
             this.time.addEvent({delay: 400, callback: () => {explosionEffect.destroy()}});
-            explosionsfx.play();
+            this.explosionsfx.play();
             bullet.disableBody(true, true);
             enemy.enemyKilled();
         });
@@ -149,11 +154,11 @@ class Level3 extends Phaser.Scene {
             this.killCount++;
             let enemy2Points = this.add.text(enemy.x, enemy.y - 30, '800', {font: '50px Verdana'}).setOrigin(0.5);
             this.tweens.add({targets: enemy2Points, alpha: 0, y: enemy.y - 150, duration: 1000});
-            this.tweens.addCounter({from: this.game.config.lvl3score, to: this.game.config.lvl3score + 800, duration: 1500, onUpdate: tween => {let value = Math.round(tween.getValue()); scoreCounter.setText(`${value}`)}});
+            this.tweens.addCounter({from: this.game.config.lvl3score, to: this.game.config.lvl3score + 800, duration: 1500, onUpdate: tween => {let value = Math.round(tween.getValue()); this.scoreCounter.setText(`${value}`)}});
             this.game.config.lvl3score += 800;
             let explosionEffect = this.add.sprite(enemy.x, enemy.y,'megumin1').play('megumin').on('animationcomplete', () => {explosionEffect.destroy()});
             this.time.addEvent({delay: 400, callback: () => {explosionEffect.destroy()}});
-            explosionsfx.play();
+            this.explosionsfx.play();
             bullet.disableBody(true, true);
             enemy.enemyKilled();
         });
@@ -163,11 +168,11 @@ class Level3 extends Phaser.Scene {
             this.killCount++;
             let enemy3Points = this.add.text(enemy.x, enemy.y - 30, '1000', {font: '50px Verdana'}).setOrigin(0.5);
             this.tweens.add({targets: enemy3Points, alpha: 0, y: enemy.y - 150, duration: 1000});
-            this.tweens.addCounter({from: this.game.config.lvl3score, to: this.game.config.lvl3score + 800, duration: 1500, onUpdate: tween => {let value = Math.round(tween.getValue()); scoreCounter.setText(`${value}`)}});
+            this.tweens.addCounter({from: this.game.config.lvl3score, to: this.game.config.lvl3score + 800, duration: 1500, onUpdate: tween => {let value = Math.round(tween.getValue()); this.scoreCounter.setText(`${value}`)}});
             this.game.config.lvl3score += 800;
             let explosionEffect = this.add.sprite(enemy.x, enemy.y,'megumin1').play('megumin').on('animationcomplete', () => {explosionEffect.destroy()});
-            this.time.addEvent({delay: 400, callback: () => {explosionEffect.destroy()}});
-            explosionsfx.play();
+            //this.time.addEvent({delay: 400, callback: () => {explosionEffect.destroy()}});
+            this.explosionsfx.play();
             bullet.disableBody(true, true);
             enemy.enemyKilled();
         });
@@ -175,7 +180,7 @@ class Level3 extends Phaser.Scene {
         // checks if player touches enemy
         this.physics.add.overlap(this.player, [enemy1, enemy2, enemy3], (player, enemy) => {
             let explosionEffect = this.add.sprite(player.x, player.y,'megumin1').play('megumin').on('animationcomplete', () => {explosionEffect.destroy()});
-            deathSound.play();
+            this.deathSound.play();
             player.setVelocityX(0).setVelocityY(0).body.allowGravity = false;
             this.time.delayedCall(1000, () => {
                 this.game.sound.stopAll();
@@ -188,6 +193,7 @@ class Level3 extends Phaser.Scene {
 
         this.boss;
         this.bossHP = 20;
+        this.bossAlive = true;
     }
     update(time, delta) {
         if (this.stars.y >= game.config.height*1.5) {this.stars.y = game.config.height*-.5}
@@ -195,11 +201,32 @@ class Level3 extends Phaser.Scene {
         if (this.stars2.y >= game.config.height*1.5) {this.stars2.y = game.config.height*-.5}
         this.stars2.y += 5;
         
-        /*if (this.killCount == 36) {
-            this.time.delayedCall(2000, () => {
+        if (this.killCount == 36) {
+            this.time.delayedCall(800, () => {
+                this.spawnBoss();
+            });
+            this.killCount++;
+        }
+
+        if (this.bossHP <= 0) {
+            this.bossHP = 100;
+            this.bossAlive = false;
+            this.bossFiring.remove();
+            this.time.addEvent({delay: 400, loop: true, callback: () => {
+                this.boss.setTint(0x000000);
+                let bossexplosionEffect = this.add.sprite(this.boss.x + (Math.random()*500 - 250), this.boss.y + (Math.random()*500 - 250),'megumin1').play('megumin').on('animationcomplete', () => {bossexplosionEffect.destroy()});
+                this.blomby.play();
+            }});
+            this.bluggy.play();
+            this.kills.push(4);
+            let bossPoints = this.add.text(this.boss.x, this.boss.y - 30, '5000', {font: '50px Verdana'}).setOrigin(0.5);
+            this.tweens.add({targets: bossPoints, alpha: 0, y: this.boss.y - 150, duration: 1000});
+            this.tweens.addCounter({from: this.game.config.lvl3score, to: this.game.config.lvl3score + 5000, duration: 1500, onUpdate: tween => {let value = Math.round(tween.getValue()); this.scoreCounter.setText(`${value}`)}});
+            this.game.config.lvl3score += 4000;
+            this.time.delayedCall(5000, () => {
                 this.scene.start('transitionScreen', {enemiesdestroyed: this.kills, playersprite: this.playersprite, nextLevel: 'victoryScreen', bgm: this.bgm})
             })
-        }*/
+        }
 
         // movement for gamepad
         for (let i = 0; i < this.pads.length; i++)
@@ -247,8 +274,41 @@ class Level3 extends Phaser.Scene {
             this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
         }
     }
-    /*spawnBoss() {
-        this.boss = this.physics.add.sprite(540, -700, 'boss').body.allowGravity = false;
-        this.tweens.add({targets})
-    }*/
+    spawnBoss() {
+        this.boss = this.physics.add.sprite(540, -700, 'boss');
+        this.boss.body.allowGravity = false;
+        this.time.delayedCall(1500, () => {this.entrance.play();});
+        let tween1 = this.tweens.chain({tweens: [{targets: this.boss, y: 400, duration: 1500}, {targets: this.boss, x: 140, duration: 1500}, {targets: this.boss, props: {x: {from: 140, to: 940, duration: 2500}}, ease: 'Sine.easeInOut', yoyo: true, repeat: -1}]});
+        
+        this.bossBullets = this.add.existing(new Bullets(this.physics.world, this, {name: 'bossBullets'}));
+        this.bossBullets.createMultiple({key: 'bossBullet', quantity: 5});
+
+        this.time.delayedCall(1500, () => {this.bossFiring = this.time.addEvent({delay: 1500, loop: true, callback: () => {
+            this.bossBullets.fire(this.boss.x, this.boss.y + 100, 0, 300)
+        }})});
+
+        this.physics.add.overlap(this.playerBullets, this.boss, (bullet, enemy) => {
+            enemy.disableBody(true, true);
+            enemy.y = -500;
+            console.log(this.bossAlive);
+            if (this.bossAlive) {
+                bullet.setTint(0xff0000);
+                this.time.delayedCall(200, () => {
+                        bullet.clearTint();
+                })
+            };
+            this.bossHP--;
+            let explosionEffect = this.add.sprite(bullet.x, bullet.y,'megumin1').play('megumin').on('animationcomplete', () => {explosionEffect.destroy()});
+            this.blomby.play();
+        });
+        this.physics.add.overlap(this.player, [this.boss, this.bossBullets], (player, enemy) => {
+            let explosionEffect = this.add.sprite(player.x, player.y,'megumin1').play('megumin').on('animationcomplete', () => {explosionEffect.destroy()});
+            this.deathSound.play();
+            player.setVelocityX(0).setVelocityY(0).body.allowGravity = false;
+            this.time.delayedCall(1000, () => {
+                this.game.sound.stopAll();
+                this.scene.start('death', {level: 'level3'});
+            });
+        });
+    }
 }

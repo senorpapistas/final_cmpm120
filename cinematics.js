@@ -369,7 +369,7 @@ class victoryScreen extends Phaser.Scene{
         this.bgm = data.bgm;
     }
     create() {
-        let sound = this.sound.add('click');
+        let sound_click = this.sound.add('click');
 
         //background
         this.background = this.add.image(game.config.width*.5, game.config.height*.5, 'space')
@@ -421,12 +421,12 @@ class victoryScreen extends Phaser.Scene{
                 {
                     targets: this.text1,
                     alpha: 1,
-                    onComplete:()=>{click.play()}
+                    onComplete:()=>{sound_click.play()}
                 },
                 {
                     targets: this.text2,
                     alpha: 1,
-                    onComplete:()=>{click.play()}
+                    onComplete:()=>{sound_click.play()}
                 },
                 {
                     targets: this.text3,
@@ -434,7 +434,7 @@ class victoryScreen extends Phaser.Scene{
                     
                     //final score counts up
                     onComplete:() => {
-                        click.play()
+                        sound_click.play()
                         let updatescore = this.tweens.addCounter({
                             from: 0,
                             to: this.finalscore,
@@ -460,7 +460,7 @@ class victoryScreen extends Phaser.Scene{
         })
 
         this.input.once('pointerdown', () => {
-            sound.play();
+            sound_click.play();
             this.bgm.stop();
             this.scene.start('selectScreen');
         });
