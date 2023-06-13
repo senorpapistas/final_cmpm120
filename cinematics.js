@@ -323,9 +323,9 @@ class titleScreen extends Phaser.Scene{
 
 
         //ship select button
-        let shipbuttonback = this.add.rectangle(game.config.width*.5, game.config.height*.95, 220, 120, 0xffffff)
-        let shipbuttonbody = this.add.rectangle(game.config.width*.5, game.config.height*.95, 200, 100, 0x3c78d8).setInteractive()
-        let shipbuttontext = this.add.text(game.config.width*.5, game.config.height*.95, "Ship", {font: "50px Verdana"}).setOrigin(.5)
+        let shipbuttonback = this.add.rectangle(game.config.width*.35, game.config.height*.95, 220, 120, 0xffffff)
+        let shipbuttonbody = this.add.rectangle(game.config.width*.35, game.config.height*.95, 200, 100, 0x3c78d8).setInteractive()
+        let shipbuttontext = this.add.text(game.config.width*.35, game.config.height*.95, "Ship", {font: "50px Verdana"}).setOrigin(.5)
 
             shipbuttonbody.on('pointerover',()=>{ 
                 shipbuttonback.setScale(1.1)
@@ -337,7 +337,30 @@ class titleScreen extends Phaser.Scene{
                 shipbuttonbody.setScale(1)
                 shipbuttontext.setScale(1)
             })
-            shipbuttonbody.on('pointerdown',()=>{this.scene.start('selectScreen')})
+            shipbuttonbody.on('pointerdown',()=>{
+                sound.play()
+                this.scene.start('selectScreen')
+            })
+
+            //level select button
+        let levelbuttonback = this.add.rectangle(game.config.width*.65, game.config.height*.95, 220, 120, 0xffffff)
+        let levelbuttonbody = this.add.rectangle(game.config.width*.65, game.config.height*.95, 200, 100, 0x3c78d8).setInteractive()
+        let levelbuttontext = this.add.text(game.config.width*.65, game.config.height*.95, "Level", {font: "50px Verdana"}).setOrigin(.5)
+
+            levelbuttonbody.on('pointerover',()=>{ 
+                levelbuttonback.setScale(1.1)
+                levelbuttonbody.setScale(1.1)
+                levelbuttontext.setScale(1.1)
+            })
+            levelbuttonbody.on('pointerout',()=>{ 
+                levelbuttonback.setScale(1)
+                levelbuttonbody.setScale(1)
+                levelbuttontext.setScale(1)
+            })
+            levelbuttonbody.on('pointerdown',()=>{
+                sound.play()
+                this.scene.start('levelselectScreen')
+            })
     }
     update() {
         //background scroll
@@ -347,7 +370,17 @@ class titleScreen extends Phaser.Scene{
             this.stars2.y += 5;
     }
 }
-    
+
+class levelselectScreen extends Phaser.Scene{
+    constructor() {
+        super('levelselectScreen')
+    }
+    create() {
+        
+        this.scene.start('level1', {playersprite: this.playersprite, bgm: this.bgm})
+    }
+}
+
 class victoryScreen extends Phaser.Scene{
     constructor(){
         super('victoryScreen');

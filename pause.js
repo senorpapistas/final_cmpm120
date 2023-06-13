@@ -60,6 +60,8 @@ class Pause extends Phaser.Scene {
                 }
             });
         */
+        
+        let sound = this.sound.add('click')
 
         //settings menu
         let rect = this.add.rectangle(game.config.width*.5,game.config.height*.5,1000,800,0x2843b8)
@@ -114,7 +116,7 @@ class Pause extends Phaser.Scene {
             //
             //fullscreen code goes here
             //
-
+            sound.play()
             if (this.scale.isFullscreen) {
                 this.scale.stopFullscreen();
                 fullscreenimage.setAlpha(0)
@@ -139,7 +141,7 @@ class Pause extends Phaser.Scene {
             //
             //subtitles code goes here
             //
-
+            sound.play()
             if (game.config.captions) {
                 game.config.captions = false;
                 subtitlesimage.setAlpha(0);
@@ -156,6 +158,7 @@ class Pause extends Phaser.Scene {
             musicbuttoneffect.setAlpha(0)
         })
         musicbutton.on('pointerdown',()=>{
+            sound.play()
             if (this.bgm.mute) {
                 musicimage.setText('🔊')
                 this.bgm.mute = false;
@@ -173,6 +176,7 @@ class Pause extends Phaser.Scene {
         quitbutton.on('pointerover',()=>{quittext.setScale(1.2)})
         quitbutton.on('pointerout',()=>{quittext.setScale(1)})
         quitbutton.on('pointerdown',()=>{
+            sound.play()
             this.scene.start('titleScreen')
             this.scene.stop(this);
             this.scene.stop(this.currLevel);
@@ -182,6 +186,7 @@ class Pause extends Phaser.Scene {
         exit.on('pointerover',()=>{exit.setScale(1.05)})
         exit.on('pointerout',()=>{exit.setScale(1)})
         exit.on('pointerdown',()=>{
+            sound.play()
             this.pauseButton.setAlpha(1);
             this.scene.resume(this.currLevel, {bgm: this.bgm});
             this.scene.stop();
