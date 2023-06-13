@@ -23,4 +23,18 @@ class Tutorial extends Phaser.Scene {
             });
         });
     }
+    update() {
+        const pads = this.input.gamepad.gamepads;
+        for (let i = 0; i < pads.length; i++)
+        {
+            const gamepad = pads[i];
+            if (!gamepad) {continue;}
+            if (gamepad.right || gamepad.B || gamepad.R1 || gamepad.left || gamepad.A || gamepad.L1) {
+                this.time.delayedCall(200, () => {
+                    this.scene.resume(this.currScene);
+                    this.scene.stop();
+                });
+            }
+        }
+    }
 }
