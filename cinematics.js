@@ -123,14 +123,10 @@ class titleScreen extends Phaser.Scene{
         this.stars2 = this.add.image(game.config.width*.5, game.config.height*1.5, 'space')
     
         //background (made of chunks, will disappear on Play)
-        let t1 = this.add.triangle(0, 0, 0, 0, 0, 700, 1080, 0, 0x000000)
-            .setOrigin(0,0)
-        let t2 = this.add.triangle(game.config.width, game.config.height, 0, 0, 0, -200, -2000, 0, 0x000000)
-            .setOrigin(0,0)
-        let t3 = this.add.triangle(0, game.config.height*.5, 0, 0, 0, 500, 2500, 0, 0x000000)
-            .setOrigin(0,0)
-        let t4 = this.add.triangle(game.config.width, game.config.height*.5, 0, 0, 0, -300, -2500, 0, 0x000000)
-            .setOrigin(0,0)
+        let t1 = this.add.triangle(0, 0, 0, 0, 0, 700, 1080, 0, 0x000000).setOrigin(0,0)
+        let t2 = this.add.triangle(game.config.width, game.config.height, 0, 0, 0, -200, -2000, 0, 0x000000).setOrigin(0,0)
+        let t3 = this.add.triangle(0, game.config.height*.5, 0, 0, 0, 500, 2500, 0, 0x000000).setOrigin(0,0)
+        let t4 = this.add.triangle(game.config.width, game.config.height*.5, 0, 0, 0, -300, -2500, 0, 0x000000).setOrigin(0,0)
 
         //player
         let player = this.add.image(game.config.width*.5, game.config.height*.8, this.playersprite[0]);
@@ -248,22 +244,22 @@ class titleScreen extends Phaser.Scene{
         let rect = this.add.rectangle(game.config.width*.5,game.config.height*.5,1000,800,0x2843b8)
         .setOrigin(.5)
         let triangle = this.add.triangle(game.config.width*.5,game.config.height*.5 -300,0,0,1000,200,1000,0,0x3c78d8)
-        let exit = this.add.triangle(game.config.width*.8 + 50,game.config.height*.2 + 250,0,0,0,100,75,50,0x3c0000).setInteractive()
+        let exit = this.add.triangle(game.config.width*.8 + 100,game.config.height*.2 + 250,0,0,0,100,75,50,0x000000).setInteractive()
         let fullscreenbutton = this.add.rectangle(game.config.width*.5,game.config.height*.45, 1000, 200, 0, 0x000000).setInteractive()
         let fullscreenbuttoneffect = this.add.rectangle(game.config.width*.5,game.config.height*.45, 1000, 200, 0x000000).setAlpha(0)
-        let fullscreentext = this.add.text(game.config.width*.15,game.config.height*.425, "  fullscreen", {font: "80px Verdana"})
+        let fullscreentext = this.add.text(game.config.width*.15,game.config.height*.425, "  Fullscreen", {font: "80px Verdana"})
         let fullscreenimage = this.add.text(game.config.width*.08,game.config.height*.425, "📺", {font: "80px Verdana"})
         if (!this.scale.isFullscreen) {fullscreenimage.setAlpha(0)}
 
         let subtitlesbutton = this.add.rectangle(game.config.width*.5,game.config.height*.55, 1000, 200, 0, 0x000000).setInteractive()
         let subtitlesbuttoneffect = this.add.rectangle(game.config.width*.5,game.config.height*.55, 1000, 200, 0x000000).setAlpha(0)
-        let subtitlestext = this.add.text(game.config.width*.15,game.config.height*.525, "  subtitles", {font: "80px Verdana"})
+        let subtitlestext = this.add.text(game.config.width*.15,game.config.height*.525, "  Subtitles", {font: "80px Verdana"})
         let subtitlesimage = this.add.text(game.config.width*.08,game.config.height*.525, "🔤", {font: "80px Verdana"})
         if (game.config.captions == false) {subtitlesimage.setAlpha(0)}
 
         let musicbutton = this.add.rectangle(game.config.width*.5,game.config.height*.65, 1000, 200, 0, 0x000000).setInteractive()
         let musicbuttoneffect = this.add.rectangle(game.config.width*.5,game.config.height*.65, 1000, 200, 0x000000).setAlpha(0)
-        let musictext = this.add.text(game.config.width*.15,game.config.height*.625, "  music", {font: "80px Verdana"})
+        let musictext = this.add.text(game.config.width*.15,game.config.height*.625, "  Music", {font: "80px Verdana"})
         let musicicon;
         if (this.bgm.mute) {musicicon = '🔈'} else {musicicon = '🔊'}
         let musicimage = this.add.text(game.config.width*.08,game.config.height*.625, musicicon, {font: "80px Verdana"})
@@ -275,12 +271,7 @@ class titleScreen extends Phaser.Scene{
         let settingsmenu = this.add.container(0,10, [rect,triangle,exit,fullscreenbutton, subtitlesbutton, musicbutton, fullscreenbuttoneffect,subtitlesbuttoneffect, musicbuttoneffect,
                                                 fullscreenimage, subtitlesimage, musicimage, fullscreentext, subtitlestext, musictext, settingstitle2, settingstitle])
             .setAlpha(0)
-        //
-        //NEED GLOBAL VARIABLES FOR FULLSCREEN AND SUBTITLES
-        //
-        //let subtitles = 0;
-        //let fullscreen = 0;
-        //let music = 1;
+   
 
         //settings buttons
         fullscreenbutton.on('pointerover',()=>{
@@ -348,7 +339,8 @@ class titleScreen extends Phaser.Scene{
             this.bgm.mute = true;
         }
     })
-
+            exit.on('pointerover',()=>{exit.setScale(1.05)})
+            exit.on('pointerout',()=>{exit.setScale(1)})
             exit.on('pointerdown',()=>{
                 sound.play()
                 settingsmenu.setAlpha(0)
@@ -412,19 +404,12 @@ class victoryScreen extends Phaser.Scene{
 
 
         //score to be updated
-        //this.score1 = 3500;
-        //this.score2 = 4500;
-        //this.score3 = 1;
-        //this.finalscore = this.score1+this.score2+this.score3;
         this.finalscore = this.game.config.lvl1score + this.game.config.lvl2score + this.game.config.lvl3score
 
         //score text        
-        this.text1 = this.add.text(game.config.width*.15,game.config.height*.3, `Level 1 score: ${this.game.config.lvl1score}`, {font: "80px Verdana"}) //.setOrigin(0.5)
-            .setAlpha(0);
-        this.text2 = this.add.text(game.config.width*.15,game.config.height*.4, `Level 2 Score: ${game.config.lvl2score}`, {font: "80px Verdana"}) //.setOrigin(0.5)
-            .setAlpha(0);
-        this.text3 = this.add.text(game.config.width*.15,game.config.height*.5, `Level 3 Score: ${game.config.lvl3score}`, {font: "80px Verdana"}) //.setOrigin(0.5)
-            .setAlpha(0);
+        this.text1 = this.add.text(game.config.width*.15,game.config.height*.3, `Level 1 score: ${this.game.config.lvl1score}`, {font: "80px Verdana"}).setAlpha(0);
+        this.text2 = this.add.text(game.config.width*.15,game.config.height*.4, `Level 2 Score: ${game.config.lvl2score}`, {font: "80px Verdana"}).setAlpha(0);
+        this.text3 = this.add.text(game.config.width*.15,game.config.height*.5, `Level 3 Score: ${game.config.lvl3score}`, {font: "80px Verdana"}).setAlpha(0);
         this.text4 = this.add.text(game.config.width*.5,game.config.height*.6, "Total:  ", {font: "80px Verdana"}).setOrigin(0.5);
 
 
@@ -529,23 +514,15 @@ class selectScreen extends Phaser.Scene{
         let player_og = this.add.image(game.config.width*.7, game.config.height*.57, 'player_og').setInteractive()
         let player = this.add.image(game.config.width*.3, game.config.height*.57, 'player').setInteractive()
 
-        player.on('pointerover', ()=> {
-            box1.setFillStyle(0xffffff, 0xcccccc, 0xabcdef)
-        })
-        player.on('pointerout', ()=> {
-            box1.setFillStyle(0x2bd62b, 0x1b961b, 0x14c714)
-        })
+        player.on('pointerover', ()=> {box1.setFillStyle(0xffffff, 0xcccccc, 0xabcdef)})
+        player.on('pointerout', ()=> {box1.setFillStyle(0x2bd62b, 0x1b961b, 0x14c714)})
         player.on('pointerdown', ()=>{
             sound.play()
             this.scene.start('cutscene', {playersprite: spriteSelect})
         })
 
-        player_og.on('pointerover', ()=> {
-            box2.setFillStyle(0xffffff, 0xcccccc, 0xabcdef)
-        })
-        player_og.on('pointerout', ()=> {
-            box2.setFillStyle(0xd91630, 0xb3172c, 0xe80c29)
-        })
+        player_og.on('pointerover', ()=> {box2.setFillStyle(0xffffff, 0xcccccc, 0xabcdef)})
+        player_og.on('pointerout', ()=> {box2.setFillStyle(0xd91630, 0xb3172c, 0xe80c29)})
         player_og.on('pointerdown', ()=>{
             sound.play()
             this.scene.start('cutscene', {playersprite: spriteSelect_og})

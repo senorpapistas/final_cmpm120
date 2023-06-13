@@ -64,22 +64,22 @@ class Pause extends Phaser.Scene {
         let rect = this.add.rectangle(game.config.width*.5,game.config.height*.5,1000,800,0x2843b8)
             .setOrigin(.5)
         let triangle = this.add.triangle(game.config.width*.5,game.config.height*.5 -300,0,0,1000,200,1000,0,0x3c78d8)
-        let exit = this.add.triangle(game.config.width*.8 + 50,game.config.height*.2 + 250,0,0,0,100,75,50,0x3c0000).setInteractive()
+        let exit = this.add.triangle(game.config.width*.8 + 100,game.config.height*.2 + 250,0,0,0,100,75,50,0x000000).setInteractive()
         let fullscreenbutton = this.add.rectangle(game.config.width*.5,game.config.height*.45, 1000, 200, 0, 0x000000).setInteractive()
         let fullscreenbuttoneffect = this.add.rectangle(game.config.width*.5,game.config.height*.45, 1000, 200, 0x000000).setAlpha(0)
-        let fullscreentext = this.add.text(game.config.width*.15,game.config.height*.425, "  fullscreen", {font: "80px Verdana"})
+        let fullscreentext = this.add.text(game.config.width*.15,game.config.height*.425, "  Fullscreen", {font: "80px Verdana"})
         let fullscreenimage = this.add.text(game.config.width*.08,game.config.height*.425, "📺", {font: "80px Verdana"})
         if (!this.scale.isFullscreen) {fullscreenimage.setAlpha(0)}
 
         let subtitlesbutton = this.add.rectangle(game.config.width*.5,game.config.height*.55, 1000, 200, 0, 0x000000).setInteractive()
         let subtitlesbuttoneffect = this.add.rectangle(game.config.width*.5,game.config.height*.55, 1000, 200, 0x000000).setAlpha(0)
-        let subtitlestext = this.add.text(game.config.width*.15,game.config.height*.525, "  subtitles", {font: "80px Verdana"})
+        let subtitlestext = this.add.text(game.config.width*.15,game.config.height*.525, "  Subtitles", {font: "80px Verdana"})
         let subtitlesimage = this.add.text(game.config.width*.08,game.config.height*.525, "🔤", {font: "80px Verdana"})
         if (game.config.captions == false) {subtitlesimage.setAlpha(0)}
 
         let musicbutton = this.add.rectangle(game.config.width*.5,game.config.height*.65, 1000, 200, 0, 0x000000).setInteractive()
         let musicbuttoneffect = this.add.rectangle(game.config.width*.5,game.config.height*.65, 1000, 200, 0x000000).setAlpha(0)
-        let musictext = this.add.text(game.config.width*.15,game.config.height*.625, "  music", {font: "80px Verdana"})
+        let musictext = this.add.text(game.config.width*.15,game.config.height*.625, "  Music", {font: "80px Verdana"})
         let musicicon;
         if (this.bgm.mute) {musicicon = '🔈'} else {musicicon = '🔊'}
         let musicimage = this.add.text(game.config.width*.08,game.config.height*.625, musicicon, {font: "80px Verdana"})
@@ -164,7 +164,20 @@ class Pause extends Phaser.Scene {
             }
         })
 
+        //quit to main menu
+        let quitbuttonbody = this.add.rectangle(game.config.width*.5, game.config.height*.8, 550, 250, 0x000000).setOrigin(.5)
+        let quitbutton = this.add.rectangle(game.config.width*.5, game.config.height*.8, 500, 200, 0xff0000).setOrigin(.5).setInteractive()
+        let quittext = this.add.text (game.config.width*.5, game.config.height*.8, "ABORT", {font: "80px Verdana"}).setOrigin(.5)
 
+        quitbutton.on('pointerover',()=>{quittext.setScale(1.2)})
+        quitbutton.on('pointerout',()=>{quittext.setScale(1)})
+        quitbutton.on('pointerdown',()=>{
+            
+        })
+
+        //exit pause screen
+        exit.on('pointerover',()=>{exit.setScale(1.05)})
+        exit.on('pointerout',()=>{exit.setScale(1)})
         exit.on('pointerdown',()=>{
             this.pauseButton.setAlpha(1);
             this.scene.resume('level1', {bgm: this.bgm});
