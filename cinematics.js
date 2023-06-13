@@ -335,7 +335,7 @@ class titleScreen extends Phaser.Scene{
             shipbuttonbody.on('pointerout',()=>{ 
                 shipbuttonback.setScale(1)
                 shipbuttonbody.setScale(1)
-                shipbuttontext.setScale(1.1)
+                shipbuttontext.setScale(1)
             })
             shipbuttonbody.on('pointerdown',()=>{this.scene.start('selectScreen')})
     }
