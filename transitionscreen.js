@@ -92,7 +92,7 @@ class TransitionScreen extends Phaser.Scene{
             })
 
         //title
-        let title = this.add.text(game.config.width*.5,game.config.height*.1, "You passed!", {font: "80px Verdana"}).setOrigin(0.5);
+        let title = this.add.text(game.config.width*.5,game.config.height*.1, "You passed!", {font: "80px Verdana", color: '#f0f024'}).setOrigin(0.5);
 
 
         //animate title
@@ -159,7 +159,7 @@ class TransitionScreen extends Phaser.Scene{
                         },
                         onComplete:()=> {
                             sound.play()
-                            this.add.text(game.config.width*.5,game.config.height*.65, "click to continue",{font: "40px Verdana"}).setOrigin(.5)
+                            this.add.text(game.config.width*.5,game.config.height*.65, "click to continue",{font: "40px Verdana", color: '#f0f024'}).setOrigin(.5)
 
 
                         }

@@ -399,10 +399,16 @@ class victoryScreen extends Phaser.Scene{
 
         //score text description
         let descriptionbackground = this.add.rectangle(game.config.width*.5,game.config.height*.8, 600, 200, 0x000000).setAlpha(0)
-        let description = this.add.text(game.config.width*.5,game.config.height*.8, "You're mid!", {font: "80px Verdana"}).setOrigin(0.5).setAlpha(0);
+        let description = this.add.text(game.config.width*.5,game.config.height*.8, "You're mid!", {font: "80px Verdana", color: '#474714'}).setOrigin(0.5).setAlpha(0);
         
-        if(this.finalscore >= 15000) {description.setText("You're ok!")}
-        else if(this.finalscore >= 20000) {description.setText("You're great!")}
+        if(this.finalscore >= 15000) {
+            description.setText("You're ok!")
+                .setColor("#ff006e")
+            }
+        else if(this.finalscore >= 20000) {
+            description.setText("You're great!")
+                .setColor('#f0f024')
+            }
         
         //score animation
         //
@@ -411,11 +417,13 @@ class victoryScreen extends Phaser.Scene{
             tweens: [
                 {
                     targets: this.text1,
-                    alpha: 1
+                    alpha: 1,
+                    onComplete:()=>{click.play()}
                 },
                 {
                     targets: this.text2,
-                    alpha: 1
+                    alpha: 1,
+                    onComplete:()=>{click.play()}
                 },
                 {
                     targets: this.text3,
@@ -423,6 +431,7 @@ class victoryScreen extends Phaser.Scene{
                     
                     //final score counts up
                     onComplete:() => {
+                        click.play()
                         let updatescore = this.tweens.addCounter({
                             from: 0,
                             to: this.finalscore,
