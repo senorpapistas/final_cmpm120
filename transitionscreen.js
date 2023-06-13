@@ -19,12 +19,18 @@ class TransitionScreen extends Phaser.Scene{
         this.load.image('megumin5', 'megumin/megumin5.png')
         this.load.image('megumin6', 'megumin/megumin6.png')
         this.load.image('megumin7', 'megumin/megumin7.png')
+
+        this.load.audio('click', '/audio/click.mp3');
+        this.load.audio('explosionsfx','/audio/explosion.mp3');
     }
     init (data) {
         this.enemiesdestroyed = data.enemiesdestroyed
         this.playersprite = data.playersprite;
     }
     create() {
+        let sound = this.sound.add('click');
+        let explosionsfx = this.sound.add('explosionsfx')
+
         //parallax effect: 2 backgrounds scroll sideways after each other
         this.stars = this.add.image(game.config.width*.5, game.config.height*.5, 'space')
         this.stars2 = this.add.image(game.config.width*1.5, game.config.height*.5, 'space')
@@ -166,6 +172,7 @@ class TransitionScreen extends Phaser.Scene{
                 //explosion effect
                 let explosion = this.add.sprite(game.config.width*.08+counter%1000, game.config.height*.2+Math.floor(counter/1000)*100,'megumin1')
                 .play('megumin')
+                explosionsfx.play()
                 this.time.addEvent({delay: 400, loop: true, callback: () => {explosion.destroy()}})
 
                 counter +=100
@@ -174,6 +181,7 @@ class TransitionScreen extends Phaser.Scene{
 
         //click to animate ship and transition to next scene
         this.input.once('pointerdown', () => {
+            sound.play()
             this.tweens.add({
                 targets: player,
                 x: 1500,
