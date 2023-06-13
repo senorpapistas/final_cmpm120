@@ -7,7 +7,7 @@ class Level3 extends Phaser.Scene {
         this.playersprite = data.playersprite;
     }
     create() {
-        this.game.config.lvl2score = 0;
+        this.game.config.lvl3score = 0;
 
         // changed world bounds to allow enemies to spawn outside without being destroyed
         this.physics.world.setBounds(-200, -500, 1480, 2720);
@@ -179,7 +179,7 @@ class Level3 extends Phaser.Scene {
             let explosionEffect = this.add.sprite(player.x, player.y,'megumin1').play('megumin').on('animationcomplete', () => {explosionEffect.destroy()});
             deathSound.play();
             player.setVelocityX(0).setVelocityY(0).body.allowGravity = false;
-            this.time.delayedCall(400, () => {
+            this.time.delayedCall(1000, () => {
                 this.game.sound.stopAll();
                 this.scene.start('death', {level: 'level2'});
             });
