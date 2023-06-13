@@ -25,7 +25,7 @@ class Level1 extends Phaser.Scene {
 
         // sounds
         this.booster = this.sound.add('boost');
-        this.bgm = this.sound.add('bgm');
+        //this.bgm = this.sound.add('bgm');
         this.bgm.loop = true;
         this.bgm.play();
         this.bgm.pauseOnBlur = true;

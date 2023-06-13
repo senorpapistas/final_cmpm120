@@ -81,13 +81,11 @@ class cutscene extends Phaser.Scene {
                 this.stars.y = game.config.height*-.5
             }
             this.stars.y += 5;
-            //this.stars.y %= 1920;
             if (this.stars2.y == game.config.height*1.5)
             {
                 this.stars2.y = game.config.height*-.5
             }
             this.stars2.y += 5;
-            //this.stars2.y %= 1920;
         }
     }
 }
@@ -194,7 +192,8 @@ class titleScreen extends Phaser.Scene{
                         duration: 1000, 
                         ease: 'Cubic',
                         onComplete:() => {
-                            this.scene.start('level1', {playersprite: this.playersprite})
+                            console.log(this.bgm.mute)
+                            this.scene.start('level1', {playersprite: this.playersprite, bgm: this.bgm})
                         }
                     });
                 }
@@ -353,13 +352,11 @@ class titleScreen extends Phaser.Scene{
                 this.stars.y = game.config.height*-.5
             }
             this.stars.y += 5;
-            //this.stars.y %= 1920;
             if (this.stars2.y >= game.config.height*1.5)
             {
                 this.stars2.y = game.config.height*-.5
             }
             this.stars2.y += 5;
-            //this.stars2.y %= 1920;
     }
 }
     
@@ -523,27 +520,3 @@ class selectScreen extends Phaser.Scene{
         })
     }
 }
-
-/*
-let config = {
-    scale: {
-        mode: Phaser.Scale.FIT,
-        autoCenter: Phaser.Scale.CENTER_BOTH,
-        width: 1080,
-        height: 1920
-    },
-    physics: {
-        default: 'arcade',
-        arcade: {
-            debug: true,
-            gravity: {
-                x: 0,
-                y: 700
-            }
-        }
-    },
-    scene: [selectScreen, victoryScreen, titleScreen,transitionScreen,cutscene],
-}
-
-let game = new Phaser.Game(config);
-*/
