@@ -150,7 +150,7 @@ class Level2 extends Phaser.Scene {
         });
 
         // checks if player touches enemy
-        this.physics.add.overlap(this.player, [enemy, enemy2], (player, enemy) => {
+        this.physics.add.overlap(this.player, [enemy1, enemy2], (player, enemy) => {
             let explosionEffect = this.add.sprite(player.x, player.y,'megumin1').play('megumin').on('animationcomplete', () => {explosionEffect.destroy()});
             deathSound.play();
             player.setVelocityX(0).setVelocityY(0).body.allowGravity = false;
