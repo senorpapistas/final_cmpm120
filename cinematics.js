@@ -322,6 +322,22 @@ class titleScreen extends Phaser.Scene{
             })    
 
 
+        //ship select button
+        let shipbuttonback = this.add.rectangle(game.config.width*.5, game.config.height*.95, 220, 120, 0xffffff)
+        let shipbuttonbody = this.add.rectangle(game.config.width*.5, game.config.height*.95, 200, 100, 0x3c78d8).setInteractive()
+        let shipbuttontext = this.add.text(game.config.width*.5, game.config.height*.95, "Ship", {font: "50px Verdana"}).setOrigin(.5)
+
+            shipbuttonbody.on('pointerover',()=>{ 
+                shipbuttonback.setScale(1.1)
+                shipbuttonbody.setScale(1.1)
+                shipbuttontext.setScale(1.1)
+            })
+            shipbuttonbody.on('pointerout',()=>{ 
+                shipbuttonback.setScale(1)
+                shipbuttonbody.setScale(1)
+                shipbuttontext.setScale(1.1)
+            })
+            shipbuttonbody.on('pointerdown',()=>{this.scene.start('selectScreen')})
     }
     update() {
         //background scroll

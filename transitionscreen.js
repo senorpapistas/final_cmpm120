@@ -203,6 +203,21 @@ class TransitionScreen extends Phaser.Scene{
             })
         });
 
+        //controller support
+        this.pads = this.input.gamepad.gamepads;
+        this.input.gamepad.on('down', () => {
+            sound.play()
+            this.tweens.add({
+                targets: player,
+                x: 1500,
+                duration: 1000,
+                onComplete:()=>{
+                    player.destroy()
+                    this.scene.start(this.nextLevel, {playersprite: this.playersprite, bgm: this.bgm});
+                }
+            })
+        })
+
     }
     update() {
         //background scroll
