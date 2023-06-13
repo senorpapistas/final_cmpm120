@@ -23,10 +23,13 @@ class Level1 extends Phaser.Scene {
 
         this.stars = this.add.image(game.config.width*.5, game.config.height*.5, 'space')
         this.stars2 = this.add.image(game.config.width*.5, game.config.height*1.5, 'space')
+        
+        let scoreCounter = this.add.text(540, 100, '0', {font: '80px Verdana'}).setOrigin(0.5);
 
         // sounds
         this.booster = this.sound.add('boost');
         let explosionsfx = this.sound.add('explosionsfx');
+        let deathSound = this.sound.add('death');
         //this.bgm = this.sound.add('bgm');
         this.bgm.loop = true;
         this.bgm.play();
@@ -130,6 +133,10 @@ class Level1 extends Phaser.Scene {
         this.physics.add.overlap(this.playerBullets, enemy1, (bullet, enemy) => {
             this.kills.push(1);
             this.killCount++;
+            let enemy1Points = this.add.text(enemy.x, enemy.y - 30, '500', {font: '50px Verdana'}).setOrigin(0.5);
+            this.tweens.add({targets: enemy1Points, alpha: 0, y: enemy.y - 150, duration: 1000});
+            this.tweens.addCounter({from: this.game.config.lvl1score, to: this.game.config.lvl1score + 500, duration: 1500, onUpdate: tween => {let value = Math.round(tween.getValue()); scoreCounter.setText(`${value}`)}});
+            this.game.config.lvl1score += 500;
             let explosionEffect = this.add.sprite(enemy.x, enemy.y,'megumin1').play('megumin').on('animationcomplete', () => {explosionEffect.destroy()});
             this.time.addEvent({delay: 400, callback: () => {explosionEffect.destroy()}});
             explosionsfx.play();
@@ -148,8 +155,13 @@ class Level1 extends Phaser.Scene {
 
         // checks if player touches enemy
         this.physics.add.overlap(this.player, enemy1 /*[testEnemy, testEnemy2]*/, (player, enemy) => {
-            this.game.sound.stopAll();
-            this.scene.start('death');
+            let explosionEffect = this.add.sprite(player.x, player.y,'megumin1').play('megumin').on('animationcomplete', () => {explosionEffect.destroy()});
+            deathSound.play();
+            player.setVelocityX(0).setVelocityY(0).body.allowGravity = false;
+            this.time.delayedCall(400, () => {
+                this.game.sound.stopAll();
+                this.scene.start('death');
+            });
         });
         // checks if object hits world bounds
         this.physics.world.on('worldbounds', (body) => {if (body.gameObject.onWorldBounds()) {this.killCount++};})

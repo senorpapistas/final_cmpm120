@@ -16,6 +16,7 @@ class Preloader extends Phaser.Scene {
 
         this.load.audio('click', '/audio/click.mp3');
         this.load.audio('explosionsfx','/audio/explosion.mp3');
+        this.load.audio('death', '/audio/death.mp3');
 
         this.load.image('planet1', 'planet1.png');
         this.load.image('planet2','planet2.png');
