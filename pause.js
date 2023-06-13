@@ -117,6 +117,11 @@ class Pause extends Phaser.Scene {
             //fullscreen code goes here
             //
             sound.play()
+            if (game.config.captions == true) {
+                let boosttext = this.add.text(440, 1800, '(whoosh)', {fontSize: '40px'});
+                this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
+            }
+
             if (this.scale.isFullscreen) {
                 this.scale.stopFullscreen();
                 fullscreenimage.setAlpha(0)
@@ -142,6 +147,11 @@ class Pause extends Phaser.Scene {
             //subtitles code goes here
             //
             sound.play()
+            if (game.config.captions == true) {
+                let boosttext = this.add.text(440, 1800, '(whoosh)', {fontSize: '40px'});
+                this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
+            }
+
             if (game.config.captions) {
                 game.config.captions = false;
                 subtitlesimage.setAlpha(0);
@@ -159,6 +169,11 @@ class Pause extends Phaser.Scene {
         })
         musicbutton.on('pointerdown',()=>{
             sound.play()
+            if (game.config.captions == true) {
+                let boosttext = this.add.text(440, 1800, '(whoosh)', {fontSize: '40px'});
+                this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
+            }
+
             if (this.bgm.mute) {
                 musicimage.setText('🔊')
                 this.bgm.mute = false;
@@ -177,6 +192,11 @@ class Pause extends Phaser.Scene {
         quitbutton.on('pointerout',()=>{quittext.setScale(1)})
         quitbutton.on('pointerdown',()=>{
             sound.play()
+            if (game.config.captions == true) {
+                let boosttext = this.add.text(440, 1800, '(whoosh)', {fontSize: '40px'});
+                this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
+            }
+
             this.scene.start('titleScreen')
             this.scene.stop(this);
             this.scene.stop(this.currLevel);
@@ -187,6 +207,11 @@ class Pause extends Phaser.Scene {
         exit.on('pointerout',()=>{exit.setScale(1)})
         exit.on('pointerdown',()=>{
             sound.play()
+            if (game.config.captions == true) {
+                let boosttext = this.add.text(440, 1800, '(whoosh)', {fontSize: '40px'});
+                this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
+            }
+            
             this.pauseButton.setAlpha(1);
             this.scene.resume(this.currLevel, {bgm: this.bgm});
             this.scene.stop();

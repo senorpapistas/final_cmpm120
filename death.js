@@ -29,6 +29,11 @@ class Death extends Phaser.Scene {
         this.input.gamepad.on('down', () => {
             losesfx.stop();
             click.play();
+            if (game.config.captions == true) {
+                let boosttext = this.add.text(game.config.width*.5, 1800, '(whoosh)', {fontSize: '40px'}).setOrigin(.5);
+                this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
+            }
+
             this.scene.start(this.level);
         })
 
@@ -42,6 +47,11 @@ class Death extends Phaser.Scene {
         restartbutton.on('pointerdown',()=>{
             losesfx.stop();
             click.play();
+            if (game.config.captions == true) {
+                let boosttext = this.add.text(game.config.width*.5, 1800, '(whoosh)', {fontSize: '40px'}).setOrigin(.5);
+                this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
+            }
+
             this.scene.start(this.level);
         })
     
@@ -55,6 +65,11 @@ class Death extends Phaser.Scene {
         quitbutton.on('pointerout',()=>{quittext.setScale(1)})
         quitbutton.on('pointerdown',()=>{
             click.play();
+            if (game.config.captions == true) {
+                let boosttext = this.add.text(game.config.width*.5, 1800, '(whoosh)', {fontSize: '40px'}).setOrigin(.5);
+                this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
+            }
+
             this.scene.start('titleScreen')
             this.scene.stop();
             this.scene.stop(this.currLevel);
