@@ -6,9 +6,9 @@ class Preloader extends Phaser.Scene {
         this.load.path = './assets/';
         this.load.image('player', 'player.png');
         this.load.image('player_og', 'player_og.png');
-        this.load.image('enemy', 'enemy.png');
-        this.load.image('enemy2', 'enemy2.png');
-        this.load.image('enemy3', 'enemy3.png');
+        this.load.image('enemy', 'germ1.png');
+        this.load.image('enemy2', 'germ2.png');
+        this.load.image('enemy3', 'germ3.png');
         this.load.image('bullet', 'bullet.png');
         this.load.image('space', 'Spacebackground.png');
 
