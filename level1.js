@@ -13,10 +13,11 @@ class Level1 extends Phaser.Scene {
         this.load.image('enemy2', 'enemy2.png');
         this.load.image('bullet', 'bullet.png');
         this.load.image('space', 'Spacebackground.png');
-        this.load.audio('boost', 'boost.wav');
-        this.load.audio('bgm', 'creamy tomato.mp3');
+        this.load.audio('boost', 'audio/boost.wav');
+        this.load.audio('bgm', 'audio/creamy tomato.mp3');
     }
     create() {
+        
         // changed world bounds to allow enemies to spawn outside without being destroyed
         this.physics.world.setBounds(-200, -500, 1480, 2720);
 
@@ -43,7 +44,7 @@ class Level1 extends Phaser.Scene {
                 pauseButton.setAlpha(0);
                 this.scene.launch('pause', {bgm: this.bgm, pB: pauseButton});
                 this.scene.pause(this);
-            });
+            })
 
         // player character sprite
         this.player = this.physics.add.sprite(540, 960, this.playersprite).setSize(150, 100).setScale(.9);
@@ -51,6 +52,9 @@ class Level1 extends Phaser.Scene {
         // temporary rectangle used to visualize sides of the screen
         this.physics.add.existing(new Phaser.GameObjects.Rectangle(this, 540, 960, 10, 1920)).body.allowGravity = false;
         
+        this.scene.launch('tutorial', {currScene: 'level1'});
+        this.scene.pause(this);
+
         // makes the player ship automatically shoot bullets every .5 seconds
         this.playerBullets = this.add.existing(new Bullets(this.physics.world, this, {name: 'playerBullets'}));
         this.playerBullets.createMultiple({key: 'bullet', quantity: 10});
@@ -121,11 +125,15 @@ class Level1 extends Phaser.Scene {
 
         
         this.kills = [];
-
+        let explosionEffect;
         // checks if enemy1 is hit by bullet
         this.physics.add.overlap(this.playerBullets, enemy1, (bullet, enemy) => {
             this.kills.push(1);
             this.killCount++;
+            explosionEffect = this.add.sprite(enemy.x, enemy.y,'megumin1').play('megumin');
+            //this.time.addEvent({delay: 400, callback: () => {explosionEffect.destroy();}});
+            explosionEffect.anims.hideOnComplete = true;
+            explosionsfx.play();
             bullet.disableBody(true, true);
             enemy.enemyKilled();
         });

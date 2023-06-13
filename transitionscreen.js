@@ -101,13 +101,13 @@ class TransitionScreen extends Phaser.Scene{
         });
 
         //explosion animation
-        this.anims.create({
+        /*this.anims.create({
             key: 'megumin',
             frames: [
                 {key: 'megumin2'}, {key: 'megumin3'}, {key: 'megumin4'}, {key: 'megumin5'}, {key: 'megumin6'}, {key: 'megumin7', duration: 50},
             ] ,
             frameRate: 8,
-        })
+        })*/
 
         //level results
         //displays enemies, then periodially shows an explosion

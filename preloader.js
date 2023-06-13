@@ -10,8 +10,13 @@ class Preloader extends Phaser.Scene {
         this.load.image('enemy2', 'enemy2.png');
         this.load.image('bullet', 'bullet.png');
         this.load.image('space', 'Spacebackground.png');
-        this.load.audio('boost', 'boost.wav');
-        this.load.audio('bgm', 'creamy tomato.mp3');
+
+        this.load.audio('boost', 'audio/boost.wav');
+        this.load.audio('bgm', 'audio/creamy tomato.mp3');
+
+        this.load.audio('click', '/audio/click.mp3');
+        this.load.audio('explosionsfx','/audio/explosion.mp3');
+
         this.load.image('planet1', 'planet1.png');
         this.load.image('planet2','planet2.png');
 
@@ -24,6 +29,13 @@ class Preloader extends Phaser.Scene {
         this.load.image('megumin7', 'megumin/megumin7.png');
     }
     create() {
+        this.anims.create({
+            key: 'megumin',
+            frames: [
+                {key: 'megumin2'}, {key: 'megumin3'}, {key: 'megumin4'}, {key: 'megumin5'}, {key: 'megumin6'}, {key: 'megumin7', duration: 50},
+            ] ,
+            frameRate: 8,
+        });
         this.scene.start('selectScreen');
     }
 }
