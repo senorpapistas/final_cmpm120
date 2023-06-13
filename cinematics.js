@@ -386,6 +386,9 @@ class victoryScreen extends Phaser.Scene{
 
         this.load.audio('click', '/audio/click.mp3');
     }*/
+    init(data) {
+        this.bgm = data.bgm;
+    }
     create() {
         let sound = this.sound.add('click');
 
@@ -478,8 +481,9 @@ class victoryScreen extends Phaser.Scene{
         })
 
         this.input.once('pointerdown', () => {
-            sound.play()
-            this.scene.start('cutscene');
+            sound.play();
+            this.bgm.stop();
+            this.scene.start('selectScreen');
         });
     }
     update() {
