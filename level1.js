@@ -6,7 +6,7 @@ class Level1 extends Phaser.Scene {
         this.bgm = data.bgm;
         this.playersprite = data.playersprite;
     }
-    preload() {
+    /*preload() {
         this.load.path = './assets/';
         this.load.image('player', 'player.png');
         this.load.image('enemy', 'enemy.png');
@@ -15,7 +15,7 @@ class Level1 extends Phaser.Scene {
         this.load.image('space', 'Spacebackground.png');
         this.load.audio('boost', 'audio/boost.wav');
         this.load.audio('bgm', 'audio/creamy tomato.mp3');
-    }
+    }*/
     create() {
         this.game.config.lvl1score = 0;
 

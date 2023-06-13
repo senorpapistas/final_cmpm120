@@ -2,13 +2,13 @@ class cutscene extends Phaser.Scene {
     constructor(){
         super('cutscene');
     }
-    preload() {
+    /*preload() {
         this.load.path = './assets/'
         this.load.image('player', 'player.png');
         this.load.image('space', 'Spacebackground.png');
         
         this.load.audio('click', '/audio/click.mp3');
-    }
+    }*/
     init (data) {
         this.playersprite = data.playersprite
     }
@@ -100,13 +100,13 @@ class titleScreen extends Phaser.Scene{
     constructor(){
         super('titleScreen');
     }
-    preload() {
+    /*preload() {
         this.load.path = './assets/'
         this.load.image('player', 'player.png');
         this.load.image('space', 'Spacebackground.png');
         
         this.load.audio('click', '/audio/click.mp3');
-    }
+    }*/
     init(data) {
         this.bgm = data.bgm;
         this.playersprite = data.playersprite;
@@ -376,7 +376,7 @@ class victoryScreen extends Phaser.Scene{
     constructor(){
         super('victoryScreen');
     }
-    preload(){
+    /*preload(){
         this.load.path = './assets/'
         this.load.image('player', 'player.png')
         this.load.image('space', 'Spacebackground.png');
@@ -385,7 +385,7 @@ class victoryScreen extends Phaser.Scene{
         this.load.image('planet2','planet2.png')
 
         this.load.audio('click', '/audio/click.mp3');
-    }
+    }*/
     create() {
         let sound = this.sound.add('click');
 
@@ -491,14 +491,14 @@ class selectScreen extends Phaser.Scene{
     constructor(){
         super('selectScreen');
     }
-    preload(){
+    /*preload(){
         this.load.path = './assets/'
         this.load.image('player', 'player.png');
         this.load.image('player_og', 'player_og.png');
         this.load.image('space', 'Spacebackground.png');
 
         this.load.audio('click', '/audio/click.mp3');
-    }
+    }*/
     create() {
         let sound = this.sound.add('click');
 

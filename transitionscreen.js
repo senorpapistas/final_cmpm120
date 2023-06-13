@@ -2,7 +2,7 @@ class TransitionScreen extends Phaser.Scene{
     constructor(){
         super('transitionScreen');
     }
-    preload() {
+    /*preload() {
         this.load.path = '../assets/'
         this.load.image('player', 'player.png')
         this.load.image('space', 'Spacebackground.png');
@@ -23,7 +23,7 @@ class TransitionScreen extends Phaser.Scene{
 
         this.load.audio('click', '/audio/click.mp3');
         this.load.audio('explosionsfx','/audio/explosion.mp3');
-    }
+    }*/
     init (data) {
         this.enemiesdestroyed = data.enemiesdestroyed;
         this.playersprite = data.playersprite;
