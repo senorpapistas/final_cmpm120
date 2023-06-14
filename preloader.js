@@ -30,6 +30,7 @@ class Preloader extends Phaser.Scene {
 
         this.load.image('planet1', 'planet1.png');
         this.load.image('planet2','planet2.png');
+        this.load.image('blackhole','blackhole.png');
 
         this.load.image('megumin1', 'megumin/megumin1.png');
         this.load.image('megumin2', 'megumin/megumin2.png');
