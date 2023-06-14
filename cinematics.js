@@ -554,7 +554,7 @@ class victoryScreen extends Phaser.Scene{
     }*/
     init(data) {
         this.bgm = data.bgm;
-
+        this.playersprite = data.playersprite;
         {
             this.cameras.main.fadeIn(100);
             const fxCamera = this.cameras.main.postFX.addPixelate(40);
@@ -675,7 +675,7 @@ class victoryScreen extends Phaser.Scene{
                 this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
             }
             this.bgm.stop();
-            this.scene.start('selectScreen');
+            this.scene.start('titleScreen', {playersprite: this.playersprite, bgm: this.bgm});
         });
     }
 }
