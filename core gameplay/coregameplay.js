@@ -41,12 +41,12 @@ class Demo extends Phaser.Scene{
     }
     preload() {
         this.load.path = '../assets/'
-        this.load.image('player', 'player.png');
-        this.load.image('bullet', 'bullet.png');
+        this.load.image('player', 'player_og.png');
+        this.load.image('bullet', 'bullet_og.png');
         this.load.image('space', 'deep-space.jpg');
         this.load.glsl('bundle', 'bundle4.glsl.js');
-        this.load.audio('boost', 'boost.wav');
-        this.load.audio('bgm', 'creamy tomato.mp3')
+        this.load.audio('boost', '/audio/boost.wav');
+        this.load.audio('bgm', '/audio/creamy tomato.mp3')
     }
     create() {
         // placeholder background shader, shifts the hue of the background constantly
