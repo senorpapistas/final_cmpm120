@@ -19,10 +19,10 @@ Link to Full Game: https://senorpapistas.github.io/final_cmpm120
 
 ### Contributor Credits
  - Production Lead: Ivan Kwok
- -	Technology Lead: Ewin Mathew
- -	Testing Lead: Joshua Widjaja
-	- Design Lead 1: Andrew Do
-	- Design Lead 2: Alan Yee
+ - Technology Lead: Ewin Mathew
+ - Testing Lead: Joshua Widjaja
+ - Design Lead 1: Andrew Do
+ - Design Lead 2: Alan Yee
 
 ### Asset Credits
  - New ship sprite generated from Craiyon Art AI
