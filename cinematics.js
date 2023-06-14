@@ -414,6 +414,30 @@ class titleScreen extends Phaser.Scene{
                 }
                 this.scene.start('levelselectScreen', {playersprite: this.playersprite, bgm: this.bgm})
             })
+
+        // credits button
+        let creditsbuttonback = this.add.rectangle(game.config.width*.8, game.config.height*.85, 220, 120, 0xffffff)
+        let creditsbuttonbody = this.add.rectangle(game.config.width*.8, game.config.height*.85, 200, 100, 0x3c78d8).setInteractive()
+        let creditsbuttontext = this.add.text(game.config.width*.8, game.config.height*.85, "Credits", {font: "50px Verdana"}).setOrigin(.5)
+
+            creditsbuttonbody.on('pointerover',()=>{ 
+                creditsbuttonback.setScale(1.1)
+                creditsbuttonbody.setScale(1.1)
+                creditsbuttontext.setScale(1.1)
+            })
+            creditsbuttonbody.on('pointerout',()=>{ 
+                creditsbuttonback.setScale(1)
+                creditsbuttonbody.setScale(1)
+                creditsbuttontext.setScale(1)
+            })
+            creditsbuttonbody.on('pointerdown',()=>{
+                sound.play()
+                if (game.config.captions == true) {
+                    let boosttext = this.add.text(game.config.width*.5, 1800, '(click)', {fontSize: '40px'}).setOrigin(.5);
+                    this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
+                }
+                this.scene.start('credits', {playersprite: this.playersprite, bgm: this.bgm})
+            })
     }
     update() {
         //background scroll
@@ -605,7 +629,7 @@ class victoryScreen extends Phaser.Scene{
             description.setText("I mean it's alright!")
                 .setColor("#ff006e")
             }
-        else if(this.finalscore >= 30000) {
+        if(this.finalscore >= 30000) {
             description.setText("Low Diff")
                 .setColor('#f0f024')
             }
