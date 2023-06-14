@@ -796,14 +796,14 @@ class selectScreen extends Phaser.Scene{
         })
 
         box2.on('pointerover', ()=> {
-            box1.setFillStyle(0xffffff, 0xcccccc, 0xabcdef)
-            name.setText("THE ALPHA").setColor('#14c714')
-            description.setText('Mission: \ndestroy the ancient germs')
+            box2.setFillStyle(0xffffff, 0xcccccc, 0xabcdef)
+            name.setText("THE OG").setColor('#e80c29')
+            description.setText('Mission: \nKILL. THEM. ALL.')
         })
         box2.on('pointerout', ()=> {
-            box1.setFillStyle(0x2bd62b, 0x1b961b, 0x14c714)
+            box2.setFillStyle(0xd91630, 0xb3172c, 0xe80c29)
             name.setText('')
-            description.setText('')    
+            description.setText('')   
         })
         box2.on('pointerdown', ()=>{
             sound.play()
@@ -811,7 +811,7 @@ class selectScreen extends Phaser.Scene{
                 let boosttext = this.add.text(game.config.width*.5, 1800, '(click)', {fontSize: '40px'}).setOrigin(.5);
                 this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
             }
-            this.scene.start('cutscene', {playersprite: spriteSelect})
+            this.scene.start('cutscene', {playersprite: spriteSelect_og})
         })
 
     }
