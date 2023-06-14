@@ -601,11 +601,11 @@ class victoryScreen extends Phaser.Scene{
         let descriptionbackground = this.add.rectangle(game.config.width*.5,game.config.height*.8, 600, 200, 0x000000).setAlpha(0)
         let description = this.add.text(game.config.width*.5,game.config.height*.8, "You're mid!", {font: "80px Verdana", color: '#474714'}).setOrigin(0.5).setAlpha(0);
         
-        if(this.finalscore >= 15000) {
+        if(this.finalscore >= 20000) {
             description.setText("You're ok!")
                 .setColor("#ff006e")
             }
-        else if(this.finalscore >= 20000) {
+        else if(this.finalscore >= 30000) {
             description.setText("You're great!")
                 .setColor('#f0f024')
             }

@@ -236,7 +236,7 @@ class Level3 extends Phaser.Scene {
         if (this.stars2.y >= game.config.height*1.5) {this.stars2.y = game.config.height*-.5}
         this.stars2.y += 5;
         
-        if (this.killCount == 6) {
+        if (this.killCount == 36) {
             this.time.delayedCall(800, () => {
                 this.spawnBoss();
             });
