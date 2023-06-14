@@ -14,7 +14,7 @@ class titleScreen extends Phaser.Scene{
         });
     }
     create(){
-        let title = this.add.text(120, 860, "GERMA")
+        let title = this.add.text(120, 860, "[TITLE]")
             .setFontSize(200)
         this.add.text(120, 1200, "(tap to begin)")
             .setFontSize(100)

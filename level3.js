@@ -137,6 +137,7 @@ class Level3 extends Phaser.Scene {
             }
         }});
 
+        /*
         // Dev button to test out level transitions
         this.w = this.game.config.width;
         this.h = this.game.config.height;
@@ -148,6 +149,7 @@ class Level3 extends Phaser.Scene {
                 //console.log(this.kills);
                 this.scene.start('transitionScreen', {enemiesdestroyed: this.kills, playersprite: this.playersprite, nextLevel: 'victoryScreen', bgm: this.bgm})
             });
+        */
 
         this.kills = [];
 

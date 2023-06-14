@@ -124,7 +124,7 @@ class Level1 extends Phaser.Scene {
             testEnemy2.spawn(spawnCoeff, -200, spawnCoeff * 0.2 * x_move, 350, .5);
         }})
         */
-
+        /*
         // Dev button to test out level transitions
         this.w = this.game.config.width;
         this.h = this.game.config.height;
@@ -136,6 +136,7 @@ class Level1 extends Phaser.Scene {
                 //console.log(this.kills);
                 this.scene.start('transitionScreen', {enemiesdestroyed: this.kills, playersprite: this.playersprite, nextLevel: 'level2', bgm: this.bgm})
             });
+        */
 
         this.kills = [];
 
