@@ -730,8 +730,8 @@ class selectScreen extends Phaser.Scene{
         let name = this.add.text(game.config.width*.5, game.config.height*.8, '', {fontSize: 120, color: '#ff0000'}).setOrigin(.5);
         let description = this.add.text(game.config.width*.5, game.config.height*.9, '', {fontSize: 60}).setOrigin(.5);
 
-        let box1 = this.add.isobox(game.config.width*.3, game.config.height*.7, 300, 200, 0x2bd62b, 0x1b961b, 0x14c714);
-        let box2 = this.add.isobox(game.config.width*.7, game.config.height*.7, 300, 200, 0xd91630, 0xb3172c, 0xe80c29);
+        let box1 = this.add.isobox(game.config.width*.3, game.config.height*.7, 300, 200, 0x2bd62b, 0x1b961b, 0x14c714).setInteractive();
+        let box2 = this.add.isobox(game.config.width*.7, game.config.height*.7, 300, 200, 0xd91630, 0xb3172c, 0xe80c29).setInteractive();
 
         let player_og = this.add.image(game.config.width*.7, game.config.height*.57, 'player_og').setInteractive()
         let player = this.add.image(game.config.width*.3, game.config.height*.57, 'player').setInteractive()
@@ -748,6 +748,25 @@ class selectScreen extends Phaser.Scene{
             description.setText('')    
         })
         player.on('pointerdown', ()=>{
+            sound.play()
+            if (game.config.captions == true) {
+                let boosttext = this.add.text(game.config.width*.5, 1800, '(click)', {fontSize: '40px'}).setOrigin(.5);
+                this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
+            }
+            this.scene.start('cutscene', {playersprite: spriteSelect})
+        })
+
+        box1.on('pointerover', ()=> {
+            box1.setFillStyle(0xffffff, 0xcccccc, 0xabcdef)
+            name.setText("THE ALPHA").setColor('#14c714')
+            description.setText('Mission: \ndestroy the ancient germs')
+        })
+        box1.on('pointerout', ()=> {
+            box1.setFillStyle(0x2bd62b, 0x1b961b, 0x14c714)
+            name.setText('')
+            description.setText('')    
+        })
+        box1.on('pointerdown', ()=>{
             sound.play()
             if (game.config.captions == true) {
                 let boosttext = this.add.text(game.config.width*.5, 1800, '(click)', {fontSize: '40px'}).setOrigin(.5);
@@ -775,5 +794,25 @@ class selectScreen extends Phaser.Scene{
             }
             this.scene.start('cutscene', {playersprite: spriteSelect_og})
         })
+
+        box2.on('pointerover', ()=> {
+            box1.setFillStyle(0xffffff, 0xcccccc, 0xabcdef)
+            name.setText("THE ALPHA").setColor('#14c714')
+            description.setText('Mission: \ndestroy the ancient germs')
+        })
+        box2.on('pointerout', ()=> {
+            box1.setFillStyle(0x2bd62b, 0x1b961b, 0x14c714)
+            name.setText('')
+            description.setText('')    
+        })
+        box2.on('pointerdown', ()=>{
+            sound.play()
+            if (game.config.captions == true) {
+                let boosttext = this.add.text(game.config.width*.5, 1800, '(click)', {fontSize: '40px'}).setOrigin(.5);
+                this.time.delayedCall(500, () => {this.tweens.add({targets: boosttext, alpha: 0, duration: 500})});
+            }
+            this.scene.start('cutscene', {playersprite: spriteSelect})
+        })
+
     }
 }
