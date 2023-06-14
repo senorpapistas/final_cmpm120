@@ -1,6 +1,7 @@
 # final_cmpm120
 by Ewin Mathew, Joshua Widjaja, Ivan Kwok, Andrew Do, Alan Yee
 
+### Main Game:
 Link to Full Game: https://senorpapistas.github.io/final_cmpm120
 
 ### Demos: 
@@ -13,7 +14,18 @@ Link to Full Game: https://senorpapistas.github.io/final_cmpm120
  - Complete Closed Captioning - No voice acting is present in the game, sound effects were captioned
  - Alternate Control Device - This game is playable using a controller. You can use the D-PAD, Shoulder Buttons, and the A and B Buttons to play.
 
-Theme of the game: Distant in Time but Nearby in Space
+### Theme of the game: Distant in Time but Nearby in Space
  - Our alpha game features the player character as a futuristic ship fighting against prehistoric germs. We additonally included a player select to allow the players to use the beta game assets, thereby having the assets nearby in the space of the computer but distant in the time they were made.
 
+### Contributor Credits
+ - Production Lead: Ivan Kwok
+ -	Technology Lead: Ewin Mathew
+ -	Testing Lead: Joshua Widjaja
+	- Design Lead 1: Andrew Do
+	- Design Lead 2: Alan Yee
 
+### Asset Credits
+ - New ship sprite generated from Craiyon Art AI
+ - New enemy sprites from adobe stock
+ - Background generated from PixelSpace by Deep Fold
+ - Planets and Blackhole generated from PixelPlanets by Deep Fold
