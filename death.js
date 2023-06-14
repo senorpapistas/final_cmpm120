@@ -10,6 +10,9 @@ class Death extends Phaser.Scene {
         this.level = data.level;
     }
     create() {
+        
+        this.add.image(540, 960, 'space');
+        this.add.image(540, 1600, 'blackhole');
 
         let click = this.sound.add('click')
 
