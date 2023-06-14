@@ -25,6 +25,8 @@ Link to Full Game: https://senorpapistas.github.io/final_cmpm120
  - Design Lead 2: Alan Yee
 
 ### Asset Credits
+ - Audio taken from YouTube and edited in Audacity by Ivan
+ - Beta assets (seen when choosing blue ship) by Ewin
  - New ship sprite generated from Craiyon Art AI
  - New enemy sprites from adobe stock
  - Background generated from PixelSpace by Deep Fold
